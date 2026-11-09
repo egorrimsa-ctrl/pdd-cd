@@ -1,14 +1,15 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>Тренажёр ПДД C·D</title>
-<meta name="description" content="Билеты ПДД категорий C и D: тренировка, экзамен, ошибки и сложные темы. Работает без интернета.">
+<meta name="description" content="Билеты ПДД категорий A·B и C·D: тренировка, экзамен, ошибки. Работает без интернета.">
 <meta name="theme-color" content="#1757B8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ПДД C·D">
+<meta name="apple-mobile-web-app-title" content="ПДД">
 <meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<script>try{if(localStorage.getItem('pdd-cat')==='ab'&&!location.hash)location.replace('ab/')}catch(e){}</script>
 <style>
 @font-face{font-family:"PT Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/pt-sans-cyrillic-400-normal.woff2) format("woff2");unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:"PT Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/pt-sans-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -27,7 +28,7 @@ html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#F3F6FA; --surface:#FFFFFF; --ink:#152033; --muted:#5A6779; --line:#D9E0EA;
   --blue:#1757B8; --blue-soft:#E3ECFA; --yellow:#F2BE1A; --ok:#1C8A4B; --okbg:#DCF2E3; --bad:#C2302B; --badbg:#F8E0DF;
-  --head:#1757B8; --head-ink:#FFFFFF; --on-blue:#FFFFFF;
+  --head:#1757B8; --head-ink:#FFFFFF; --on-blue:#FFFFFF; --on-yellow:#152033;
   --f-display:"PT Sans Narrow","Arial Narrow",Arial,sans-serif; --f-body:"PT Sans",Arial,sans-serif; --f-mono:"PT Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -133,8 +134,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 .result.ok{background:var(--okbg)} .result.bad{background:var(--badbg)}
 .review{display:flex;flex-direction:column;gap:14px}
 .sec{display:flex;flex-direction:column;gap:12px}
-.xfer textarea{width:100%;font-family:var(--f-mono);font-size:16px;line-height:1.35;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:6px;padding:8px 10px;resize:vertical}
-.xfer textarea:focus-visible{outline:2px solid var(--yellow);outline-offset:1px}
 /* hard */
 .hlist{display:flex;flex-direction:column;gap:12px}
 .hcard{background:var(--surface);border:1px solid var(--line);border-radius:8px}
@@ -154,13 +153,20 @@ button{font:inherit;color:inherit;cursor:pointer}
 .numtable table.pairs td{font-family:var(--f-body);font-size:15px;font-variant-numeric:tabular-nums;white-space:normal;width:auto;text-align:left;padding-left:8px;overflow-wrap:break-word;hyphens:auto}
 .numtable table.pairs td:first-child{font-weight:700}
 @media (max-width:520px){.hcard summary{flex-direction:column;gap:6px}}
+.xfer textarea{width:100%;font-family:var(--f-mono);font-size:16px;line-height:1.35;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:6px;padding:8px 10px;resize:vertical}
+.xfer textarea:focus-visible{outline:2px solid var(--yellow);outline-offset:1px}
+.brand .bl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
+.cats{display:inline-flex;border:1.5px solid rgba(255,255,255,.6);border-radius:6px;overflow:hidden}
+.cats a{color:var(--head-ink);text-decoration:none;font-family:var(--f-display);font-size:16px;line-height:1.3;padding:3px 11px}
+.cats a.on{background:var(--yellow);color:var(--on-yellow)}
+.cats a:focus-visible{outline:2px solid var(--yellow);outline-offset:-3px}
 @media (max-width:520px){.stats{grid-template-columns:1fr 1fr 1fr}.stat b{font-size:20px}.day{grid-template-columns:56px 1fr;}.day>.btn{grid-column:2;justify-self:start}h2{font-size:24px}}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .3s}}
 </style>
 
 <header>
   <div class="wrap">
-    <div class="brand"><h1>Тренажёр ПДД C·D</h1><span class="prog" id="hdrProg"></span></div>
+    <div class="brand"><div class="bl"><h1>Тренажёр ПДД</h1><div class="cats" role="group" aria-label="Категория"><a href="ab/" data-cat="ab">A·B</a><a href="./" data-cat="cd" class="on" aria-current="page">C·D</a></div></div><span class="prog" id="hdrProg"></span></div>
     <nav id="nav">
       <a href="#plan" data-v="plan">Программа</a>
       <a href="#rules" data-v="rules">Закономерности</a>
@@ -356,26 +362,27 @@ function hardHTML(){const all=hardAll(),m=all.filter(isMistake);
   <div class="hlist">${HARD.map(h=>`<details class="hcard" id="h-${h.id}"><summary><span class="ht"><h3>${esc(h.t)}</h3><span class="muted">${esc(h.d)}</span></span><span class="hmeta mono">${h.qs.length} вопр. · ${pct(h.qs)}%</span></summary>
    <div class="hbody"><ul>${h.l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${h.mn?`<p class="mn">${esc(h.mn)}</p>`:''}
    <div class="row"><button class="btn small" data-hq="${h.id}">Решить ${h.qs.length} ${plural(h.qs.length,'вопрос','вопроса','вопросов')}</button><div class="bar" style="flex:1;min-width:80px;max-width:240px"><i style="width:${pct(h.qs)}%"></i></div></div></div></details>`).join('')}</div>`}
-const IS_APP=true;
+const IS_APP=true;const XPREF='PDDCD1:';const CAT='cd',SWP='sw.js';
 /* ---------- перенос прогресса между браузером и приложением ---------- */
-const progCode=()=>'PDDCD1:'+btoa(unescape(encodeURIComponent(JSON.stringify(ST))));
+const XP=typeof XPREF==='string'?XPREF:'PDDCD1:';
+const progCode=()=>XP+btoa(unescape(encodeURIComponent(JSON.stringify(ST))));
 function xferHTML(){return `<section class="sec xfer"><h3>Перенос прогресса</h3>
   <p class="muted">${IS_APP?'Уже занимались в браузере? Там внизу «Программы» нажмите «Скопировать код» и вставьте его сюда.':'Хотите продолжить в приложении на iPhone? Скопируйте код и вставьте его в приложении внизу «Программы».'}</p>
   <div class="row"><button class="btn ghost small" id="xcopy">Скопировать код</button><span class="muted" id="xmsg" role="status"></span></div>
   <label for="xcode" class="muted" style="font-size:14px">Код прогресса</label>
-  <textarea id="xcode" rows="3" placeholder="PDDCD1:…" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+  <textarea id="xcode" rows="3" placeholder="${XP}…" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
   <div class="row"><button class="btn small" id="xload">Загрузить код</button></div></section>`}
 function bindXfer(){
  const xc=$('#xcopy');if(xc)xc.onclick=()=>{const code=progCode(),ta=$('#xcode'),msg=$('#xmsg');
   const fb=()=>{ta.value=code;ta.focus();ta.select();msg.textContent='Код в поле ниже: выделите его и скопируйте'};
   try{navigator.clipboard.writeText(code).then(()=>{msg.textContent='Код скопирован'},fb)}catch(e){fb()}};
  const xl=$('#xload');if(xl)xl.onclick=()=>{const msg=$('#xmsg');
-  try{const s=$('#xcode').value.replace(/\s+/g,'');if(!s.startsWith('PDDCD1:'))throw 0;
-   const o=JSON.parse(decodeURIComponent(escape(atob(s.slice(7)))));if(!o||typeof o.r!=='object'||typeof o.w!=='object')throw 0;
+  try{const s=$('#xcode').value.replace(/\s+/g,'');if(!s.startsWith(XP)){if(/^PDD(AB|CD)1:/.test(s))throw 'cat';throw 0}
+   const o=JSON.parse(decodeURIComponent(escape(atob(s.slice(XP.length)))));if(!o||typeof o.r!=='object'||typeof o.w!=='object')throw 0;
    let n=0;for(const k in o.r){const i=+k,v=+o.r[k];if(i>=0&&i<Q.length&&Number.isFinite(v)){ST.r[i]=Math.max(ST.r[i]||0,v);n++}}
    for(const k in o.w){const i=+k;if(i>=0&&i<Q.length&&o.w[k])ST.w[i]=1}
    save();render();const m=$('#xmsg');if(m)m.textContent=`Загружено: ${n} ${plural(n,'вопрос','вопроса','вопросов')}`}
-  catch(e){msg.textContent='Код не распознан. Скопируйте его целиком, вместе с началом «PDDCD1:».'}};
+  catch(e){msg.textContent=e==='cat'?(IS_APP?'Это код другой категории. Откройте её через переключатель A·B / C·D и вставьте там.':'Это код из тренажёра другой категории.'):`Код не распознан. Скопируйте его целиком, вместе с началом «${XP}».`}};
 }
 /* ---------- приложение: установка и работа без интернета ---------- */
 const PACKS=8,IMGC='pdd-cd-img-1';
@@ -392,8 +399,11 @@ async function prefetchPacks(){
    if(!(await c.match(u))){const r=await fetch(u,{cache:'reload'});if(!r.ok)throw 0;await c.put(u,r)}
    OFF.done=k+1;const el=$('#offst');if(el)el.textContent=offText()}}
  catch(e){OFF.fail=true;const el=$('#offst');if(el)el.textContent=offText()}}
-if(OFF.ok){navigator.serviceWorker.register('sw.js').catch(()=>{});prefetchPacks();
+if(OFF.ok){navigator.serviceWorker.register(SWP).catch(()=>{});prefetchPacks();
  try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}
+/* ---------- переключатель категорий ---------- */
+try{localStorage.setItem('pdd-cat',CAT)}catch(e){}
+document.querySelectorAll('.cats a').forEach(a=>a.addEventListener('click',()=>{try{localStorage.setItem('pdd-cat',a.dataset.cat)}catch(e){}}));
 /* ---------- router ---------- */
 let view='plan';
 const go=()=>{const h=location.hash.slice(1);view=['plan','rules','hard','train','mistakes','exam'].includes(h)?h:'plan';render()};

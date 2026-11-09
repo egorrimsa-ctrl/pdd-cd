@@ -1,7 +1,7 @@
 {
- "name": "Тренажёр ПДД C·D",
- "short_name": "ПДД C·D",
- "description": "Билеты ПДД категорий C и D без интернета",
+ "name": "Тренажёр ПДД",
+ "short_name": "ПДД",
+ "description": "Билеты ПДД категорий A·B и C·D без интернета",
  "lang": "ru",
  "start_url": "./",
  "scope": "./",
