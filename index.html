@@ -352,13 +352,16 @@ const HARD=[
 ];
 HARD.forEach(h=>h.qs=allIdx().filter(h.f));
 const PAIRS=[['Протектор','1,0 мм','2,0 мм'],['Люфт руля','25°','20°'],['Стояночный тормоз, уклон','31%','23%'],['Скорость вне населённого пункта','70 км/ч','90 км/ч с ремнями, 70 без'],['Скорость на автомагистрали','90 км/ч','90 км/ч с ремнями'],['Стаж для людей','3 года (люди в кузове)','2 года (люди в буксирующем автобусе)'],['Категория «1»','C1: 3,5–7,5 т','D1: 9–16 мест']];
+const PAIRS_HEAD=['Что','Грузовик','Автобус'];
+const PAIRS_TITLE='Грузовик или автобус';
+const HARD_LEAD='Темы, где нельзя рассуждать «по логике»: медицина, категории, штрафы, расстояния, нормы для грузовика и автобуса.';
 const hardAll=()=>[...new Set(HARD.flatMap(h=>h.qs))];
 function hardHTML(){const all=hardAll(),m=all.filter(isMistake);
   return `<section class="sec"><h2>Сложное и спорное</h2>
-  <p class="lead">Темы, где нельзя рассуждать «по логике»: медицина, категории, штрафы, расстояния, нормы для грузовика и автобуса. Сначала прочитайте шпаргалку темы, потом решите её вопросы. Всего ${all.length} ${plural(all.length,'вопрос','вопроса','вопросов')}, выучено ${pct(all)}%.</p></section>
+  <p class="lead">${HARD_LEAD} Сначала прочитайте шпаргалку темы, потом решите её вопросы. Всего ${all.length} ${plural(all.length,'вопрос','вопроса','вопросов')}, выучено ${pct(all)}%.</p></section>
   <div class="row"><button class="btn" data-hall="1">Все сложные вперемешку</button>${m.length?`<button class="btn ghost" data-hmist="1">Сложные из ошибок · ${m.length}</button>`:''}</div>
-  <div class="odds"><h3>Грузовик или автобус</h3><p class="muted">Эти пары путают чаще всего: число в вопросе есть, но для другой машины.</p>
-  <div class="numtable"><table class="pairs"><tr><th>Что</th><th>Грузовик</th><th>Автобус</th></tr>${PAIRS.map(p=>`<tr><td>${esc(p[0])}</td><td>${esc(p[1])}</td><td>${esc(p[2])}</td></tr>`).join('')}</table></div></div>
+  <div class="odds"><h3>${PAIRS_TITLE}</h3><p class="muted">Эти пары путают чаще всего: число в вопросе есть, но для другой машины.</p>
+  <div class="numtable"><table class="pairs" lang="ru"><tr>${PAIRS_HEAD.map(x=>`<th>${esc(x)}</th>`).join('')}</tr>${PAIRS.map(p=>`<tr><td>${esc(p[0])}</td><td>${esc(p[1])}</td><td>${esc(p[2])}</td></tr>`).join('')}</table></div></div>
   <div class="hlist">${HARD.map(h=>`<details class="hcard" id="h-${h.id}"><summary><span class="ht"><h3>${esc(h.t)}</h3><span class="muted">${esc(h.d)}</span></span><span class="hmeta mono">${h.qs.length} вопр. · ${pct(h.qs)}%</span></summary>
    <div class="hbody"><ul>${h.l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${h.mn?`<p class="mn">${esc(h.mn)}</p>`:''}
    <div class="row"><button class="btn small" data-hq="${h.id}">Решить ${h.qs.length} ${plural(h.qs.length,'вопрос','вопроса','вопросов')}</button><div class="bar" style="flex:1;min-width:80px;max-width:240px"><i style="width:${pct(h.qs)}%"></i></div></div></div></details>`).join('')}</div>`}
