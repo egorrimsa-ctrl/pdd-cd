@@ -154,6 +154,80 @@ button{font:inherit;color:inherit;cursor:pointer}
 @media (max-width:520px){.hcard summary{flex-direction:column;gap:6px}}
 .xfer textarea{width:100%;font-family:var(--f-mono);font-size:16px;line-height:1.35;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:6px;padding:8px 10px;resize:vertical}
 .xfer textarea:focus-visible{outline:2px solid var(--yellow);outline-offset:1px}
+/* lessons */
+:root{--stage:#0D1F3C;--stage-2:#15305A;--stage-ink:#FFFFFF;--stage-muted:#B7C6DE;--sign-red:#D3302A;--yes:#3FBF73;--no:#F0645C}
+.lstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.ltile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--head);color:var(--head-ink);border:0;border-radius:8px;padding:12px;min-height:104px;position:relative;overflow:hidden}
+.ltile::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:repeating-linear-gradient(90deg,var(--yellow) 0 18px,transparent 18px 28px)}
+.ltile .lplay{width:28px;height:28px;border-radius:50%;background:var(--yellow);color:var(--on-yellow,#152033);display:grid;place-items:center}
+.ltile .lt{font-family:var(--f-display);font-size:18px;line-height:1.15}
+.ltile .lm{font-size:12px;opacity:.85}
+.ltile.seen .lplay{background:var(--head-ink);color:var(--head)}
+.ltile:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+.lbtn{display:inline-flex;align-items:center;gap:6px}
+html.lp-open,html.lp-open body{overflow:hidden}
+#lp{position:fixed;inset:0;z-index:50;background:var(--stage);color:var(--stage-ink);display:flex;flex-direction:column;
+ padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.lp-top{padding:10px 16px 0;display:flex;flex-direction:column;gap:8px}
+.lp-segs{display:flex;gap:4px}
+.lp-segs i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden}
+.lp-segs i b{display:block;height:100%;width:0;background:var(--yellow)}
+.lp-segs i.done b{width:100%}
+.lp-bar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lp-t{font-family:var(--f-display);font-size:17px;opacity:.9;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp-x{background:none;border:0;color:var(--stage-ink);font-size:20px;line-height:1;padding:8px;margin-right:-8px}
+.lp-stage{flex:1;min-height:0;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:12px 20px;cursor:pointer;
+ background:radial-gradient(120% 70% at 50% 110%,var(--stage-2),transparent 70%)}
+.ls{width:100%;max-width:560px;display:flex;flex-direction:column;gap:16px}
+.ls h2{font-family:var(--f-display);font-size:38px;line-height:1.05;margin:0;text-wrap:balance}
+.ls h3{font-family:var(--f-display);font-size:28px;line-height:1.1;margin:0;text-wrap:balance}
+.ls .eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow)}
+.ls .cap{font-size:18px;line-height:1.45;color:var(--stage-muted);max-width:44ch}
+.ls .roadline{height:8px;width:100%;background:repeating-linear-gradient(90deg,var(--yellow) 0 30px,transparent 30px 48px)}
+.bigv{font-family:var(--f-display);font-size:clamp(72px,24vw,132px);line-height:.95;color:var(--yellow);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.bigv small{font-size:.32em;margin-left:.2em;color:var(--stage-ink)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vcol{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.vcol span{font-size:15px;color:var(--stage-muted);line-height:1.3}
+.vcol b{font-family:var(--f-display);font-size:clamp(24px,7vw,38px);line-height:1.05;color:var(--yellow);overflow-wrap:break-word;hyphens:auto}
+.ls ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.ls ol.bul li{font-size:19px;line-height:1.35;padding-left:22px;position:relative}
+.ls ol.bul li::before{content:"";position:absolute;left:0;top:.5em;width:10px;height:10px;background:var(--yellow);transform:rotate(45deg)}
+.ls ol.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;font-size:19px;line-height:1.3}
+.ls ol.steps .n{width:34px;height:34px;border-radius:50%;border:2px solid var(--yellow);color:var(--yellow);display:grid;place-items:center;font-family:var(--f-mono);font-weight:700}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yn>div{border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:16px;line-height:1.3;min-width:0}
+.yn b{font-family:var(--f-display);font-size:22px}
+.yn .yes{background:rgba(63,191,115,.14);border:1.5px solid var(--yes)} .yn .yes b{color:var(--yes)}
+.yn .no{background:rgba(240,100,92,.14);border:1.5px solid var(--no)} .yn .no b{color:var(--no)}
+.scale{display:flex;flex-direction:column;gap:9px}
+.srow{display:grid;grid-template-columns:44px 1fr;gap:4px 10px;align-items:center}
+.srow b{font-family:var(--f-mono);font-size:18px;color:var(--yellow);text-align:right;grid-row:span 2}
+.srow i{display:block;height:8px;border-radius:4px;background:var(--yellow);width:var(--w)}
+.srow span{font-size:14px;color:var(--stage-muted);line-height:1.25}
+.signs{display:flex;flex-wrap:wrap;gap:16px 22px}
+.sg{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px;text-align:center;font-size:15px;line-height:1.25;color:var(--stage-muted)}
+.disc{width:84px;height:84px;border-radius:50%;background:#FFFFFF;border:9px solid var(--sign-red);color:#111111;display:grid;place-items:center;font-family:var(--f-display);font-size:34px;font-variant-numeric:tabular-nums}
+.rulev{font-family:var(--f-display);font-size:clamp(26px,7vw,36px);line-height:1.2;border-left:6px solid var(--yellow);padding-left:16px;margin:0;text-wrap:balance}
+.lp-acts{display:flex;flex-wrap:wrap;gap:10px}
+.lp-acts .btn.ghost{color:var(--stage-ink);border-color:rgba(255,255,255,.6)}
+.lp-acts .btn:not(.ghost){background:var(--yellow);color:#152033}
+.lp-ctl{display:flex;justify-content:center;gap:28px;padding:10px 16px 16px}
+.lp-ctl button{width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:var(--stage-ink);display:grid;place-items:center}
+.lp-ctl .lp-pp{background:var(--yellow);border-color:var(--yellow);color:#152033}
+.lp-ctl button:disabled{opacity:.3;cursor:default}
+#lp:focus{outline:none}
+#lp button:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){
+ .lp-stage.go .a{animation:lpin .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*.22s)}
+ .lp-stage.go .srow i{animation:lpbar .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*.22s + .15s)}
+ .lp-stage.go .roadline{animation:lproad 1.2s linear both}
+ #lp.paused .lp-stage .a,#lp.paused .lp-stage .srow i{animation-play-state:paused}
+}
+@keyframes lpin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes lpbar{from{width:0}to{width:var(--w)}}
+@keyframes lproad{from{background-position:0 0}to{background-position:-96px 0}}
+@media (max-width:420px){.ls h2{font-size:32px}.ls h3{font-size:24px}.ls .cap{font-size:16px}.ls ol.bul li,.ls ol.steps li{font-size:17px}.disc{width:72px;height:72px;font-size:28px;border-width:8px}.sg{width:84px}}
 .brand .bl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
 .cats{display:inline-flex;border:1.5px solid rgba(255,255,255,.6);border-radius:6px;overflow:hidden}
 .cats a{color:var(--head-ink);text-decoration:none;font-family:var(--f-display);font-size:16px;line-height:1.3;padding:3px 11px}
@@ -380,11 +454,12 @@ function hardHTML(){const all=hardAll(),m=all.filter(isMistake);
   return `<section class="sec"><h2>Сложное и спорное</h2>
   <p class="lead">${HARD_LEAD} Сначала прочитайте шпаргалку темы, потом решите её вопросы. Всего ${all.length} ${plural(all.length,'вопрос','вопроса','вопросов')}, выучено ${pct(all)}%.</p></section>
   <div class="row"><button class="btn" data-hall="1">Все сложные вперемешку</button>${m.length?`<button class="btn ghost" data-hmist="1">Сложные из ошибок · ${m.length}</button>`:''}</div>
+  ${lessonsStripHTML()}
   <div class="odds"><h3>${PAIRS_TITLE}</h3><p class="muted">Эти пары путают чаще всего: число в вопросе есть, но для другой машины.</p>
   <div class="numtable"><table class="pairs" lang="ru"><tr>${PAIRS_HEAD.map(x=>`<th>${esc(x)}</th>`).join('')}</tr>${PAIRS.map(p=>`<tr><td>${esc(p[0])}</td><td>${esc(p[1])}</td><td>${esc(p[2])}</td></tr>`).join('')}</table></div></div>
   <div class="hlist">${HARD.map(h=>`<details class="hcard" id="h-${h.id}"><summary><span class="ht"><h3>${esc(h.t)}</h3><span class="muted">${esc(h.d)}</span></span><span class="hmeta mono">${h.qs.length} вопр. · ${pct(h.qs)}%</span></summary>
    <div class="hbody"><ul>${h.l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${h.mn?`<p class="mn">${esc(h.mn)}</p>`:''}
-   <div class="row"><button class="btn small" data-hq="${h.id}">Решить ${h.qs.length} ${plural(h.qs.length,'вопрос','вопроса','вопросов')}</button><div class="bar" style="flex:1;min-width:80px;max-width:240px"><i style="width:${pct(h.qs)}%"></i></div></div></div></details>`).join('')}</div>`}
+   <div class="row">${LESSONS[h.id]?`<button class="btn ghost small lbtn" data-lesson="${h.id}">${PLAY_SVG}Урок · ${mmss(lDur(LESSONS[h.id]))}</button>`:''}<button class="btn small" data-hq="${h.id}">Решить ${h.qs.length} ${plural(h.qs.length,'вопрос','вопроса','вопросов')}</button><div class="bar" style="flex:1;min-width:80px;max-width:240px"><i style="width:${pct(h.qs)}%"></i></div></div></div></details>`).join('')}</div>`}
 const IS_APP=true;const XPREF='PDDAB1:';const CAT='ab',SWP='../sw.js';
 /* ---------- перенос прогресса между браузером и приложением ---------- */
 const XP=typeof XPREF==='string'?XPREF:'PDDCD1:';
@@ -407,6 +482,197 @@ function bindXfer(){
    save();render();const m=$('#xmsg');if(m)m.textContent=`Загружено: ${n} ${plural(n,'вопрос','вопроса','вопросов')}`}
   catch(e){msg.textContent=e==='cat'?(IS_APP?'Это код другой категории. Откройте её через переключатель A·B / C·D и вставьте там.':'Это код из тренажёра другой категории.'):`Код не распознан. Скопируйте его целиком, вместе с началом «${XP}».`}};
 }
+/* ---------- уроки: сценарии ---------- */
+const LCAT=(typeof XPREF==='string'&&XPREF==='PDDAB1:')?'ab':'cd';
+const CDAB=(cd,ab)=>LCAT==='ab'?ab:cd;
+const LESSONS={
+ med:{t:'Первая помощь',sc:[
+  {k:'title',h:'Первая помощь',s:'Ответы в этих вопросах длинные и похожие. Разберём числа и позы, на которых держатся все 20 вопросов.'},
+  {k:'big',v:'30 : 2',h:'Реанимация',s:'Начинают, когда нет сознания, дыхания и кровообращения. 30 надавливаний на грудину, затем 2 вдоха «рот ко рту».'},
+  {k:'steps',h:'Руки при реанимации',items:['Основание ладони — на середину груди','На два пальца выше мечевидного отростка','Вторая рука сверху, пальцы в замок','Локти прямые, давить без рывков']},
+  {k:'big',v:'10 с',h:'Проверка дыхания',s:'Рука на лбу, двумя пальцами поднять подбородок, запрокинуть голову. 10 секунд слушать, ловить выдох щекой и смотреть на грудь.'},
+  {k:'list',h:'Три позы',items:['Без сознания, но дышит — на бок: колени на земле, верхняя рука под щекой','Травма позвоночника — на спину на твёрдое, не перемещать','Поза «лягушки» — не менять, валик под колени, холод на живот']},
+  {k:'vs',h:'Кровотечение',a:['Артерия','ярко-алая струя: прижать пальцем, жгут выше раны'],b:['Вена, мелкие сосуды','давящая повязка']},
+  {k:'vs',h:'Сколько держать жгут',a:['Тепло','до 1 часа'],b:['Холод','до 30 минут'],s:'Под жгут кладут записку со временем наложения.'},
+  {k:'big',v:'20 мин',h:'Ожог',s:'Охлаждать водой. Пузыри не вскрывать, одежду не отрывать, не бинтовать, поить водой.'},
+  {k:'steps',h:'Подавился',items:['Наклонить вперёд','5 ударов ладонью между лопаток','Не помогло — встать сзади и обхватить','5 толчков в живот выше пупка']},
+  {k:'yesno',h:'Запомните',yes:['Перчатки и стерильная салфетка на рану','Руку при переломе — на косынку','Извлечь из машины при угрозе пожара или взрыва'],no:['Давать лекарства','Промывать рану','Растирать отмороженное место']},
+  {k:'rule',h:'Запоминалка',v:'Жгут: лето — час, зима — полчаса. Ожог — 20 минут. Сердце — 30 на 2. Дыхание — 10 секунд.'}]},
+ fines:{t:'Штрафы и ответственность',sc:[
+  {k:'title',h:'Штрафы и ответственность',s:'Здесь логика не помогает, только память. Суммы — как в билетах, на экзамене отвечайте так.'},
+  {k:'big',v:'0,16',u:'мг/л',h:'Опьянение',s:'Больше 0,16 мг этилового спирта на литр выдыхаемого воздуха.'},
+  {k:'vs',h:'Штрафы из билетов',a:['Тонированные стёкла','500 ₽'],b:['Нет полиса ОСАГО','800 ₽']},
+  {k:'big',v:'1–1,5',u:'года',h:'Уехал с места ДТП',s:'Лишение прав или арест до 15 суток. Права вернут после экзамена по ПДД и оплаты штрафов.'},
+  {k:'vs',h:'Вред здоровью',a:['Лёгкий или средний','административная ответственность'],b:['Тяжкий или смерть','уголовная ответственность']},
+  {k:'list',h:'Лишённый прав сел за руль',items:['Единственный случай, где есть обязательные работы','Арест — за езду, уход с места ДТП, опьянение, отказ от освидетельствования','Повторно пьяный после админнаказания — уголовная, даже без пострадавших']},
+  {k:'steps',h:'Когда везут на медосвидетельствование',items:['Отказался от проверки на алкоголь','Не согласен с её результатом','Прибор показал ноль, а признаки опьянения есть']},
+  {k:'list',h:'Ещё три ответа',items:['Удостоверение изымают после вступления постановления в силу','Машину задерживают до устранения причины','Владелец платит за вред, если не докажет непреодолимую силу или умысел потерпевшего']},
+  {k:'rule',h:'Запоминалка',v:'0,16 — алкоголь. 500 — стёкла. 800 — нет ОСАГО. 1–1,5 года или 15 суток — уехал с ДТП.'}]},
+ dist:{t:'Расстояния и дистанция',sc:[
+  {k:'title',h:'Расстояния',s:'Вопросы «на сколько метров» решаются одной линейкой. Её и выучим.'},
+  {k:'scale',h:'Линейка ПДД, метры',marks:[[5,'переход, перекрёсток, шлагбаум'],[10,'до рельса без шлагбаума'],[15,'знак аварийной в городе'],[30,'знак аварийной за городом'],[50,'стоянка у переезда'],[100,'обгон до переезда, разворот'],[150,'дальний свет'],[300,'недостаточная видимость']]},
+  {k:'vs',h:'Не путайте',a:['Дистанция','до машины впереди'],b:['Интервал','сбоку, до соседей']},
+  CDAB({k:'big',v:'3 с',h:'Минимальная дистанция',s:'Грузовик и автобус на сухой дороге: путь, который машина проедет за 3 секунды. У легкового — 2 секунды.'},
+       {k:'big',v:'2 с',h:'Минимальная дистанция',s:'Легковой на сухой дороге: путь, который машина проедет за 2 секунды.'}),
+  {k:'big',v:'≈ 1 с',h:'Время реакции',s:'На 90 км/ч за это время машина проезжает около 25 м. Остановочный путь — от момента, когда заметили опасность, до полной остановки.'},
+  {k:'big',v:'v²',h:'Тормозной путь',s:'Растёт пропорционально квадрату скорости: вдвое быстрее — вчетверо длиннее. Без ABS он короче при прерывистом нажатии на тормоз.'},
+  {k:'list',h:'Ловушки',items:['В тумане предметы кажутся дальше, чем есть',CDAB('Буксируете машину без тормозов — тормозной путь длиннее','Прицеп без своих тормозов — тормозной путь длиннее'),'Знак 3.16 «70 м» — держать не меньше 70 м']},
+  {k:'rule',h:'Запоминалка',v:'5 — перекрёсток, переход, шлагбаум. 10 — рельс. 15 и 30 — знак аварийной. 100 — обгон и разворот. 150 — дальний. 300 — видимость.'}]},
+ tech:CDAB({t:'Протектор и неисправности',sc:[
+  {k:'title',h:'Протектор и неисправности',s:'У грузовика и автобуса разные нормы. Это главная ловушка блока.'},
+  {k:'vs',h:'Протектор, не меньше',a:['Грузовик','1,0 мм'],b:['Автобус','2,0 мм']},
+  {k:'vs',h:'Люфт руля, не больше',a:['Грузовик','25°'],b:['Автобус','20°']},
+  {k:'vs',h:'Стояночный тормоз держит на уклоне',a:['Грузовик и автопоезд','31%'],b:['Автобус','23%']},
+  {k:'big',v:'70%',h:'Светопропускание',s:'Лобовое и передние боковые стёкла пропускают не меньше 70% света.'},
+  {k:'list',h:'Дальше нельзя даже до ремонта',items:['Рабочий тормоз и рулевое','Манометр тормозного пневмопривода','Сцепное устройство автопоезда','Фары и задние габариты — в темноте','Дворник водителя — в дождь или снег']},
+  {k:'yesno',h:'Эксплуатация',yes:['Не работает стеклоподъёмник','Не работает указатель температуры','Восстановленные шипы','Оранжевые огни спереди'],no:['Неисправен звуковой сигнал','Разный рисунок протектора на оси','Шипы вместе с нешипованными','Негерметичный выпуск']},
+  {k:'rule',h:'Запоминалка',v:'Грузовик: 1 мм, 25°, 31%. Автобус: 2 мм, 20°, 23%. Автобус везёт людей, поэтому протектор строже.'}]},
+ {t:'Протектор и неисправности',sc:[
+  {k:'title',h:'Протектор и неисправности',s:'Нормы для легкового и мотоцикла разные. Их и путают.'},
+  {k:'vs',h:'Протектор, не меньше',a:['Легковой','1,6 мм'],b:['Мотоцикл','0,8 мм']},
+  {k:'big',v:'10°',h:'Люфт руля легкового',s:'Суммарный люфт в рулевом управлении — не больше 10 градусов.'},
+  {k:'vs',h:'Стояночный тормоз держит на уклоне',a:['Легковой в снаряжённом состоянии','23%'],b:['Любая машина с полной нагрузкой','16%']},
+  {k:'vs',h:'Стёкла',a:['Пропускание света','не меньше 70%'],b:['Цветная полоса на лобовом','не шире 140 мм']},
+  {k:'yesno',h:'Ремни безопасности',yes:['Потёртости на лямке'],no:['Надрывы на лямке','Лямка не вытягивается или не втягивается','Не стопорится при рывке']},
+  {k:'list',h:'Дальше нельзя даже до ремонта',items:['Рабочий тормоз и рулевое','Фары и задние габариты — в темноте','Дворник водителя — в дождь или снег']},
+  {k:'yesno',h:'Эксплуатация',yes:['Не работает стеклоподъёмник','Не работает указатель температуры','Восстановленные шипы','Оранжевые огни спереди'],no:['Неисправен звуковой сигнал','Разный рисунок протектора на оси','Шипы вместе с нешипованными','Негерметичный выпуск']},
+  {k:'list',h:'Мотоцикл нельзя',items:['Без подножек и рукояток для пассажира, если они предусмотрены','Без дуг безопасности, если они предусмотрены','С люфтом в соединении рамы с коляской']},
+  {k:'rule',h:'Запоминалка',v:'Легковой: 1,6 мм, 10°, 23%. Мотоцикл: 0,8 мм. Полоса на лобовом — до 140 мм.'}]}),
+ speed:CDAB({t:'Скорость грузовика и автобуса',sc:[
+  {k:'title',h:'Скорость грузовика и автобуса',s:'Часть вопросов с картинкой. Сначала смотрите, какая у вас машина и где вы едете.'},
+  {k:'signs',h:'Грузовик больше 3,5 т',items:[[60,'город'],[70,'вне города'],[90,'автомагистраль']]},
+  {k:'vs',h:'Автобус вне города',a:['Ремни, только сидячие места','90 км/ч'],b:['Без ремней или стоячие места','70 км/ч']},
+  {k:'signs',h:'Не быстрее',items:[[60,'люди в кузове, дети, спецгруз'],[50,'буксировка'],[20,'жилая зона и дворы']]},
+  {k:'list',h:'Знак минимальной скорости над полосой',items:['Нижняя граница — со знака','Верхняя — из правил для вашей машины','Грузовик за городом по такой полосе: 50–70 км/ч']},
+  {k:'rule',h:'Запоминалка',v:'Грузовик: 60 город, 70 трасса, 90 магистраль. Люди в кузове — 60. Буксир — 50.'}]},
+ {t:'Скорость',sc:[
+  {k:'title',h:'Скорость',s:'Часть вопросов с картинкой. Сначала смотрите, где вы едете и есть ли прицеп.'},
+  {k:'signs',h:'Легковой, мотоцикл, грузовик до 3,5 т',items:[[60,'город'],[90,'вне города'],[110,'автомагистраль']]},
+  {k:'signs',h:'Легковой с прицепом',items:[[70,'вне города'],[90,'автомагистраль']]},
+  {k:'signs',h:'Не быстрее',items:[[50,'мопед и буксировка'],[20,'жилая зона и дворы']]},
+  {k:'list',h:'Знак минимальной скорости над полосой',items:['Нижняя граница — со знака','Верхняя — из правил','В городе 40–60 км/ч, за городом 50–90 км/ч']},
+  {k:'rule',h:'Запоминалка',v:'60 — город, 90 — трасса, 110 — магистраль. С прицепом 70 и 90. Мопед и буксир — 50.'}]}),
+ tow:CDAB({t:'Буксировка и перевозка людей',sc:[
+  {k:'title',h:'Буксировка и перевозка людей',s:'Вопросов мало, но в каждом есть исключение.'},
+  {k:'vs',h:'Длина сцепки',a:['Гибкая','4–6 м'],b:['Жёсткая','до 4 м']},
+  {k:'yesno',h:'Гололедица',yes:['Жёсткая сцепка','Частичная погрузка'],no:['Гибкая сцепка']},
+  {k:'list',h:'Буксировка',items:['Без рабочих тормозов и тяжелее половины вашей массы — на сцепке нельзя','В городе с буксиром — только правая полоса','Скорость — до 50 км/ч']},
+  {k:'list',h:'Люди',items:['В кузове — не больше 8, у водителя C или C1 от 3 лет','На грузовом прицепе — нельзя','В буксирующем автобусе — водитель с правами от 2 лет','В буксируемом автобусе на жёсткой сцепке — нельзя']},
+  {k:'list',h:'Организованная перевозка детей',items:['Немаршрутный автобус с ремнями','Знаки «Перевозка детей» и жёлтый или оранжевый маячок','Сопровождающие, людей не больше, чем мест']},
+  {k:'rule',h:'Запоминалка',v:'Гибкая 4–6, жёсткая до 4. Гололёд — без гибкой. 3 года — люди в кузове, 2 года — люди в буксирующем автобусе.'}]},
+ {t:'Буксировка, дети и пассажиры',sc:[
+  {k:'title',h:'Буксировка, дети и пассажиры',s:'Вопросов мало, но в каждом есть исключение.'},
+  {k:'vs',h:'Длина сцепки',a:['Гибкая','4–6 м'],b:['Жёсткая','до 4 м']},
+  {k:'yesno',h:'Гололедица',yes:['Жёсткая сцепка','Частичная погрузка'],no:['Гибкая сцепка']},
+  {k:'list',h:'Люди при буксировке',items:['В буксирующей легковой — можно','В буксируемой — только на гибкой или жёсткой сцепке','Без тормозов и тяжелее половины вашей массы — буксировать нельзя']},
+  {k:'list',h:'Мотоцикл на буксире',items:['Без коляски — нельзя','С коляской — если у водителя буксирующего права от 2 лет']},
+  {k:'vs',h:'Детское кресло',a:['До 7 лет','на любом месте'],b:['7–11 лет','на переднем сиденье'],s:'На заднем сиденье мотоцикла — только с 12 лет.'},
+  {k:'rule',h:'Запоминалка',v:'Кресло: до 7 лет — везде, 7–11 — спереди. Мотоцикл — с 12. Гибкая 4–6, жёсткая до 4.'}]}),
+ cat:CDAB({t:'Какая категория нужна',sc:[
+  {k:'title',h:'Какая категория нужна',s:'Массы и число мест путают чаще всего. Учите границы как числа.'},
+  {k:'vs',h:'Грузовые',a:['C1','3,5–7,5 т'],b:['C','больше 3,5 т'],s:'Прицеп до 750 кг можно с обеими.'},
+  {k:'vs',h:'Прицеп тяжелее 750 кг',a:['C1 с прицепом','C1E'],b:['C с прицепом','CE']},
+  {k:'vs',h:'Автобусы',a:['D1','9–16 мест'],b:['D','больше 8 мест'],s:'Считают места для сидения, кроме водителя.'},
+  {k:'vs',h:'Нужен стаж',a:['Люди в кузове','C или C1 от 3 лет'],b:['Люди в буксирующем автобусе','от 2 лет']},
+  {k:'big',v:'56 ч',h:'За рулём в неделю',s:'Грузовик больше 3,5 т и автобус — не больше 56 часов за календарную неделю.'},
+  {k:'big',v:'C',h:'Передать руль грузовика больше 7,5 т',s:'В своём присутствии — только человеку с категорией C.'},
+  {k:'rule',h:'Запоминалка',v:'C1 = 3,5–7,5 т. D1 = 9–16 мест. Буква E — прицеп тяжелее 750 кг. 3 года — кузов, 2 года — автобус на буксире.'}]},
+ {t:'Какая категория нужна',sc:[
+  {k:'title',h:'Какая категория нужна',s:'Что дают права категорий A и B и когда нужен стаж.'},
+  {k:'big',v:'3,5 т',h:'Категория B',s:'Разрешённая масса до 3,5 т и не больше 8 мест для сидения, кроме водителя.'},
+  {k:'vs',h:'Прицеп',a:['До 750 кг','хватает B'],b:['Тяжелее','нужна BE']},
+  {k:'list',h:'Права категории A дают ещё',items:['A1','B1 с мотоциклетной посадкой или рулём','M']},
+  {k:'vs',h:'Передать руль в своём присутствии',a:['Легковой','человеку с B'],b:['Мотоцикл до 125 см³','человеку с A или A1']},
+  {k:'big',v:'2 года',h:'Пассажир на мотоцикле',s:'Только у водителя с A или A1 от 2 лет. Буксировать мотоциклом с коляской — тоже от 2 лет.'},
+  {k:'rule',h:'Запоминалка',v:'B — 3,5 т и 8 мест. Прицеп до 750 кг — хватает B. Пассажир на мотоцикле — 2 года стажа.'}]}),
+ truck:{t:'Знаки и полосы для грузовика',sc:[
+  {k:'title',h:'Знаки и полосы для грузовика',s:'Вопросы, где ответ зависит от того, что вы за рулём грузовика.'},
+  {k:'vs',h:'Какая масса на знаке',a:['3.11 «Ограничение массы»','фактическая; у автопоезда — сумма'],b:['Табличка 8.11','разрешённая максимальная']},
+  {k:'big',v:'3.4',h:'«Движение грузовых автомобилей запрещено»',s:'Без цифры — для грузовых больше 3,5 т. Обслуживаете предприятие в зоне знака — проезжать можно.'},
+  {k:'list',h:'Габариты на знаках',items:['Высота, ширина, длина считаются вместе с грузом','Равно числу на знаке — проезжать можно']},
+  {k:'list',h:'Полосы',items:['Грузовик больше 2,5 т: крайняя левая при трёх и более полосах в одну сторону — только налево и разворот','Табличка с грузовиком касается грузовых больше 3,5 т','Направо — заранее займите крайнее правое положение']},
+  {k:'yesno',h:'Стоянка на краю тротуара',yes:['Легковые, мотоциклы, мопеды, велосипеды'],no:['Грузовик больше 3,5 т, если табличка не разрешает']},
+  {k:'rule',h:'Запоминалка',v:'Разрешённая максимальная масса — из документов. Фактическая — сколько весите сейчас. Знак 3.11 — фактическая.'}]},
+ moto:{t:'Мотоциклы и мопеды',sc:[
+  {k:'title',h:'Мотоциклы и мопеды',s:'Вопросы, где за рулём мотоцикла или мопеда — вы или сосед.'},
+  {k:'vs',h:'Знаки для мопеда',a:['3.5 «Мотоциклам запрещено»','мопеду можно'],b:['3.9 «Велосипедам запрещено»','мопеду нельзя']},
+  {k:'list',h:'Мопеду нельзя',items:['На автомагистраль и дорогу для автомобилей','На велодорожку и полосу для маршрутных ТС','Налево и разворот, если есть трамвай или больше одной полосы']},
+  {k:'list',h:'Где ехать мопеду',items:['У правого края в один ряд','По обочине, не мешая пешеходам','По полосе для велосипедистов']},
+  {k:'big',v:'50',u:'км/ч',h:'Мопед',s:'Не быстрее 50 км/ч, шлем застёгнут, хотя бы одна рука на руле.'},
+  {k:'list',h:'Мотоцикл',items:['Днём — ближний свет или противотуманная фара','Пассажир — если у водителя A или A1 от 2 лет','Ребёнок сзади — с 12 лет']},
+  {k:'steps',h:'Сигналы рукой',items:['Левая рука в сторону — налево','Левая рука согнута вверх — направо','Рука вверх — торможение']},
+  {k:'rule',h:'Запоминалка',v:'3.5 — мопеду можно, 3.9 — нельзя. Мопед — до 50 км/ч, только правый край.'}]}
+};
+/* ---------- уроки: плеер ---------- */
+const LKEY='pdd-'+LCAT+'-lessons';
+let LSEEN={};try{LSEEN=JSON.parse(localStorage.getItem(LKEY)||'{}')||{}}catch(e){}
+const markSeen=id=>{LSEEN[id]=1;try{localStorage.setItem(LKEY,JSON.stringify(LSEEN))}catch(e){}};
+const scText=s=>[s.h,s.s,s.v,s.u,...(s.items||[]).flat(),...(s.yes||[]),...(s.no||[]),...(s.a||[]),...(s.b||[]),...(s.marks||[]).flat()].filter(Boolean).join(' ');
+const scDur=s=>s.k==='title'?5:Math.min(12,Math.max(5,2.5+scText(s).length*0.05));
+const lDur=L=>L.sc.reduce((a,s)=>a+scDur(s),0);
+const mmss=sec=>{sec=Math.round(sec);return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')};
+const PLAY_SVG='<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';
+const PAUSE_SVG='<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></svg>';
+const PREV_SVG='<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 2.5h2v11H3zM14 2.5v11L6 8z" fill="currentColor"/></svg>';
+const NEXT_SVG='<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M11 2.5h2v11h-2zM2 2.5v11L10 8z" fill="currentColor"/></svg>';
+function sceneHTML(s){
+ const a=(i)=>` class="a" style="--i:${i}"`;
+ const cap=s.s?`<p class="a cap" style="--i:6">${esc(s.s)}</p>`:'';
+ if(s.k==='title')return `<div class="ls title"><span class="a eyebrow" style="--i:0">Урок</span><h2${a(1)}>${esc(s.h)}</h2><div class="a roadline" style="--i:2"></div><p class="a cap" style="--i:3">${esc(s.s)}</p></div>`;
+ if(s.k==='big')return `<div class="ls"><span class="a eyebrow" style="--i:0">${esc(s.h)}</span><div class="a bigv" style="--i:1">${esc(s.v)}${s.u?`<small>${esc(s.u)}</small>`:''}</div>${cap}</div>`;
+ if(s.k==='vs')return `<div class="ls"><span class="a eyebrow" style="--i:0">${esc(s.h)}</span><div class="vs"><div class="a vcol" style="--i:1"><span>${esc(s.a[0])}</span><b>${esc(s.a[1])}</b></div><div class="a vcol" style="--i:3"><span>${esc(s.b[0])}</span><b>${esc(s.b[1])}</b></div></div>${cap}</div>`;
+ if(s.k==='list'||s.k==='steps')return `<div class="ls"><h3 class="a" style="--i:0">${esc(s.h)}</h3><ol class="${s.k==='steps'?'steps':'bul'}">${s.items.map((x,j)=>`<li class="a" style="--i:${1+j*1.6}">${s.k==='steps'?`<span class="n">${j+1}</span>`:''}<span>${esc(x)}</span></li>`).join('')}</ol>${cap}</div>`;
+ if(s.k==='yesno')return `<div class="ls"><h3 class="a" style="--i:0">${esc(s.h)}</h3><div class="yn"><div class="a yes" style="--i:1"><b>Можно</b>${s.yes.map(x=>`<span>${esc(x)}</span>`).join('')}</div><div class="a no" style="--i:3"><b>Нельзя</b>${s.no.map(x=>`<span>${esc(x)}</span>`).join('')}</div></div>${cap}</div>`;
+ if(s.k==='scale'){const mx=Math.log10(Math.max(...s.marks.map(m=>m[0]))*1.15);
+  return `<div class="ls"><h3 class="a" style="--i:0">${esc(s.h)}</h3><div class="scale">${s.marks.map((m,j)=>`<div class="srow a" style="--i:${1+j*0.9}"><b>${m[0]}</b><i style="--w:${Math.max(6,Math.round(100*Math.log10(m[0]*1.15)/mx))}%"></i><span>${esc(m[1])}</span></div>`).join('')}</div>${cap}</div>`}
+ if(s.k==='signs')return `<div class="ls"><h3 class="a" style="--i:0">${esc(s.h)}</h3><div class="signs">${s.items.map((m,j)=>`<div class="sg a" style="--i:${1+j*1.4}"><span class="disc">${m[0]}</span><span>${esc(m[1])}</span></div>`).join('')}</div>${cap}</div>`;
+ if(s.k==='rule')return `<div class="ls"><span class="a eyebrow" style="--i:0">${esc(s.h)}</span><p class="a rulev" style="--i:1">${esc(s.v)}</p></div>`;
+ return '';
+}
+let LP=null;
+function openLesson(id){const L=LESSONS[id];if(!L)return;closeLesson(true);
+ const el=document.createElement('div');el.id='lp';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Урок: '+L.t);
+ el.innerHTML=`<div class="lp-top"><div class="lp-segs">${L.sc.map(()=>'<i><b></b></i>').join('')}</div><div class="lp-bar"><span class="lp-t">${esc(L.t)}</span><button class="lp-x" aria-label="Закрыть урок">✕</button></div></div>
+ <div class="lp-stage" aria-live="polite"></div>
+ <div class="lp-ctl"><button class="lp-prev" aria-label="Предыдущая сцена">${PREV_SVG}</button><button class="lp-pp" aria-label="Пауза">${PAUSE_SVG}</button><button class="lp-next" aria-label="Следующая сцена">${NEXT_SVG}</button></div>`;
+ document.body.appendChild(el);document.documentElement.classList.add('lp-open');
+ LP={id,L,i:0,el_:0,paused:false,last:performance.now(),end:false,el};
+ el.querySelector('.lp-x').onclick=()=>closeLesson();
+ el.querySelector('.lp-prev').onclick=()=>lpPrev();
+ el.querySelector('.lp-next').onclick=()=>lpNext();
+ el.querySelector('.lp-pp').onclick=()=>lpPause(!LP.paused);
+ el.querySelector('.lp-stage').onclick=e=>{if(!LP||LP.end||e.target.closest('button'))return;const r=e.currentTarget.getBoundingClientRect();(e.clientX-r.left)<r.width*0.3?lpPrev():lpNext()};
+ lpScene();LP.raf=requestAnimationFrame(lpTick);el.tabIndex=-1;el.focus({preventScroll:true});
+}
+function lpScene(){const s=LP.L.sc[LP.i];LP.el_=0;LP.dur=scDur(s);LP.el.querySelector('.lp-pp').disabled=false;LP.el.querySelector('.lp-next').disabled=false;
+ const st=LP.el.querySelector('.lp-stage');st.innerHTML=sceneHTML(s);st.classList.remove('go');void st.offsetWidth;st.classList.add('go');
+ LP.el.querySelectorAll('.lp-segs i').forEach((g,k)=>{g.className=k<LP.i?'done':k===LP.i?'cur':'';g.firstChild.style.width=k<LP.i?'100%':'0%'})}
+function lpTick(t){if(!LP)return;const dt=(t-LP.last)/1000;LP.last=t;
+ if(!LP.paused&&!LP.end&&!document.hidden){LP.el_+=dt;const seg=LP.el.querySelectorAll('.lp-segs i')[LP.i];if(seg)seg.firstChild.style.width=Math.min(100,100*LP.el_/LP.dur)+'%';if(LP.el_>=LP.dur)lpNext()}
+ LP.raf=requestAnimationFrame(lpTick)}
+function lpPause(p){if(!LP||LP.end)return;LP.paused=p;LP.el.classList.toggle('paused',p);const b=LP.el.querySelector('.lp-pp');b.innerHTML=p?PLAY_SVG:PAUSE_SVG;b.setAttribute('aria-label',p?'Продолжить':'Пауза')}
+function lpNext(){if(!LP)return;if(LP.end)return;if(LP.i<LP.L.sc.length-1){LP.i++;lpScene()}else lpEnd()}
+function lpPrev(){if(!LP)return;if(LP.end){LP.end=false;LP.el.classList.remove('ended');LP.i=LP.L.sc.length-1;lpScene();return}if(LP.el_>1.5||LP.i===0){lpScene()}else{LP.i--;lpScene()}}
+function lpEnd(){LP.end=true;markSeen(LP.id);LP.el.classList.add('ended');LP.el.querySelectorAll('.lp-segs i').forEach(g=>{g.className='done';g.firstChild.style.width='100%'});
+ const h=HARD.find(x=>x.id===LP.id),n=h?h.qs.length:0;
+ const st=LP.el.querySelector('.lp-stage');st.innerHTML=`<div class="ls end"><span class="a eyebrow" style="--i:0">Урок пройден</span><h2 class="a" style="--i:1">${esc(LP.L.t)}</h2><p class="a cap" style="--i:2">Закрепите сразу: решите вопросы по теме, пока всё свежо.</p>
+ <div class="a lp-acts" style="--i:3">${n?`<button class="btn" data-lq="${LP.id}">Решить ${n} ${plural(n,'вопрос','вопроса','вопросов')}</button>`:''}<button class="btn ghost" data-lr="1">Смотреть ещё раз</button><button class="btn ghost" data-lc="1">Закрыть</button></div></div>`;
+ st.classList.remove('go');void st.offsetWidth;st.classList.add('go');
+ const q=st.querySelector('[data-lq]');if(q)q.onclick=()=>{const x=HARD.find(o=>o.id===LP.id);closeLesson();startSess(x.t,x.qs)};
+ st.querySelector('[data-lr]').onclick=()=>{const id=LP.id;openLesson(id)};
+ st.querySelector('[data-lc]').onclick=()=>closeLesson();
+ const pp=LP.el.querySelector('.lp-pp');pp.disabled=true;LP.el.querySelector('.lp-next').disabled=true}
+function closeLesson(silent){if(!LP)return;cancelAnimationFrame(LP.raf);LP.el.remove();LP=null;document.documentElement.classList.remove('lp-open');if(!silent&&view==='hard')render()}
+document.addEventListener('keydown',e=>{if(!LP)return;
+ if(e.key==='Escape'){e.preventDefault();closeLesson()}
+ else if(e.key===' '){e.preventDefault();lpPause(!LP.paused)}
+ else if(e.key==='ArrowRight'){e.preventDefault();lpNext()}
+ else if(e.key==='ArrowLeft'){e.preventDefault();lpPrev()}
+ e.stopImmediatePropagation()},true);
+document.addEventListener('visibilitychange',()=>{if(LP)LP.last=performance.now()});
+function lessonsStripHTML(){const ids=HARD.map(h=>h.id).filter(id=>LESSONS[id]);
+ return `<section class="sec"><h3>Видеоуроки</h3><p class="muted">Около минуты на тему: числа и правила, на которых держатся вопросы. После урока — сразу вопросы по теме.</p>
+ <div class="lstrip">${ids.map(id=>{const L=LESSONS[id];return `<button class="ltile${LSEEN[id]?' seen':''}" data-lesson="${id}"><span class="lplay">${PLAY_SVG}</span><span class="lt">${esc(L.t)}</span><span class="lm mono">${mmss(lDur(L))} · ${LSEEN[id]?'просмотрен':L.sc.length+' сцен'}</span></button>`}).join('')}</div></section>`}
 /* ---------- приложение: установка и работа без интернета ---------- */
 const PACKS=8,IMGC='pdd-cd-img-1';
 let OFF={done:0,ok:'serviceWorker' in navigator&&'caches' in window,fail:false};
@@ -536,6 +802,7 @@ function bind(){const v=$('#view');fillImgs();bindXfer();
  if(SESS&&SESS.i+1<SESS.list.length)pack((Q[SESS.list[SESS.i+1]].t-1)/5|0);
  v.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{const d=DAYS[+b.dataset.day];if(d.s){const rest=d.s.filter(i=>!learned(i));startSess('День '+(+b.dataset.day+1)+'. '+d.t,rest.length?rest:d.s)}else location.hash='exam'});
  v.querySelectorAll('[data-rule]').forEach(b=>b.onclick=()=>{location.hash='rules';setTimeout(()=>{const el=document.getElementById('r-'+b.dataset.rule);if(el)el.scrollIntoView({block:'start'})},30)});
+ v.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>openLesson(b.dataset.lesson));
  v.querySelectorAll('[data-hq]').forEach(b=>b.onclick=()=>{const x=HARD.find(o=>o.id===b.dataset.hq);startSess(x.t,x.qs)});
  v.querySelectorAll('[data-hall]').forEach(b=>b.onclick=()=>startSess('Сложное вперемешку',shuffle(hardAll())));
  v.querySelectorAll('[data-hmist]').forEach(b=>b.onclick=()=>startSess('Сложное: ошибки',shuffle(hardAll().filter(isMistake))));
