@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#302e2b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Задачи">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Шахматные задачи</title>
+<style>
+:root{--bg:#302e2b;--panel:#262522;--panel2:#3c3a37;--text:#f2f1ef;--muted:#a7a6a2;--green:#81b64c;--green2:#a3d160;--red:#e0503b;--light:#ebecd0;--dark:#739552;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);min-height:100vh;min-height:100dvh}
+button{font:inherit;color:inherit;border:0;cursor:pointer;touch-action:manipulation}
+[hidden]{display:none!important}
+.top{display:flex;align-items:center;gap:8px;height:52px;padding:0 10px;max-width:1040px;margin:0 auto}
+.top h1{flex:1;font-size:18px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon{width:40px;height:40px;border-radius:8px;background:transparent;font-size:22px;display:flex;align-items:center;justify-content:center}
+.icon:active{background:var(--panel2)}
+main{max-width:1040px;margin:0 auto;padding:0 12px 24px}
+.screen{animation:fade .15s ease}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+/* --- меню --- */
+.rating-card{background:var(--panel);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.rating-card .big{font-size:34px;font-weight:800;line-height:1}
+.rating-card svg{flex:1;height:48px;min-width:0}
+.tiles{display:grid;gap:10px}
+.tile{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--panel);border-radius:12px;padding:16px;min-height:76px}
+.tile:active{background:var(--panel2)}
+.tile .ic{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.tile b{display:block;font-size:18px}
+.tile span.muted{font-size:14px}
+.tile.main{background:var(--green);color:#fff}
+.tile.main .muted{color:#eef7e4}
+.tile.main:active{background:#6e9c40}
+.foot{margin-top:18px;font-size:13px;color:var(--muted);line-height:1.5}
+.foot .box{background:var(--panel);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.foot b{color:var(--text)}
+
+/* --- кнопки --- */
+.btn{background:var(--green);color:#fff;border-radius:10px;padding:13px 16px;font-weight:700;font-size:16px;box-shadow:0 4px 0 #5d8a35;flex:1 1 0;min-width:0}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #5d8a35}
+.btn.sec{background:var(--panel2);box-shadow:0 4px 0 #2a2926;font-weight:600}
+.btn.sec:active{box-shadow:0 2px 0 #2a2926}
+.btn:disabled{opacity:.4;pointer-events:none}
+.row{display:flex;gap:8px}
+
+/* --- экран задачи --- */
+.play{display:flex;gap:20px;align-items:flex-start;justify-content:center}
+.board-col{width:min(100%,calc(100dvh - 300px),640px);min-width:min(100%,300px);flex:none}
+.side{flex:1;min-width:260px;max-width:360px;display:flex;flex-direction:column;gap:10px}
+@media (max-width:760px){.play{flex-direction:column;align-items:stretch;gap:10px}.board-col{width:100%;min-width:0;max-width:calc(100dvh - 250px);margin:0 auto}.side{max-width:none;min-width:0}#play{margin:0 -12px}.side{padding:0 12px}}
+.infobar{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 2px}
+.infobar .grow{flex:1}
+.pill{background:var(--panel);border-radius:8px;padding:6px 10px;font-weight:700;font-variant-numeric:tabular-nums}
+.delta{font-weight:800;font-variant-numeric:tabular-nums}
+.delta.up{color:var(--green2)}.delta.down{color:var(--red)}
+.status{display:flex;align-items:center;gap:12px;background:var(--panel);border-radius:12px;padding:14px;min-height:64px;font-size:17px;font-weight:600}
+.status .dot{width:26px;height:26px;border-radius:6px;flex:none;border:2px solid #000}
+.status .dot.w{background:#fff}.status .dot.b{background:#111;border-color:#666}
+.status.ok{background:#3a5a22}.status.bad{background:#6a2a22}.status.win{background:var(--green);color:#fff}
+.status .sub{display:block;font-size:14px;font-weight:400;opacity:.85}
+.meta{font-size:14px;color:var(--muted);background:var(--panel);border-radius:10px;padding:10px 14px}
+.meta b{color:var(--text)}
+.timer{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.timer.low{color:var(--red)}
+.strikes{font-size:22px;letter-spacing:2px;color:#555}
+.strikes .x{color:var(--red)}
+.score{font-size:28px;font-weight:800}
+
+/* --- доска --- */
+.board{position:relative;width:100%;aspect-ratio:1;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:4px;overflow:hidden}
+.sqs{position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr)}
+.sq{position:relative}
+.sq.l{background:var(--light)}.sq.d{background:var(--dark)}
+.sq.last.l{background:#f5f682}.sq.last.d{background:#b9ca43}
+.sq.sel.l{background:#f5f682}.sq.sel.d{background:#b9ca43}
+.sq.hint::before{content:"";position:absolute;inset:0;background:rgba(80,160,255,.55)}
+.sq.wrong::before{content:"";position:absolute;inset:0;background:rgba(224,80,59,.65)}
+.sq.good::before{content:"";position:absolute;inset:0;background:rgba(129,182,76,.6)}
+.sq.check::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,0,0,.9) 0,rgba(231,0,0,.55) 35%,rgba(169,0,0,0) 70%)}
+.sq.dot::after{content:"";position:absolute;left:36%;top:36%;width:28%;height:28%;border-radius:50%;background:rgba(0,0,0,.18)}
+.sq.ring::after{content:"";position:absolute;inset:0;border-radius:50%;border:clamp(4px,1.1vw,7px) solid rgba(0,0,0,.18)}
+.coord{position:absolute;font-size:clamp(9px,2.4vw,13px);font-weight:700;pointer-events:none}
+.coord.f{right:3px;bottom:1px}.coord.r{left:3px;top:1px}
+.sq.l .coord{color:var(--dark)}.sq.d .coord{color:var(--light)}
+.pcs{position:absolute;inset:0;pointer-events:none}
+.pc{position:absolute;width:12.5%;height:12.5%;background-size:100% 100%;will-change:transform}
+.pc.anim{transition:transform .2s ease}
+.pc.drag{z-index:5;transition:none;scale:1.15}
+.badge{position:absolute;width:5.2%;height:5.2%;border-radius:50%;z-index:6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:clamp(10px,2.6vw,16px);box-shadow:0 1px 3px rgba(0,0,0,.5);pointer-events:none}
+.badge.ok{background:var(--green)}.badge.bad{background:var(--red)}
+.promo{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:10;display:flex;align-items:center;justify-content:center}
+.promo div{background:#fff;border-radius:10px;display:flex;gap:4px;padding:6px}
+.promo button{width:min(18vw,80px);height:min(18vw,80px);background-size:90% 90%;background-position:center;background-repeat:no-repeat;border-radius:8px;background-color:#eee}
+
+/* --- списки --- */
+.seg{display:flex;background:var(--panel);border-radius:10px;padding:4px;gap:4px;margin-bottom:12px;overflow-x:auto}
+.seg button{flex:1 0 auto;background:transparent;border-radius:8px;padding:9px 8px;font-size:13px;white-space:nowrap;color:var(--muted)}
+.seg button.on{background:var(--panel2);color:var(--text);font-weight:700}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--panel);border-radius:10px;padding:12px 14px}
+.item:active{background:var(--panel2)}
+.item .t{flex:1;min-width:0}
+.item b{display:block;font-weight:600}
+.item .n{font-size:13px;color:var(--muted)}
+.bar{height:6px;background:#1b1a18;border-radius:3px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--green)}
+h2{font-size:17px;margin:20px 0 10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.card{background:var(--panel);border-radius:10px;padding:12px;text-align:center}
+.card b{display:block;font-size:24px}
+.card span{font-size:13px;color:var(--muted)}
+.rush-modes{display:grid;gap:10px}
+.results{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.results li button{width:100%;background:var(--panel);border-radius:8px;padding:10px;display:flex;justify-content:space-between;gap:6px}
+.results .okc{color:var(--green2);font-weight:800}.results .badc{color:var(--red);font-weight:800}
+textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;border-radius:8px;padding:8px;font:12px ui-monospace,monospace}
+.graph{width:100%;height:150px;background:var(--panel);border-radius:10px;display:block}
+
+.wK{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgdmlld0JveD0iMCAwIDQ1IDQ1Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMTEuNjNWNk0yMCA4aDUiLz48cGF0aCBmaWxsPSIjZmZmIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMjVzNC41LTcuNSAzLTEwLjVjMCAwLTEtMi41LTMtMi41cy0zIDIuNS0zIDIuNWMtMS41IDMgMyAxMC41IDMgMTAuNSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMS41IDM3YzUuNSAzLjUgMTUuNSAzLjUgMjEgMHYtN3M5LTQuNSA2LTEwLjVjLTQtNi41LTEzLjUtMy41LTE2IDRWMjd2LTMuNWMtMy41LTcuNS0xMy0xMC41LTE2LTQtMyA2IDUgMTAgNSAxMHoiLz48cGF0aCBkPSJNMTEuNSAzMGM1LjUtMyAxNS41LTMgMjEgMG0tMjEgMy41YzUuNS0zIDE1LjUtMyAyMSAwbS0yMSAzLjVjNS41LTMgMTUuNS0zIDIxIDAiLz48L2c+PC9zdmc+)}
+.wQ{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBkPSJNOCAxMmEyIDIgMCAxIDEtNCAwIDIgMiAwIDEgMSA0IDBtMTYuNS00LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTQxIDEyYTIgMiAwIDEgMS00IDAgMiAyIDAgMSAxIDQgME0xNiA4LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTMzIDlhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwIi8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzguNS0xLjUgMjEtMS41IDI3IDBsMi0xMi03IDExVjExbC01LjUgMTMuNS0zLTE1LTMgMTUtNS41LTE0VjI1TDcgMTR6Ii8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzAgMiAxLjUgMiAyLjUgNCAxIDEuNSAxIDEgLjUgMy41LTEuNSAxLTEuNSAyLjUtMS41IDIuNS0xLjUgMS41LjUgMi41LjUgMi41IDYuNSAxIDE2LjUgMSAyMyAwIDAgMCAxLjUtMSAwLTIuNSAwIDAgLjUtMS41LTEtMi41LS41LTIuNS0uNS0yIC41LTMuNSAxLTIgMi41LTIgMi41LTQtOC41LTEuNS0xOC41LTEuNS0yNyAweiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0xMS41IDMwYzMuNS0xIDE4LjUtMSAyMiAwTTEyIDMzLjVjNi0xIDE1LTEgMjEgMCIvPjwvZz48L3N2Zz4=)}
+.wR{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBzdHJva2UtbGluZWNhcD0iYnV0dCIgZD0iTTkgMzloMjd2LTNIOXptMy0zdi00aDIxdjR6bS0xLTIyVjloNHYyaDVWOWg1djJoNVY5aDR2NSIvPjxwYXRoIGQ9Im0zNCAxNC0zIDNIMTRsLTMtMyIvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMzEgMTd2MTIuNUgxNFYxNyIvPjxwYXRoIGQ9Im0zMSAyOS41IDEuNSAyLjVoLTIwbDEuNS0yLjUiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMTEgMTRoMjMiLz48L2c+PC9zdmc+)}
+.wB{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48ZyBmaWxsPSIjZmZmIiBzdHJva2UtbGluZWNhcD0iYnV0dCI+PHBhdGggZD0iTTkgMzZjMy4zOS0uOTcgMTAuMTEuNDMgMTMuNS0yIDMuMzkgMi40MyAxMC4xMSAxLjAzIDEzLjUgMiAwIDAgMS42NS41NCAzIDItLjY4Ljk3LTEuNjUuOTktMyAuNS0zLjM5LS45Ny0xMC4xMS40Ni0xMy41LTEtMy4zOSAxLjQ2LTEwLjExLjAzLTEzLjUgMS0xLjM1LjQ5LTIuMzIuNDctMy0uNSAxLjM1LTEuOTQgMy0yIDMtMnoiLz48cGF0aCBkPSJNMTUgMzJjMi41IDIuNSAxMi41IDIuNSAxNSAwIC41LTEuNSAwLTIgMC0yIDAtMi41LTIuNS00LTIuNS00IDUuNS0xLjUgNi0xMS41LTUtMTUuNS0xMSA0LTEwLjUgMTQtNSAxNS41IDAgMC0yLjUgMS41LTIuNSA0IDAgMC0uNS41IDAgMnoiLz48cGF0aCBkPSJNMjUgOGEyLjUgMi41IDAgMSAxLTUgMCAyLjUgMi41IDAgMSAxIDUgMHoiLz48L2c+PHBhdGggc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTE3LjUgMjZoMTBNMTUgMzBoMTVtLTcuNS0xNC41djVNMjAgMThoNSIvPjwvZz48L3N2Zz4=)}
+.wN{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjIgMTBjMTAuNSAxIDE2LjUgOCAxNiAyOUgxNWMwLTkgMTAtNi41IDgtMjEiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjQgMThjLjM4IDIuOTEtNS41NSA3LjM3LTggOS0zIDItMi44MiA0LjM0LTUgNC0xLjA0Mi0uOTQgMS40MS0zLjA0IDAtMy0xIDAgLjE5IDEuMjMtMSAyLTEgMC00LjAwMyAxLTQtNCAwLTIgNi0xMiA2LTEyczEuODktMS45IDItMy41Yy0uNzMtLjk5NC0uNS0yLS41LTMgMS0xIDMgMi41IDMgMi41aDJzLjc4LTEuOTkyIDIuNS0zYzEgMCAxIDMgMSAzIi8+PHBhdGggZmlsbD0iIzAwMCIgZD0iTTkuNSAyNS41YS41LjUgMCAxIDEtMSAwIC41LjUgMCAxIDEgMSAwbTUuNDMzLTkuNzVhLjUgMS41IDMwIDEgMS0uODY2LS41LjUgMS41IDMwIDEgMSAuODY2LjUiLz48L2c+PC9zdmc+)}
+.wP{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxwYXRoIGZpbGw9IiNmZmYiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIyLjUgOWMtMi4yMSAwLTQgMS43OS00IDQgMCAuODkuMjkgMS43MS43OCAyLjM4QzE3LjMzIDE2LjUgMTYgMTguNTkgMTYgMjFjMCAyLjAzLjk0IDMuODQgMi40MSA1LjAzLTMgMS4wNi03LjQxIDUuNTUtNy40MSAxMy40N2gyM2MwLTcuOTItNC40MS0xMi40MS03LjQxLTEzLjQ3IDEuNDctMS4xOSAyLjQxLTMgMi40MS01LjAzIDAtMi40MS0xLjMzLTQuNS0zLjI4LTUuNjIuNDktLjY3Ljc4LTEuNDkuNzgtMi4zOCAwLTIuMjEtMS43OS00LTQtNHoiLz48L3N2Zz4=)}
+.bK{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgdmlld0JveD0iMCAwIDQ1IDQ1Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMTEuNlY2Ii8+PHBhdGggZmlsbD0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIGQ9Ik0yMi41IDI1czQuNS03LjUgMy0xMC41YzAgMC0xLTIuNS0zLTIuNXMtMyAyLjUtMyAyLjVjLTEuNSAzIDMgMTAuNSAzIDEwLjUiLz48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTEuNSAzN2EyMi4zIDIyLjMgMCAwIDAgMjEgMHYtN3M5LTQuNSA2LTEwLjVjLTQtNi41LTEzLjUtMy41LTE2IDRWMjd2LTMuNWMtMy41LTcuNS0xMy0xMC41LTE2LTQtMyA2IDUgMTAgNSAxMHoiLz48cGF0aCBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMjAgOGg1Ii8+PHBhdGggc3Ryb2tlPSIjZWNlY2VjIiBkPSJNMzIgMjkuNXM4LjUtNCA2LTkuN0MzNC4xIDE0IDI1IDE4IDIyLjUgMjQuNnYyLjEtMi4xQzIwIDE4IDkuOSAxNCA3IDE5LjljLTIuNSA1LjYgNC44IDkgNC44IDkiLz48cGF0aCBzdHJva2U9IiNlY2VjZWMiIGQ9Ik0xMS41IDMwYzUuNS0zIDE1LjUtMyAyMSAwbS0yMSAzLjVjNS41LTMgMTUuNS0zIDIxIDBtLTIxIDMuNWM1LjUtMyAxNS41LTMgMjEgMCIvPjwvZz48L3N2Zz4=)}
+.bQ{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48ZyBzdHJva2U9Im5vbmUiPjxjaXJjbGUgY3g9IjYiIGN5PSIxMiIgcj0iMi43NSIvPjxjaXJjbGUgY3g9IjE0IiBjeT0iOSIgcj0iMi43NSIvPjxjaXJjbGUgY3g9IjIyLjUiIGN5PSI4IiByPSIyLjc1Ii8+PGNpcmNsZSBjeD0iMzEiIGN5PSI5IiByPSIyLjc1Ii8+PGNpcmNsZSBjeD0iMzkiIGN5PSIxMiIgcj0iMi43NSIvPjwvZz48cGF0aCBzdHJva2UtbGluZWNhcD0iYnV0dCIgZD0iTTkgMjZjOC41LTEuNSAyMS0xLjUgMjcgMGwyLjUtMTIuNUwzMSAyNWwtLjMtMTQuMS01LjIgMTMuNi0zLTE0LjUtMyAxNC41LTUuMi0xMy42TDE0IDI1IDYuNSAxMy41eiIvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJidXR0IiBkPSJNOSAyNmMwIDIgMS41IDIgMi41IDQgMSAxLjUgMSAxIC41IDMuNS0xLjUgMS0xLjUgMi41LTEuNSAyLjUtMS41IDEuNS41IDIuNS41IDIuNSA2LjUgMSAxNi41IDEgMjMgMCAwIDAgMS41LTEgMC0yLjUgMCAwIC41LTEuNS0xLTIuNS0uNS0yLjUtLjUtMiAuNS0zLjUgMS0yIDIuNS0yIDIuNS00LTguNS0xLjUtMTguNS0xLjUtMjcgMHoiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgZD0iTTExIDM4LjVhMzUgMzUgMSAwIDAgMjMgMCIvPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2VjZWNlYyIgZD0iTTExIDI5YTM1IDM1IDEgMCAxIDIzIDBtLTIxLjUgMi41aDIwbS0yMSAzYTM1IDM1IDEgMCAwIDIyIDBtLTIzIDNhMzUgMzUgMSAwIDAgMjQgMCIvPjwvZz48L3N2Zz4=)}
+.bR{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBzdHJva2UtbGluZWNhcD0iYnV0dCIgZD0iTTkgMzloMjd2LTNIOXptMy41LTcgMS41LTIuNWgxN2wxLjUgMi41em0tLjUgNHYtNGgyMXY0eiIvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMTQgMjkuNXYtMTNoMTd2MTN6Ii8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik0xNCAxNi41IDExIDE0aDIzbC0zIDIuNXpNMTEgMTRWOWg0djJoNVY5aDV2Mmg1VjloNHY1eiIvPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2VjZWNlYyIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLXdpZHRoPSIxIiBkPSJNMTIgMzUuNWgyMW0tMjAtNGgxOW0tMTgtMmgxN20tMTctMTNoMTdNMTEgMTRoMjMiLz48L2c+PC9zdmc+)}
+.bB{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48ZyBmaWxsPSIjMDAwIiBzdHJva2UtbGluZWNhcD0iYnV0dCI+PHBhdGggZD0iTTkgMzZjMy40LTEgMTAuMS40IDEzLjUtMiAzLjQgMi40IDEwLjEgMSAxMy41IDIgMCAwIDEuNi41IDMgMi0uNyAxLTEuNiAxLTMgLjUtMy40LTEtMTAuMS41LTEzLjUtMS0zLjQgMS41LTEwLjEgMC0xMy41IDEtMS40LjUtMi4zLjUtMy0uNSAxLjQtMiAzLTIgMy0yeiIvPjxwYXRoIGQ9Ik0xNSAzMmMyLjUgMi41IDEyLjUgMi41IDE1IDAgLjUtMS41IDAtMiAwLTIgMC0yLjUtMi41LTQtMi41LTQgNS41LTEuNSA2LTExLjUtNS0xNS41LTExIDQtMTAuNSAxNC01IDE1LjUgMCAwLTIuNSAxLjUtMi41IDQgMCAwLS41LjUgMCAyeiIvPjxwYXRoIGQ9Ik0yNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAxIDEgNSAweiIvPjwvZz48cGF0aCBzdHJva2U9IiNlY2VjZWMiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIGQ9Ik0xNy41IDI2aDEwTTE1IDMwaDE1bS03LjUtMTQuNXY1TTIwIDE4aDUiLz48L2c+PC9zdmc+)}
+.bN{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMjIgMTBjMTAuNSAxIDE2LjUgOCAxNiAyOUgxNWMwLTkgMTAtNi41IDgtMjEiLz48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMjQgMThjLjM4IDIuOTEtNS41NSA3LjM3LTggOS0zIDItMi44MiA0LjM0LTUgNC0xLjA0LS45NCAxLjQxLTMuMDQgMC0zLTEgMCAuMTkgMS4yMy0xIDItMSAwLTQgMS00LTQgMC0yIDYtMTIgNi0xMnMxLjg5LTEuOSAyLTMuNWMtLjczLTEtLjUtMi0uNS0zIDEtMSAzIDIuNSAzIDIuNWgycy43OC0yIDIuNS0zYzEgMCAxIDMgMSAzIi8+PHBhdGggZmlsbD0iI2VjZWNlYyIgc3Ryb2tlPSIjZWNlY2VjIiBkPSJNOS41IDI1LjVhLjUuNSAwIDEgMS0xIDAgLjUuNSAwIDEgMSAxIDBtNS40My05Ljc1YS41IDEuNSAzMCAxIDEtLjg2LS41LjUgMS41IDMwIDEgMSAuODYuNSIvPjxwYXRoIGZpbGw9IiNlY2VjZWMiIHN0cm9rZT0ibm9uZSIgZD0ibTI0LjU1IDEwLjQtLjQ1IDEuNDUuNS4xNWMzLjE1IDEgNS42NSAyLjQ5IDcuOSA2Ljc1UzM1Ljc1IDI5LjA2IDM1LjI1IDM5bC0uMDUuNWgyLjI1bC4wNS0uNWMuNS0xMC4wNi0uODgtMTYuODUtMy4yNS0yMS4zNHMtNS43OS02LjY0LTkuMTktNy4xNnoiLz48L2c+PC9zdmc+)}
+.bP{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxwYXRoIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTIyLjUgOWE0IDQgMCAwIDAtMy4yMiA2LjM4IDYuNDggNi40OCAwIDAgMC0uODcgMTAuNjVjLTMgMS4wNi03LjQxIDUuNTUtNy40MSAxMy40N2gyM2MwLTcuOTItNC40MS0xMi40MS03LjQxLTEzLjQ3YTYuNDYgNi40NiAwIDAgMC0uODctMTAuNjVBNC4wMSA0LjAxIDAgMCAwIDIyLjUgOXoiLz48L3N2Zz4=)}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="icon" id="back" aria-label="Назад" style="visibility:hidden">‹</button>
+  <h1 id="title">Шахматные задачи</h1>
+  <button class="icon" id="mute" aria-label="Звук">🔊</button>
+</header>
+<main>
+  <section id="home" class="screen"><p class="muted">Загружаю задачи…</p></section>
+  <section id="themes" class="screen" hidden></section>
+  <section id="rushMenu" class="screen" hidden></section>
+  <section id="rushEnd" class="screen" hidden></section>
+  <section id="stats" class="screen" hidden></section>
+  <section id="play" class="screen" hidden>
+    <div class="play">
+      <div class="board-col">
+        <div class="board" id="board">
+          <div class="sqs" id="sqs"></div>
+          <div class="pcs" id="pcs"></div>
+          <div class="promo" id="promo" hidden></div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="infobar" id="infobar"></div>
+        <div class="status" id="status" role="status"></div>
+        <div class="row" id="btns"></div>
+        <div class="meta" id="meta" hidden></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+/* ===== Шахматные правила: все ходы, включая рокировку, взятие на проходе и превращение ===== */
+const Chess = (() => {
+  const N_OFF = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+  const K_OFF = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+  const DIAG = [[-1,-1],[-1,1],[1,-1],[1,1]];
+  const ORTH = [[-1,0],[1,0],[0,-1],[0,1]];
+  const inB = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
+  const colorOf = p => !p ? null : (p === p.toUpperCase() ? 'w' : 'b');
+  const sqName = s => String.fromCharCode(97 + (s & 7)) + (8 - (s >> 3));
+  const sqIndex = n => (8 - +n[1]) * 8 + (n.charCodeAt(0) - 97);
+  const other = c => c === 'w' ? 'b' : 'w';
+
+  function parseFEN(fen) {
+    const [pos, turn, castle = '-', ep = '-'] = fen.trim().split(/\s+/);
+    const b = new Array(64).fill('');
+    let r = 0, c = 0;
+    for (const ch of pos) {
+      if (ch === '/') { r++; c = 0; }
+      else if (/\d/.test(ch)) c += +ch;
+      else { b[r * 8 + c] = ch; c++; }
+    }
+    return { b, turn, castle: castle === '-' ? '' : castle, ep: ep === '-' ? -1 : sqIndex(ep) };
+  }
+
+  function attacked(b, sq, by) {
+    const r = sq >> 3, c = sq & 7, w = by === 'w';
+    const P = w ? 'P' : 'p', N = w ? 'N' : 'n', K = w ? 'K' : 'k', B = w ? 'B' : 'b', R = w ? 'R' : 'r', Q = w ? 'Q' : 'q';
+    const pr = w ? r + 1 : r - 1;
+    for (const dc of [-1, 1]) if (inB(pr, c + dc) && b[pr * 8 + c + dc] === P) return true;
+    for (const [dr, dc] of N_OFF) { const nr = r + dr, nc = c + dc; if (inB(nr, nc) && b[nr * 8 + nc] === N) return true; }
+    for (const [dr, dc] of K_OFF) { const nr = r + dr, nc = c + dc; if (inB(nr, nc) && b[nr * 8 + nc] === K) return true; }
+    for (const [dirs, a] of [[DIAG, B], [ORTH, R]]) {
+      for (const [dr, dc] of dirs) {
+        let nr = r + dr, nc = c + dc;
+        while (inB(nr, nc)) {
+          const t = b[nr * 8 + nc];
+          if (t) { if (t === a || t === Q) return true; break; }
+          nr += dr; nc += dc;
+        }
+      }
+    }
+    return false;
+  }
+
+  const kingSq = (b, color) => b.indexOf(color === 'w' ? 'K' : 'k');
+  const inCheck = (st, color = st.turn) => attacked(st.b, kingSq(st.b, color), other(color));
+
+  function pseudo(st, s) {
+    const b = st.b, p = b[s], col = colorOf(p), t = p.toLowerCase(), r = s >> 3, c = s & 7, out = [];
+    const add = (to, extra) => out.push(Object.assign({ from: s, to, promo: null }, extra));
+    if (t === 'p') {
+      const dir = col === 'w' ? -1 : 1, start = col === 'w' ? 6 : 1, nr = r + dir;
+      if (!inB(nr, 0)) return out;
+      const last = nr === 0 || nr === 7;
+      const push = (to, extra) => {
+        if (last) for (const pr of ['q', 'r', 'b', 'n']) add(to, Object.assign({ promo: pr }, extra));
+        else add(to, extra);
+      };
+      if (!b[nr * 8 + c]) {
+        push(nr * 8 + c);
+        if (r === start && !b[(r + 2 * dir) * 8 + c]) add((r + 2 * dir) * 8 + c);
+      }
+      for (const dc of [-1, 1]) {
+        const cc = c + dc;
+        if (cc < 0 || cc > 7) continue;
+        const to = nr * 8 + cc, tg = b[to];
+        if (tg && colorOf(tg) !== col) push(to, { capture: true });
+        else if (to === st.ep) add(to, { ep: true, capture: true });
+      }
+    } else if (t === 'n' || t === 'k') {
+      for (const [dr, dc] of (t === 'n' ? N_OFF : K_OFF)) {
+        const nr = r + dr, nc = c + dc;
+        if (!inB(nr, nc)) continue;
+        const tg = b[nr * 8 + nc];
+        if (!tg) add(nr * 8 + nc);
+        else if (colorOf(tg) !== col) add(nr * 8 + nc, { capture: true });
+      }
+      if (t === 'k') {
+        const home = col === 'w' ? 60 : 4, opp = other(col);
+        if (s === home && !attacked(b, s, opp)) {
+          const [ks, qs] = col === 'w' ? ['K', 'Q'] : ['k', 'q'];
+          const R = col === 'w' ? 'R' : 'r';
+          if (st.castle.includes(ks) && b[home + 3] === R && !b[home + 1] && !b[home + 2] &&
+              !attacked(b, home + 1, opp) && !attacked(b, home + 2, opp)) add(home + 2, { castle: 'k' });
+          if (st.castle.includes(qs) && b[home - 4] === R && !b[home - 1] && !b[home - 2] && !b[home - 3] &&
+              !attacked(b, home - 1, opp) && !attacked(b, home - 2, opp)) add(home - 2, { castle: 'q' });
+        }
+      }
+    } else {
+      const dirs = t === 'b' ? DIAG : t === 'r' ? ORTH : DIAG.concat(ORTH);
+      for (const [dr, dc] of dirs) {
+        let nr = r + dr, nc = c + dc;
+        while (inB(nr, nc)) {
+          const tg = b[nr * 8 + nc];
+          if (!tg) add(nr * 8 + nc);
+          else { if (colorOf(tg) !== col) add(nr * 8 + nc, { capture: true }); break; }
+          nr += dr; nc += dc;
+        }
+      }
+    }
+    return out;
+  }
+
+  function make(st, m) {
+    const b = st.b.slice();
+    let p = b[m.from];
+    const col = colorOf(p), t = p.toLowerCase();
+    if (m.promo) p = col === 'w' ? m.promo.toUpperCase() : m.promo;
+    b[m.to] = p;
+    b[m.from] = '';
+    if (m.ep) b[m.to + (col === 'w' ? 8 : -8)] = '';
+    if (m.castle === 'k') { b[m.to - 1] = b[m.to + 1]; b[m.to + 1] = ''; }
+    if (m.castle === 'q') { b[m.to + 1] = b[m.to - 2]; b[m.to - 2] = ''; }
+    let castle = st.castle;
+    const strip = chars => { for (const ch of chars) castle = castle.replace(ch, ''); };
+    if (t === 'k') strip(col === 'w' ? 'KQ' : 'kq');
+    for (const sq of [m.from, m.to]) {
+      if (sq === 63) strip('K'); if (sq === 56) strip('Q');
+      if (sq === 7) strip('k'); if (sq === 0) strip('q');
+    }
+    const ep = t === 'p' && Math.abs(m.to - m.from) === 16 ? (m.to + m.from) / 2 : -1;
+    return { b, turn: other(st.turn), castle, ep };
+  }
+
+  function legal(st) {
+    const res = [];
+    for (let s = 0; s < 64; s++) {
+      const p = st.b[s];
+      if (!p || colorOf(p) !== st.turn) continue;
+      for (const m of pseudo(st, s)) {
+        const nb = make(st, m);
+        if (!attacked(nb.b, kingSq(nb.b, st.turn), other(st.turn))) res.push(m);
+      }
+    }
+    return res;
+  }
+
+  const uci = m => sqName(m.from) + sqName(m.to) + (m.promo || '');
+  const findUci = (st, u) => legal(st).find(m => uci(m) === u) || null;
+  const isMate = st => inCheck(st) && legal(st).length === 0;
+
+  return { parseFEN, legal, make, inCheck, isMate, uci, findUci, colorOf, sqName, sqIndex, kingSq };
+})();
+if (typeof module !== 'undefined') module.exports = Chess;
+
+/* ===== Шахматные задачи: приложение ===== */
+const $ = s => document.querySelector(s);
+const C = Chess;
+
+const THEMES = [
+  ['mateIn1','Мат в 1 ход'],['mateIn2','Мат в 2 хода'],['mateIn3','Мат в 3 хода'],['mateIn4','Мат в 4 хода'],
+  ['fork','Вилка'],['pin','Связка'],['skewer','Линейный удар'],['discoveredAttack','Вскрытое нападение'],
+  ['discoveredCheck','Вскрытый шах'],['doubleCheck','Двойной шах'],['backRankMate','Мат по последней горизонтали'],
+  ['smotheredMate','Спёртый мат'],['sacrifice','Жертва'],['attraction','Завлечение'],['deflection','Отвлечение'],
+  ['hangingPiece','Незащищённая фигура'],['trappedPiece','Ловля фигуры'],['capturingDefender','Уничтожение защиты'],
+  ['clearance','Освобождение линии'],['interference','Перекрытие'],['intermezzo','Промежуточный ход'],
+  ['xRayAttack','Рентген'],['quietMove','Тихий ход'],['defensiveMove','Защита'],['zugzwang','Цугцванг'],
+  ['advancedPawn','Продвинутая пешка'],['promotion','Превращение пешки'],['kingsideAttack','Атака на короля'],
+  ['queensideAttack','Атака на ферзевом фланге'],['exposedKing','Открытый король'],['attackingF2F7','Атака на f2/f7'],
+  ['opening','Дебют'],['middlegame','Миттельшпиль'],['endgame','Эндшпиль'],['rookEndgame','Ладейный эндшпиль'],
+  ['pawnEndgame','Пешечный эндшпиль'],['queenEndgame','Ферзевый эндшпиль'],['bishopEndgame','Слоновый эндшпиль'],
+  ['knightEndgame','Коневой эндшпиль']
+];
+const EXTRA_NAMES = { mate:'Мат', mateIn5:'Мат в 5 ходов', operaMate:'Мат Оперы', pillsburysMate:'Мат Пильсбери',
+  epauletteMate:'Эполетный мат', anastasiaMate:'Мат Анастасии', arabianMate:'Арабский мат', hookMate:'Мат «крюк»',
+  bodenMate:'Мат Бодена', morphysMate:'Мат Морфи', cornerMate:'Мат в углу', killBoxMate:'Мат «коробка»',
+  swallowstailMate:'Мат «ласточкин хвост»', dovetailMate:'Мат «голубиный хвост»', doubleBishopMate:'Мат двумя слонами',
+  triangleMate:'Мат «треугольник»', vukovicMate:'Мат Вуковича', blindSwineMate:'Мат «слепые свиньи»',
+  balestraMate:'Мат Балестры', enPassant:'Взятие на проходе', queenRookEndgame:'Ферзь и ладья в эндшпиле' };
+const TNAME = Object.assign({}, EXTRA_NAMES, Object.fromEntries(THEMES));
+const RUSH_MODES = [
+  { id:'r3', name:'3 минуты', sub:'Решите как можно больше за 3 минуты', time:180 },
+  { id:'r5', name:'5 минут', sub:'Решите как можно больше за 5 минут', time:300 },
+  { id:'surv', name:'Выживание', sub:'Без таймера, до трёх ошибок', time:0 }
+];
+
+/* ---------- хранилище ---------- */
+const KEY = 'chess-puzzles-v1';
+const fresh = () => ({ rating:1200, best:1200, hist:[1200], rated:0, ratedWon:0, attempts:0, firstTry:0,
+  seen:{}, theme:{}, rush:{}, muted:false, diff:'mine' });
+let S = fresh();
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+/* ---------- звук ---------- */
+let AC = null;
+function audio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (AC && AC.state === 'suspended') AC.resume(); return AC; }
+function tone(f, d, type = 'sine', v = .15, at = 0) {
+  if (S.muted) return; const a = audio(); if (!a) return;
+  const o = a.createOscillator(), g = a.createGain(), t = a.currentTime + at;
+  o.type = type; o.frequency.value = f; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t + d + .02);
+}
+const SND = {
+  move: () => tone(420, .07, 'triangle', .22),
+  capture: () => { tone(260, .09, 'square', .07); tone(180, .08, 'triangle', .2, .01); },
+  wrong: () => { tone(220, .14, 'sawtooth', .07); tone(150, .2, 'sawtooth', .07, .12); },
+  win: () => { tone(660, .1, 'sine', .18); tone(880, .1, 'sine', .18, .1); tone(1175, .18, 'sine', .16, .2); },
+  end: () => { tone(523, .15, 'sine', .18); tone(392, .15, 'sine', .18, .15); tone(262, .3, 'sine', .18, .3); }
+};
+
+/* ---------- задачи ---------- */
+let PZ = [];   // {id, fen, moves[], rating, themes[]}
+let BYID = {};
+async function loadPuzzles() {
+  const r = await fetch('puzzles.json');
+  const raw = await r.json();
+  PZ = raw.map(a => ({ id:a[0], fen:a[1], moves:a[2].split(' '), rating:a[3], themes:a[4] ? a[4].split(' ') : [] }));
+  BYID = Object.fromEntries(PZ.map(p => [p.id, p]));
+}
+function pickNear(target, pool, avoid) {
+  for (let w = 60; w <= 3000; w *= 2) {
+    const c = pool.filter(p => Math.abs(p.rating - target) <= w && !avoid(p));
+    if (c.length) return c[Math.floor(Math.random() * c.length)];
+  }
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+/* ---------- экраны ---------- */
+let screen = 'home', backTo = null;
+const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats'];
+function show(name, title, back) {
+  screen = name; backTo = back || null;
+  for (const s of SCREENS) $('#' + s).hidden = s !== name;
+  $('#title').textContent = title;
+  $('#back').style.visibility = back ? 'visible' : 'hidden';
+  window.scrollTo(0, 0);
+}
+$('#back').onclick = () => { if (backTo) backTo(); };
+function setMute() { $('#mute').textContent = S.muted ? '🔇' : '🔊'; $('#mute').title = S.muted ? 'Включить звук' : 'Выключить звук'; }
+$('#mute').onclick = () => { S.muted = !S.muted; save(); setMute(); };
+
+function spark(hist, w = 200, h = 48) {
+  const d = hist.slice(-60); if (d.length < 2) return '';
+  const mn = Math.min(...d) - 10, mx = Math.max(...d) + 10;
+  const pts = d.map((v, i) => `${(i / (d.length - 1) * w).toFixed(1)},${(h - (v - mn) / (mx - mn) * h).toFixed(1)}`).join(' ');
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="#81b64c" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+function goHome() {
+  stopRush();
+  const bestRush = Math.max(0, ...Object.values(S.rush));
+  $('#home').innerHTML = `
+  <div class="rating-card"><div><div class="muted small">Рейтинг задач</div><div class="big">${S.rating}</div></div>${spark(S.hist)}</div>
+  <div class="tiles">
+    <button class="tile main" id="tRated"><span class="ic" style="background:#5d8a35">🧩</span><span><b>Решать задачи</b><span class="muted">Подбор по вашему рейтингу · ${PZ.length} задач</span></span></button>
+    <button class="tile" id="tRush"><span class="ic" style="background:#e3a23b">⚡</span><span><b>Puzzle Rush</b><span class="muted">На время, 3 ошибки — конец${bestRush ? ' · рекорд ' + bestRush : ''}</span></span></button>
+    <button class="tile" id="tThemes"><span class="ic" style="background:#4a7fd1">🎯</span><span><b>Темы</b><span class="muted">Вилки, связки, маты в 2–3 хода и другое</span></span></button>
+    <button class="tile" id="tStats"><span class="ic" style="background:#8a5bc9">📈</span><span><b>Статистика</b><span class="muted">Решено ${S.attempts} · с первой попытки ${S.attempts ? Math.round(S.firstTry / S.attempts * 100) : 0}%</span></span></button>
+  </div>
+  <div class="foot">${appFoot()}</div>`;
+  $('#tRated').onclick = () => startRated();
+  $('#tRush').onclick = () => goRushMenu();
+  $('#tThemes').onclick = () => goThemes();
+  $('#tStats').onclick = () => goStats();
+  show('home', 'Шахматные задачи', null);
+}
+
+/* ---------- темы ---------- */
+const DIFFS = [['mine','Мой уровень'],['easy','Лёгкие'],['mid','Средние'],['hard','Сложные'],['any','Любые']];
+function diffOk(p) {
+  switch (S.diff) {
+    case 'easy': return p.rating < 1200;
+    case 'mid': return p.rating >= 1200 && p.rating < 1800;
+    case 'hard': return p.rating >= 1800;
+    default: return true;
+  }
+}
+function goThemes() {
+  const counts = {};
+  for (const p of PZ) if (diffOk(p)) for (const t of p.themes) counts[t] = (counts[t] || 0) + 1;
+  const items = THEMES.filter(([id]) => (counts[id] || 0) >= 5).map(([id, name]) => {
+    const st = S.theme[id], pct = st && st[0] ? Math.round(st[1] / st[0] * 100) : null;
+    return `<button class="item" data-t="${id}"><span class="t"><b>${name}</b><span class="n">${counts[id]} задач${st ? ' · решено ' + st[0] + ' · ' + pct + '% с первой' : ''}</span>${st ? `<div class="bar"><i style="width:${pct}%"></i></div>` : ''}</span><span class="muted">›</span></button>`;
+  }).join('');
+  $('#themes').innerHTML = `<div class="seg">${DIFFS.map(([id, n]) => `<button data-d="${id}" class="${S.diff === id ? 'on' : ''}">${n}</button>`).join('')}</div>
+    <div class="list">${items}</div>`;
+  $('#themes').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { S.diff = b.dataset.d; save(); goThemes(); });
+  $('#themes').querySelectorAll('[data-t]').forEach(b => b.onclick = () => startTheme(b.dataset.t));
+  show('themes', 'Темы', goHome);
+}
+
+/* ---------- состояние задачи ---------- */
+let G = null;            // текущая задача
+let MODE = null;         // {kind:'rated'|'theme'|'rush'|'review', theme, ...}
+const boardEl = $('#board'), sqsEl = $('#sqs'), pcsEl = $('#pcs');
+let flip = false, sqEls = [];
+
+(function buildSquares() {
+  for (let i = 0; i < 64; i++) { const d = document.createElement('div'); sqsEl.appendChild(d); sqEls.push(d); }
+})();
+
+function viewIdx(s) { return flip ? 63 - s : s; }
+function paintSquares() {
+  for (let vi = 0; vi < 64; vi++) {
+    const s = flip ? 63 - vi : vi, r = s >> 3, c = s & 7, el = sqEls[vi];
+    let cls = 'sq ' + ((r + c) % 2 ? 'd' : 'l');
+    const h = G.hl;
+    if (G.last && G.last.includes(s)) cls += ' last';
+    if (G.sel === s) cls += ' sel';
+    if (h.hint.includes(s)) cls += ' hint';
+    if (h.wrong === s) cls += ' wrong';
+    if (h.good === s) cls += ' good';
+    if (h.check === s) cls += ' check';
+    if (G.targets.includes(s)) cls += G.st.b[s] || (G.epT === s) ? ' ring' : ' dot';
+    el.className = cls;
+    el.innerHTML = '';
+    const vr = vi >> 3, vc = vi & 7;
+    if (vc === 0) el.insertAdjacentHTML('beforeend', `<span class="coord r">${8 - r}</span>`);
+    if (vr === 7) el.insertAdjacentHTML('beforeend', `<span class="coord f">${String.fromCharCode(97 + c)}</span>`);
+  }
+}
+function placeEl(el, s) { const vi = viewIdx(s); el.style.left = (vi & 7) * 12.5 + '%'; el.style.top = (vi >> 3) * 12.5 + '%'; }
+function drawPieces(anims) {
+  pcsEl.innerHTML = '';
+  const moving = [];
+  for (let s = 0; s < 64; s++) {
+    const p = G.st.b[s]; if (!p) continue;
+    const el = document.createElement('div');
+    el.className = 'pc ' + (C.colorOf(p) === 'w' ? 'w' : 'b') + p.toUpperCase();
+    el.dataset.s = s;
+    placeEl(el, s);
+    const a = anims && anims.find(x => x[1] === s);
+    if (a) {
+      const f = viewIdx(a[0]), t = viewIdx(s);
+      el.style.transform = `translate(${((f & 7) - (t & 7)) * 100}%,${((f >> 3) - (t >> 3)) * 100}%)`;
+      moving.push(el);
+    }
+    pcsEl.appendChild(el);
+  }
+  if (moving.length) requestAnimationFrame(() => requestAnimationFrame(() => moving.forEach(el => { el.classList.add('anim'); el.style.transform = ''; })));
+  drawBadge();
+}
+function drawBadge() {
+  pcsEl.querySelectorAll('.badge').forEach(b => b.remove());
+  if (!G.badge) return;
+  const [s, kind] = G.badge, vi = viewIdx(s), b = document.createElement('div');
+  b.className = 'badge ' + kind; b.textContent = kind === 'ok' ? '✓' : '✗';
+  b.style.left = ((vi & 7) * 12.5 + 12.5 - 5.6) + '%'; b.style.top = Math.max(0, (vi >> 3) * 12.5 - 1.2) + '%';
+  if ((vi >> 3) === 0) b.style.top = '0.4%';
+  if ((vi & 7) === 7) b.style.left = (100 - 5.6) + '%';
+  pcsEl.appendChild(b);
+}
+function render(anims) {
+  G.hl.check = C.inCheck(G.st) ? C.kingSq(G.st.b, G.st.turn) : -1;
+  paintSquares();
+  drawPieces(anims);
+}
+function animsFor(m) {
+  const a = [[m.from, m.to]];
+  if (m.castle === 'k') a.push([m.to + 1, m.to - 1]);
+  if (m.castle === 'q') a.push([m.to - 2, m.to + 1]);
+  return a;
+}
+function playSound(m, st) {
+  if (m.capture) SND.capture(); else SND.move();
+}
+
+/* ---------- статус и кнопки ---------- */
+const colorRu = c => c === 'w' ? 'белых' : 'чёрных';
+function setStatus(kind, text, sub) {
+  const el = $('#status');
+  el.className = 'status' + (kind ? ' ' + kind : '');
+  const dot = !kind || kind === 'ok' || kind === 'bad' ? `<span class="dot ${G ? G.user : 'w'}"></span>` : '';
+  el.innerHTML = `${dot}<span>${text}${sub ? `<span class="sub">${sub}</span>` : ''}</span>`;
+}
+function setButtons(list) {
+  const el = $('#btns'); el.innerHTML = '';
+  for (const [label, fn, cls] of list) {
+    const b = document.createElement('button'); b.className = 'btn' + (cls ? ' ' + cls : ''); b.textContent = label; b.onclick = fn; el.appendChild(b);
+  }
+}
+function setInfo(html) { $('#infobar').innerHTML = html; }
+function setMeta(html) { const el = $('#meta'); el.hidden = !html; el.innerHTML = html || ''; }
+
+/* ---------- запуск задачи ---------- */
+function startPuzzle(p, mode) {
+  MODE = mode;
+  const st = C.parseFEN(p.fen);
+  G = { p, st, idx:0, user: st.turn === 'w' ? 'b' : 'w', mistakes:0, hinted:0, gaveUp:false, done:false, busy:true,
+        sel:null, targets:[], epT:-1, last:null, hl:{ hint:[], wrong:-1, good:-1, check:-1 }, badge:null, rated:false, t0:Date.now() };
+  flip = G.user === 'b';
+  hidePromo();
+  render();
+  setStatus('', `Вы играете за ${colorRu(G.user)}`, 'Сначала ходит соперник…');
+  updateUi();
+  setTimeout(() => { if (G && G.p === p) opponentMove(); }, 550);
+}
+function opponentMove() {
+  const m = C.findUci(G.st, G.p.moves[G.idx]);
+  G.st = C.make(G.st, m); G.idx++; G.last = [m.from, m.to]; G.busy = false; G.hl.hint = [];
+  playSound(m); render(animsFor(m));
+  if (!G.done) setStatus('', `Ваш ход: играйте за ${colorRu(G.user)}`, G.idx > 1 ? 'Верно! Продолжайте.' : 'Найдите лучший ход.');
+  updateUi();
+}
+function canMove() { return G && !G.done && !G.busy && G.st.turn === G.user; }
+
+function select(s) {
+  G.sel = s;
+  const ms = C.legal(G.st).filter(m => m.from === s);
+  G.targets = [...new Set(ms.map(m => m.to))];
+  G.epT = (ms.find(m => m.ep) || {}).to ?? -1;
+}
+function deselect() { G.sel = null; G.targets = []; G.epT = -1; }
+
+function tryUser(from, to, dropped) {
+  const ms = C.legal(G.st).filter(m => m.from === from && m.to === to);
+  if (!ms.length) { deselect(); render(); return; }
+  if (ms.length > 1) { askPromo(ms, dropped); return; }
+  userMove(ms[0], dropped);
+}
+function askPromo(ms, dropped) {
+  const color = G.user, el = $('#promo');
+  el.innerHTML = '<div>' + ['q','r','b','n'].map(x => `<button data-p="${x}" class="pc ${color}${x.toUpperCase()}" style="position:static;width:min(18vw,80px);height:min(18vw,80px)" aria-label="${x}"></button>`).join('') + '</div>';
+  el.hidden = false;
+  // Касание, открывшее окно, тут же порождает «click» — его пропускаем.
+  const t0 = Date.now(), fresh = () => Date.now() - t0 < 400;
+  el.querySelectorAll('button').forEach(b => b.onclick = ev => { ev.stopPropagation(); if (fresh()) return; hidePromo(); userMove(ms.find(m => m.promo === b.dataset.p), dropped); });
+  el.onclick = () => { if (fresh()) return; hidePromo(); deselect(); render(); };
+}
+function hidePromo() { $('#promo').hidden = true; }
+
+function userMove(m, dropped) {
+  const u = C.uci(m), exp = G.p.moves[G.idx];
+  const after = C.make(G.st, m), mate = C.isMate(after);
+  const prev = G.st, prevLast = G.last;
+  deselect(); G.hl.hint = []; G.hl.wrong = -1; G.hl.good = -1;
+  G.st = after; G.last = [m.from, m.to];
+  const anims = dropped ? (m.castle ? animsFor(m).slice(1) : null) : animsFor(m);
+  if (u === exp || mate) {
+    G.idx++; G.badge = [m.to, 'ok'];
+    playSound(m); render(anims);
+    if (mate || G.idx >= G.p.moves.length) { solved(); return; }
+    G.busy = true; updateUi();
+    setStatus('ok', 'Верно!', 'Соперник отвечает…');
+    setTimeout(() => { if (G && G.st === after) { G.badge = null; opponentMove(); } }, 420);
+    return;
+  }
+  // неверно
+  G.mistakes++; G.badge = [m.to, 'bad']; G.hl.wrong = m.to; G.busy = true;
+  SND.wrong(); render(anims);
+  if (MODE.kind === 'rated') applyRating(false);
+  if (MODE.kind === 'rush') { rushResult(false); return; }
+  setStatus('bad', 'Неверно', 'Ход отменён — попробуйте другой.');
+  updateUi();
+  setTimeout(() => {
+    if (!G || G.st !== after) return;
+    G.st = prev; G.badge = null; G.hl.wrong = -1; G.busy = false;
+    G.last = prevLast;
+    render([[m.to, m.from]]);
+    updateUi();
+  }, 800);
+}
+
+function solved() {
+  G.done = true; G.busy = false;
+  const clean = G.mistakes === 0 && !G.hinted && !G.gaveUp;
+  record(clean);
+  if (MODE.kind === 'rush') { rushResult(true); return; }
+  if (MODE.kind === 'rated' && !G.rated) applyRating(true);
+  SND.win();
+  setStatus('win', clean ? 'Решено! Отлично.' : 'Задача решена', clean ? 'С первой попытки.' : 'В следующий раз — без ошибок.');
+  updateUi();
+}
+
+function record(clean) {
+  if (G.recorded) return; G.recorded = true;
+  S.attempts++; if (clean) S.firstTry++;
+  for (const t of G.p.themes) { const a = S.theme[t] || (S.theme[t] = [0, 0]); a[0]++; if (clean) a[1]++; }
+  save();
+}
+
+function applyRating(win) {
+  if (G.rated) return; G.rated = true;
+  const E = 1 / (1 + Math.pow(10, (G.p.rating - S.rating) / 400));
+  const K = S.rated < 20 ? 40 : 24;
+  let d = Math.round(K * ((win ? 1 : 0) - E));
+  if (win && d < 1) d = 1; if (!win && d > -1) d = -1;
+  S.rating = Math.max(100, S.rating + d); S.rated++; if (win) S.ratedWon++;
+  S.best = Math.max(S.best, S.rating); S.hist.push(S.rating); if (S.hist.length > 500) S.hist.splice(0, S.hist.length - 500);
+  S.seen[G.p.id] = win ? 1 : 0;
+  G.delta = d; save();
+}
+
+function updateUi() {
+  if (!G) return;
+  const k = MODE.kind;
+  if (k === 'rush') { rushInfo(); setButtons([]); setMeta(''); return; }
+  // шапка
+  const label = k === 'rated' ? 'Рейтинг' : k === 'theme' ? TNAME[MODE.theme] : 'Разбор';
+  let right = '';
+  if (k === 'rated') right = `<span class="pill">${S.rating}</span>${G.delta != null ? `<span class="delta ${G.delta >= 0 ? 'up' : 'down'}">${G.delta >= 0 ? '+' : '−'}${Math.abs(G.delta)}</span>` : ''}`;
+  setInfo(`<span class="grow muted">${label}</span>${right}`);
+  if (G.done) {
+    const th = G.p.themes.filter(t => TNAME[t] && !(t === 'mate' && G.p.themes.some(x => /^mateIn/.test(x)))).map(t => TNAME[t]);
+    setMeta(`Рейтинг задачи: <b>${G.p.rating}</b>${th.length ? '<br>Темы: ' + th.join(', ') : ''}`);
+    const btns = [];
+    if (k !== 'review') btns.push(['Следующая', () => nextPuzzle()]);
+    else btns.push(['Назад к результатам', () => show('rushEnd', 'Puzzle Rush', goRushMenu)]);
+    btns.unshift(['Заново', () => startPuzzle(G.p, MODE), 'sec']);
+    setButtons(btns);
+  } else {
+    setMeta('');
+    setButtons([
+      ['Подсказка', hint, 'sec'],
+      ['Решение', showSolution, 'sec'],
+      k === 'review' ? ['К результатам', () => show('rushEnd', 'Puzzle Rush', goRushMenu), 'sec']
+        : ['Пропустить', () => { if (k === 'rated' && !G.rated && G.idx > 0) applyRating(false); nextPuzzle(); }, 'sec']
+    ]);
+    $('#btns').querySelectorAll('button').forEach((b, i) => { if (i < 2) b.disabled = G.busy || G.st.turn !== G.user; });
+  }
+}
+
+function hint() {
+  if (!canMove()) return;
+  const m = C.findUci(G.st, G.p.moves[G.idx]);
+  G.hinted++;
+  if (MODE.kind === 'rated') applyRating(false);
+  G.hl.hint = G.hinted === 1 ? [m.from] : [m.from, m.to];
+  render(); updateUi();
+  setStatus('', G.hinted === 1 ? 'Подсказка: ходите этой фигурой' : 'Подсказка: вот ход целиком', G.hinted === 1 ? 'Нажмите «Подсказка» ещё раз, чтобы увидеть, куда.' : 'Сделайте этот ход.');
+}
+
+function showSolution() {
+  if (!G || G.done) return;
+  G.gaveUp = true; G.done = true; G.busy = true;
+  if (MODE.kind === 'rated') applyRating(false);
+  record(false);
+  deselect(); G.hl.hint = []; G.badge = null;
+  setStatus('', 'Решение', 'Показываю ходы…');
+  const step = () => {
+    if (!G || !G.gaveUp) return;
+    if (G.idx >= G.p.moves.length) { G.busy = false; setStatus('', 'Решение показано', 'Разберите позицию и переходите к следующей.'); updateUi(); return; }
+    const m = C.findUci(G.st, G.p.moves[G.idx]);
+    G.st = C.make(G.st, m); G.idx++; G.last = [m.from, m.to];
+    playSound(m); render(animsFor(m));
+    setTimeout(step, 750);
+  };
+  updateUi();
+  setTimeout(step, 300);
+}
+
+function nextPuzzle() {
+  if (MODE.kind === 'rated') return startRated();
+  if (MODE.kind === 'theme') return startTheme(MODE.theme);
+}
+
+function startRated() {
+  const p = pickNear(S.rating, PZ, q => q.id in S.seen);
+  show('play', 'Решать задачи', goHome);
+  startPuzzle(p, { kind:'rated' });
+}
+let themeSeen = {};
+function startTheme(t) {
+  const pool = PZ.filter(p => p.themes.includes(t) && diffOk(p));
+  const target = S.diff === 'mine' ? S.rating : S.diff === 'easy' ? 900 : S.diff === 'mid' ? 1500 : S.diff === 'hard' ? 2050 : 600 + Math.random() * 1800;
+  const seen = themeSeen[t] || (themeSeen[t] = new Set());
+  if (pool.every(p => seen.has(p.id))) seen.clear();
+  const fresh2 = pool.filter(q => !seen.has(q.id));
+  const p = S.diff === 'any' ? fresh2[Math.floor(Math.random() * fresh2.length)] : pickNear(target, pool, q => seen.has(q.id));
+  seen.add(p.id);
+  show('play', TNAME[t], goThemes);
+  startPuzzle(p, { kind:'theme', theme:t });
+}
+
+/* ---------- управление: касание и перетаскивание ---------- */
+let drag = null;
+function squareAt(e) {
+  const r = boardEl.getBoundingClientRect();
+  const c = Math.floor((e.clientX - r.left) / r.width * 8), rr = Math.floor((e.clientY - r.top) / r.height * 8);
+  if (c < 0 || c > 7 || rr < 0 || rr > 7) return -1;
+  const vi = rr * 8 + c; return flip ? 63 - vi : vi;
+}
+boardEl.addEventListener('pointerdown', e => {
+  audio();
+  if (!canMove() || !$('#promo').hidden) return;
+  const s = squareAt(e); if (s < 0) return;
+  if (G.sel !== null && G.targets.includes(s)) { tryUser(G.sel, s, false); return; }
+  const p = G.st.b[s];
+  if (p && C.colorOf(p) === G.user) {
+    const wasSel = G.sel === s;
+    select(s); paintSquares();
+    const el = pcsEl.querySelector(`.pc[data-s="${s}"]`);
+    const r = boardEl.getBoundingClientRect(), sz = r.width / 8;
+    const vi = viewIdx(s), cx = r.left + (vi & 7) * sz + sz / 2, cy = r.top + (vi >> 3) * sz + sz / 2;
+    drag = { s, el, cx, cy, x0:e.clientX, y0:e.clientY, moved:false, wasSel };
+    try { boardEl.setPointerCapture(e.pointerId); } catch (_) {}
+  } else { deselect(); paintSquares(); }
+});
+boardEl.addEventListener('pointermove', e => {
+  if (!drag) return;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) return;
+  drag.moved = true;
+  if (drag.el) { drag.el.classList.remove('anim'); drag.el.classList.add('drag'); drag.el.style.transform = `translate(${e.clientX - drag.cx}px,${e.clientY - drag.cy}px)`; }
+  e.preventDefault();
+});
+function endDrag(e, cancel) {
+  if (!drag) return;
+  const d = drag; drag = null;
+  if (d.el) { d.el.classList.remove('drag'); d.el.style.transform = ''; }
+  if (cancel) return;
+  const s = squareAt(e);
+  if (d.moved) {
+    if (s >= 0 && s !== d.s && G.targets.includes(s)) tryUser(d.s, s, true);
+  } else if (d.wasSel && s === d.s) { deselect(); paintSquares(); }
+}
+boardEl.addEventListener('pointerup', e => endDrag(e, false));
+boardEl.addEventListener('pointercancel', e => endDrag(e, true));
+boardEl.addEventListener('contextmenu', e => e.preventDefault());
+
+/* ---------- Puzzle Rush ---------- */
+let R = null, rushTimer = null;
+function goRushMenu() {
+  stopRush();
+  $('#rushMenu').innerHTML = `<p class="muted">Задачи идут от лёгких к сложным. Одна неверная попытка — минус жизнь, после трёх ошибок забег окончен.</p>
+  <div class="rush-modes">${RUSH_MODES.map(m => `<button class="tile${m.id === 'r3' ? ' main' : ''}" data-m="${m.id}"><span class="ic" style="background:${m.id === 'r3' ? '#5d8a35' : '#3c3a37'}">${m.time ? '⏱' : '❤️'}</span><span><b>${m.name}</b><span class="muted">${m.sub}${S.rush[m.id] ? ' · рекорд ' + S.rush[m.id] : ''}</span></span></button>`).join('')}</div>`;
+  $('#rushMenu').querySelectorAll('[data-m]').forEach(b => b.onclick = () => startRush(RUSH_MODES.find(m => m.id === b.dataset.m)));
+  show('rushMenu', 'Puzzle Rush', goHome);
+}
+function startRush(mode) {
+  R = { mode, score:0, strikes:0, n:0, used:new Set(), log:[], end: mode.time ? Date.now() + mode.time * 1000 : 0, over:false };
+  show('play', 'Puzzle Rush · ' + mode.name, () => { if (confirmLeave()) goRushMenu(); });
+  if (mode.time) rushTimer = setInterval(() => { rushInfo(); if (Date.now() >= R.end) finishRush(); }, 200);
+  rushNext();
+}
+function confirmLeave() { return !R || R.over || confirm('Выйти из забега? Результат не сохранится.'); }
+function rushNext() {
+  const target = Math.min(2400, 600 + R.n * 45);
+  const p = pickNear(target, PZ, q => R.used.has(q.id));
+  R.used.add(p.id); R.n++;
+  startPuzzle(p, { kind:'rush' });
+}
+function rushInfo() {
+  if (!R) return;
+  const left = R.mode.time ? Math.max(0, R.end - Date.now()) : 0;
+  const mm = Math.floor(left / 60000), ss = Math.floor(left / 1000) % 60;
+  setInfo(`${R.mode.time ? `<span class="timer${left < 30000 ? ' low' : ''}">${mm}:${String(ss).padStart(2, '0')}</span>` : ''}
+    <span class="grow"></span><span class="strikes">${[0,1,2].map(i => `<span class="${i < R.strikes ? 'x' : ''}">✗</span>`).join('')}</span>
+    <span class="score">${R.score}</span>`);
+}
+function rushResult(ok) {
+  if (!R || R.over) return;
+  R.log.push({ id:G.p.id, ok, rating:G.p.rating });
+  if (ok) { R.score++; SND.win(); setStatus('ok', 'Верно!', `Счёт: ${R.score}`); }
+  else { R.strikes++; record(false); setStatus('bad', 'Ошибка', `Осталось жизней: ${3 - R.strikes}`); }
+  G.done = true; G.busy = true;
+  rushInfo();
+  setTimeout(() => {
+    if (!R || R.over) return;
+    if (R.strikes >= 3) finishRush(); else rushNext();
+  }, ok ? 450 : 900);
+}
+function stopRush() { if (rushTimer) clearInterval(rushTimer); rushTimer = null; }
+function finishRush() {
+  if (!R || R.over) return;
+  R.over = true; stopRush(); SND.end();
+  const prev = S.rush[R.mode.id] || 0, rec = R.score > prev;
+  if (rec) S.rush[R.mode.id] = R.score;
+  save();
+  $('#rushEnd').innerHTML = `<div class="rating-card" style="justify-content:center;text-align:center;flex-direction:column">
+     <div class="muted">${R.mode.name}</div><div class="big" style="font-size:56px">${R.score}</div>
+     <div class="muted">${rec ? '🏆 Новый рекорд!' : 'Рекорд: ' + prev}</div></div>
+   <div class="row" style="margin-bottom:14px"><button class="btn sec" id="reMenu">Меню</button><button class="btn" id="reAgain">Ещё раз</button></div>
+   <h2>Задачи забега <span class="muted small">— нажмите, чтобы разобрать</span></h2>
+   <ul class="results">${R.log.map((x, i) => `<li><button data-id="${x.id}"><span>${i + 1}. <span class="${x.ok ? 'okc' : 'badc'}">${x.ok ? '✓' : '✗'}</span></span><span class="muted">${x.rating}</span></button></li>`).join('')}</ul>`;
+  $('#reMenu').onclick = goRushMenu;
+  $('#reAgain').onclick = () => startRush(R.mode);
+  $('#rushEnd').querySelectorAll('[data-id]').forEach(b => b.onclick = () => { show('play', 'Разбор задачи', () => show('rushEnd', 'Puzzle Rush', goRushMenu)); startPuzzle(BYID[b.dataset.id], { kind:'review' }); });
+  show('rushEnd', 'Puzzle Rush', goRushMenu);
+}
+
+/* ---------- статистика ---------- */
+function goStats() {
+  const h = S.hist.slice(-200), w = 600, hh = 150;
+  let graph = '';
+  if (h.length > 1) {
+    const mn = Math.min(...h) - 20, mx = Math.max(...h) + 20;
+    const pts = h.map((v, i) => `${(i / (h.length - 1) * w).toFixed(1)},${(hh - 10 - (v - mn) / (mx - mn) * (hh - 20)).toFixed(1)}`).join(' ');
+    graph = `<svg class="graph" viewBox="0 0 ${w} ${hh}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="#81b64c" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>`;
+  }
+  const rows = Object.entries(S.theme).filter(([t, a]) => THEMES.some(x => x[0] === t) && a[0] >= 3)
+    .map(([t, a]) => [t, a, a[1] / a[0]]).sort((x, y) => x[2] - y[2]);
+  $('#stats').innerHTML = `
+   <div class="cards">
+     <div class="card"><b>${S.rating}</b><span>Рейтинг</span></div>
+     <div class="card"><b>${S.best}</b><span>Лучший рейтинг</span></div>
+     <div class="card"><b>${S.attempts}</b><span>Задач сыграно</span></div>
+     <div class="card"><b>${S.attempts ? Math.round(S.firstTry / S.attempts * 100) : 0}%</b><span>С первой попытки</span></div>
+   </div>
+   <h2>Рейтинг</h2>${graph || '<p class="muted">Решите несколько задач, и здесь появится график.</p>'}
+   <h2>Puzzle Rush</h2>
+   <div class="cards">${RUSH_MODES.map(m => `<div class="card"><b>${S.rush[m.id] || 0}</b><span>${m.name}</span></div>`).join('')}</div>
+   <h2>Темы <span class="muted small">— сначала самые слабые</span></h2>
+   ${rows.length ? `<div class="list">${rows.map(([t, a, r]) => `<button class="item" data-t="${t}"><span class="t"><b>${TNAME[t]}</b><span class="n">${a[1]} из ${a[0]} с первой попытки</span><div class="bar"><i style="width:${Math.round(r * 100)}%"></i></div></span><span class="muted">${Math.round(r * 100)}%</span></button>`).join('')}</div>` : '<p class="muted">Пока мало данных: по каждой теме нужно хотя бы 3 задачи.</p>'}
+   <h2>Перенос прогресса</h2>
+   <p class="muted small">Прогресс хранится только на этом устройстве. В Safari и в приложении на экране «Домой» он разный — перенесите его кодом.</p>
+   <div class="row"><button class="btn sec" id="xCopy">Скопировать код</button><button class="btn sec" id="xLoad">Загрузить код</button></div>
+   <p class="muted small" id="xMsg"></p>
+   <textarea id="xCode" rows="3" placeholder="CHESS1:…" spellcheck="false" autocapitalize="off"></textarea>
+   <h2>Сброс</h2>
+   <button class="btn sec" id="reset" style="width:100%">Сбросить всю статистику</button>`;
+  $('#stats').querySelectorAll('[data-t]').forEach(b => b.onclick = () => startTheme(b.dataset.t));
+  $('#xCopy').onclick = () => {
+    const code = 'CHESS1:' + btoa(unescape(encodeURIComponent(JSON.stringify(S))));
+    const fb = () => { $('#xCode').value = code; $('#xCode').select(); $('#xMsg').textContent = 'Код в поле ниже — выделите и скопируйте.'; };
+    try { navigator.clipboard.writeText(code).then(() => { $('#xMsg').textContent = 'Код скопирован.'; }, fb); } catch (e) { fb(); }
+  };
+  $('#xLoad').onclick = () => {
+    try {
+      const s = $('#xCode').value.replace(/\s+/g, '');
+      if (!s.startsWith('CHESS1:')) throw 0;
+      S = Object.assign(fresh(), JSON.parse(decodeURIComponent(escape(atob(s.slice(7)))))); save(); setMute();
+      goStats(); $('#xMsg').textContent = 'Прогресс загружен.';
+    } catch (e) { $('#xMsg').textContent = 'Не получилось: вставьте код целиком в поле ниже.'; }
+  };
+  let armed = false;
+  $('#reset').onclick = e => {
+    if (!armed) { armed = true; e.target.textContent = 'Нажмите ещё раз, чтобы сбросить'; return; }
+    const m = S.muted; S = fresh(); S.muted = m; save(); goStats();
+  };
+  show('stats', 'Статистика', goHome);
+}
+
+/* ---------- работа без интернета ---------- */
+const OFF = { ok:'serviceWorker' in navigator && 'caches' in window, ready:false };
+const isStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+function offText() {
+  if (!OFF.ok) return 'Работа без интернета недоступна в этом браузере.';
+  return OFF.ready ? '✅ Всё скачано: приложение работает без интернета.' : 'Скачиваю задачи для работы без интернета…';
+}
+function appFoot() {
+  return `${isStandalone() ? '' : `<div class="box"><b>Установить на iPhone.</b> Откройте эту страницу в Safari, нажмите «Поделиться» внизу экрана и выберите «На экран „Домой“». Появится иконка, и задачи будут открываться как обычное приложение — без интернета.</div>`}
+    <div id="offst">${offText()}</div>
+    <div style="margin-top:6px">Задачи — открытая база Lichess (CC0). Фигуры — Colin M. L. Burnett (GPLv2+).</div>`;
+}
+async function checkOffline() {
+  if (!OFF.ok) return;
+  try {
+    await navigator.serviceWorker.ready;
+    for (let i = 0; i < 40 && !OFF.ready; i++) {
+      const hit = await caches.match('puzzles.json');
+      if (hit) OFF.ready = true; else await new Promise(r => setTimeout(r, 500));
+    }
+  } catch (e) {}
+  const el = $('#offst'); if (el) el.textContent = offText();
+}
+if (OFF.ok) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+}
+
+/* ---------- старт ---------- */
+setMute();
+loadPuzzles().then(() => { goHome(); checkOffline(); }).catch(() => {
+  $('#home').innerHTML = '<p>Не удалось загрузить задачи. Откройте приложение один раз с интернетом.</p>';
+});
+
+</script>
+</body>
+</html>
