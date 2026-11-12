@@ -162,7 +162,7 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
 .clsic{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
 .clsdot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;color:#fff;font-weight:900;font-size:10px;margin-right:6px;vertical-align:-4px;flex:none}
 .clsdot.sm{width:16px;height:16px;font-size:8px;margin-right:4px;vertical-align:-3px}
-.badge.cls{width:5.6%;height:5.6%;font-size:clamp(8px,2.2vw,13px)}
+.badge.cls{width:6.6%;height:6.6%;font-size:clamp(10px,2.8vw,16px);border:1.5px solid rgba(255,255,255,.85)}
 .sumt{width:100%;border-collapse:collapse;color:var(--text);font-size:14px;margin-bottom:10px}
 .sumt th{font-size:13px;color:var(--muted);font-weight:600;text-align:center;padding:4px;max-width:90px;overflow:hidden;text-overflow:ellipsis}
 .sumt td{padding:4px}
@@ -175,6 +175,13 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
 .mvrow i{font-style:normal;color:var(--muted);font-size:13px}
 .mvb{background:transparent;text-align:left;padding:5px 6px;border-radius:6px;color:var(--text);font-size:15px;display:flex;align-items:center}
 .mvb.on{background:var(--panel2)}
+.levels{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.levels button{background:var(--panel);border-radius:10px;padding:10px;display:grid;grid-template-columns:34px 1fr;grid-template-rows:auto auto;column-gap:8px;text-align:left;border:2px solid transparent;align-items:center}
+.levels button.on{border-color:var(--green);background:#3a4a2c}
+.levels .li{grid-row:span 2;font-size:26px;text-align:center}
+.levels b{font-size:14px;line-height:1.2}
+.levels span:last-child{font-size:12px;color:var(--muted)}
+.status .sub .clsdot{width:18px;height:18px;font-size:9px;vertical-align:-4px}
 
 .wK{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgdmlld0JveD0iMCAwIDQ1IDQ1Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMTEuNjNWNk0yMCA4aDUiLz48cGF0aCBmaWxsPSIjZmZmIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMjVzNC41LTcuNSAzLTEwLjVjMCAwLTEtMi41LTMtMi41cy0zIDIuNS0zIDIuNWMtMS41IDMgMyAxMC41IDMgMTAuNSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMS41IDM3YzUuNSAzLjUgMTUuNSAzLjUgMjEgMHYtN3M5LTQuNSA2LTEwLjVjLTQtNi41LTEzLjUtMy41LTE2IDRWMjd2LTMuNWMtMy41LTcuNS0xMy0xMC41LTE2LTQtMyA2IDUgMTAgNSAxMHoiLz48cGF0aCBkPSJNMTEuNSAzMGM1LjUtMyAxNS41LTMgMjEgMG0tMjEgMy41YzUuNS0zIDE1LjUtMyAyMSAwbS0yMSAzLjVjNS41LTMgMTUuNS0zIDIxIDAiLz48L2c+PC9zdmc+)}
 .wQ{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBkPSJNOCAxMmEyIDIgMCAxIDEtNCAwIDIgMiAwIDEgMSA0IDBtMTYuNS00LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTQxIDEyYTIgMiAwIDEgMS00IDAgMiAyIDAgMSAxIDQgME0xNiA4LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTMzIDlhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwIi8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzguNS0xLjUgMjEtMS41IDI3IDBsMi0xMi03IDExVjExbC01LjUgMTMuNS0zLTE1LTMgMTUtNS41LTE0VjI1TDcgMTR6Ii8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzAgMiAxLjUgMiAyLjUgNCAxIDEuNSAxIDEgLjUgMy41LTEuNSAxLTEuNSAyLjUtMS41IDIuNS0xLjUgMS41LjUgMi41LjUgMi41IDYuNSAxIDE2LjUgMSAyMyAwIDAgMCAxLjUtMSAwLTIuNSAwIDAgLjUtMS41LTEtMi41LS41LTIuNS0uNS0yIC41LTMuNSAxLTIgMi41LTIgMi41LTQtOC41LTEuNS0xOC41LTEuNS0yNyAweiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0xMS41IDMwYzMuNS0xIDE4LjUtMSAyMiAwTTEyIDMzLjVjNi0xIDE1LTEgMjEgMCIvPjwvZz48L3N2Zz4=)}
@@ -205,6 +212,7 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
   <section id="gameMenu" class="screen" hidden></section>
   <section id="anaWait" class="screen" hidden></section>
   <section id="anaMenu" class="screen" hidden></section>
+  <section id="botMenu" class="screen" hidden></section>
   <section id="play" class="screen" hidden>
     <div class="play">
       <div class="board-col">
@@ -458,7 +466,7 @@ const RUSH_MODES = [
 /* ---------- хранилище ---------- */
 const KEY = 'chess-puzzles-v1';
 const fresh = () => ({ rating:1200, best:1200, hist:[1200], rated:0, ratedWon:0, attempts:0, firstTry:0,
-  seen:{}, theme:{}, rush:{}, muted:false, diff:'mine', gameTc:'none', autoFlip:true, gameFlip:false });
+  seen:{}, theme:{}, rush:{}, muted:false, diff:'mine', gameTc:'none', autoFlip:true, gameFlip:false, botLvl:3, botColor:'w', coachCls:true, liveCls:true });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
@@ -518,7 +526,7 @@ function pickNear(target, pool, avoid) {
 
 /* ---------- экраны ---------- */
 let screen = 'home', backTo = null;
-const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu', 'anaWait', 'anaMenu'];
+const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu', 'anaWait', 'anaMenu', 'botMenu'];
 function show(name, title, back) {
   screen = name; backTo = back || null;
   for (const s of SCREENS) $('#' + s).hidden = s !== name;
@@ -546,6 +554,7 @@ function goHome() {
     <button class="tile main" id="tRated"><span class="ic" style="background:#5d8a35">🧩</span><span><b>Решать задачи</b><span class="muted">Подбор по вашему рейтингу · ${PZ.length} задач</span></span></button>
     <button class="tile" id="tRush"><span class="ic" style="background:#e3a23b">⚡</span><span><b>Puzzle Rush</b><span class="muted">На время, 3 ошибки — конец${bestRush ? ' · рекорд ' + bestRush : ''}</span></span></button>
     <button class="tile" id="tThemes"><span class="ic" style="background:#4a7fd1">🎯</span><span><b>Темы</b><span class="muted">Вилки, связки, маты в 2–3 хода и другое</span></span></button>
+    <button class="tile" id="tBot"><span class="ic" style="background:#3f6fb5">🤖</span><span><b>Игра с тренером</b><span class="muted">10 уровней — от новичка до гроссмейстера${(() => { const b = loadGame(BKEY); return b && b.moves.length && !b.result ? ' · есть незаконченная партия' : ''; })()}</span></span></button>
     <button class="tile" id="tGame"><span class="ic" style="background:#c9653b">♞︎</span><span><b>Игра вдвоём</b><span class="muted">На одной доске, с часами или без${loadGame() && loadGame().moves.length && !loadGame().result ? ' · есть незаконченная партия' : ''}</span></span></button>
     <button class="tile" id="tAna"><span class="ic" style="background:#2f8f83">📊</span><span><b>Анализ партий</b><span class="muted">Ошибки, точность и уровень игры — как на chess.com</span></span></button>
     <button class="tile" id="tStats"><span class="ic" style="background:#8a5bc9">📈</span><span><b>Статистика</b><span class="muted">Решено ${S.attempts} · с первой попытки ${S.attempts ? Math.round(S.firstTry / S.attempts * 100) : 0}%</span></span></button>
@@ -557,6 +566,7 @@ function goHome() {
   $('#tStats').onclick = () => goStats();
   $('#tGame').onclick = () => goGameMenu();
   $('#tAna').onclick = () => goAnaMenu();
+  $('#tBot').onclick = () => goBotMenu();
   show('home', 'Шахматные задачи', null);
 }
 
@@ -641,9 +651,8 @@ function drawBadge() {
   const [s, kind, txt] = G.badge, vi = viewIdx(s), b = document.createElement('div');
   b.className = 'badge ' + kind; b.textContent = txt || (kind === 'ok' ? '✓' : '✗');
   if (G.badgeColor) b.style.background = G.badgeColor;
-  b.style.left = ((vi & 7) * 12.5 + 12.5 - 5.6) + '%'; b.style.top = Math.max(0, (vi >> 3) * 12.5 - 1.2) + '%';
-  if ((vi >> 3) === 0) b.style.top = '0.4%';
-  if ((vi & 7) === 7) b.style.left = (100 - 5.6) + '%';
+  const bw = kind === 'cls' ? 6.6 : 5.2;
+  b.style.left = Math.min(100 - bw, (vi & 7) * 12.5 + 12.5 - bw * .75) + '%'; b.style.top = Math.max(0.3, (vi >> 3) * 12.5 - bw * .3) + '%';
   pcsEl.appendChild(b);
 }
 function render(anims) {
@@ -1161,15 +1170,18 @@ function saveGame() {
   if (!G || !G.game) return;
   clockCommit();
   const k = G.clock;
-  try { localStorage.setItem(GKEY, JSON.stringify({ gid:G.gid, moves:G.moves, tc:G.tc, clock:k ? { w:k.w, b:k.b } : null, result:G.result || null })); } catch (e) {}
+  try { localStorage.setItem(G.bot ? BKEY : GKEY, JSON.stringify({ gid:G.gid, moves:G.moves, tc:G.tc, clock:k ? { w:k.w, b:k.b } : null, result:G.result || null, bot:G.bot || null })); } catch (e) {}
 }
-function loadGame() { try { return JSON.parse(localStorage.getItem(GKEY) || 'null'); } catch (e) { return null; } }
+function loadGame(key = GKEY) { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) { return null; } }
 
-function startGame(saved) {
-  const tc = TCS.find(t => t.id === (saved ? saved.tc : S.gameTc)) || TCS[0];
+function startGame(saved, bot) {
+  bot = bot || (saved && saved.bot) || null;
+  const tc = bot ? TCS[0] : TCS.find(t => t.id === (saved ? saved.tc : S.gameTc)) || TCS[0];
   const r = replay(saved ? saved.moves : []);
   G = { game:true, gid:saved && saved.gid || String(Date.now()), tc:tc.id, inc:tc.inc * 1000, st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn,
-        done:false, busy:false, sel:null, targets:[], epT:-1, last:null, hl:{ hint:[], wrong:-1, good:-1, check:-1 }, badge:null, result:null };
+        done:false, busy:false, sel:null, targets:[], epT:-1, last:null, hl:{ hint:[], wrong:-1, good:-1, check:-1 }, badge:null, result:null,
+        bot, gen:0, evals:[], cls:{}, clsBest:{}, opening:null, arrows:[] };
+  if (bot) G.user = bot.color;
   const lastH = r.H[r.H.length - 1]; if (lastH.m) G.last = [lastH.m.from, lastH.m.to];
   G.clock = tc.base ? { w:saved && saved.clock ? saved.clock.w : tc.base * 1000, b:saved && saved.clock ? saved.clock.b : tc.base * 1000,
                         running:r.moves.length > 0, paused:false, since:now() } : null;
@@ -1177,15 +1189,20 @@ function startGame(saved) {
   if (saved && saved.result) { G.result = saved.result; G.done = true; }
   setFlip();
   hidePromo();
-  show('play', 'Игра вдвоём', () => { clockPause(true); goGameMenu(); });
+  if (bot) show('play', 'Тренер · ' + LEVELS[bot.lvl].name, () => { Eng.stop(); goBotMenu(); });
+  else show('play', 'Игра вдвоём', () => { clockPause(true); Eng.stop(); goGameMenu(); });
   render(); gameUi();
   clearInterval(gameTimer); gameTimer = setInterval(gameTick, 100);
   saveGame();
+  afterMove();
 }
-function setFlip() { flip = S.autoFlip ? G.st.turn === 'b' : !!S.gameFlip; }
+function setFlip() { flip = G.bot ? G.bot.color === 'b' : S.autoFlip ? G.st.turn === 'b' : !!S.gameFlip; }
 
-function gameMove(m, dropped) {
+function gameMove(m, dropped, byBot) {
   const prev = G.st;
+  G.gen++; G.arrows = []; G.hl.hint = [];
+  // значок вашего хода остаётся, пока тренер отвечает, если ваша фигура всё ещё на месте
+  if (!(byBot && G.badge && G.st.b[G.badge[0]] && m.to !== G.badge[0])) { G.badge = null; G.badgeColor = null; }
   clockCommit();
   const k = G.clock;
   if (k) { if (k.running) k[prev.turn] += G.inc; k.running = true; k.since = now(); }
@@ -1193,13 +1210,14 @@ function gameMove(m, dropped) {
   const hm = prev.b[m.from].toLowerCase() === 'p' || m.capture ? 0 : G.H[G.H.length - 1].hm + 1;
   G.st = C.make(prev, m); G.moves.push(C.uci(m));
   G.H.push({ st:G.st, key:posKey(G.st), hm, m });
-  G.last = [m.from, m.to]; deselect(); G.user = G.st.turn;
+  G.last = [m.from, m.to]; deselect(); G.user = G.bot ? G.bot.color : G.st.turn;
   playSound(m);
   render(dropped ? (m.castle ? animsFor(m).slice(1) : null) : animsFor(m));
   checkEnd();
   saveGame();
   gameUi();
-  if (S.autoFlip && !G.result) {
+  afterMove();
+  if (S.autoFlip && !G.bot && !G.result) {
     G.busy = true;
     setTimeout(() => { if (!G || !G.game) return; G.busy = false; setFlip(); render(); }, 380);
   }
@@ -1223,14 +1241,20 @@ function endGame(res, quiet) {
 function undoMove() {
   if (!G.moves.length) return;
   clockCommit();
-  const r = replay(G.moves.slice(0, -1));
+  let n = G.moves.length - 1;
+  if (G.bot) { n = G.moves.length; do { n--; } while (n > 0 && (n % 2 === 0 ? 'w' : 'b') !== G.bot.color); }
+  G.gen++; G.badge = null; G.badgeColor = null; G.arrows = []; G.hl.hint = [];
+  G.evals.length = Math.min(G.evals.length, n + 1);
+  for (const k of Object.keys(G.cls)) if (+k > n) { delete G.cls[k]; delete G.clsBest[k]; }
+  const r = replay(G.moves.slice(0, n));
   if (G.result) unarchiveGame(G.gid);
-  Object.assign(G, { st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn, result:null, done:false, busy:false });
+  Object.assign(G, { st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:G.bot ? G.bot.color : r.st.turn, result:null, done:false, busy:false });
   deselect();
   const h = r.H[r.H.length - 1]; G.last = h.m ? [h.m.from, h.m.to] : null;
   if (G.clock) { G.clock.since = now(); if (!G.moves.length) G.clock.running = false; }
-  if (S.autoFlip) setFlip();
+  if (S.autoFlip || G.bot) setFlip();
   render(); saveGame(); gameUi();
+  afterMove();
 }
 
 function material() {
@@ -1246,6 +1270,7 @@ function material() {
 function gameUi() {
   if (!G || !G.game) return;
   const tc = TCS.find(t => t.id === G.tc);
+  if (G.bot) return botUi();
   setInfo(G.clock
     ? `<span class="clk" id="clk-w"><span>♔ Белые</span><b></b></span><span class="clk" id="clk-b"><span>♚ Чёрные</span><b></b></span>`
     : `<span class="grow muted">Без часов</span><span class="muted small">Ход ${Math.floor(G.moves.length / 2) + 1}</span>`);
@@ -1255,7 +1280,8 @@ function gameUi() {
     const el = $('#status'); el.className = 'status win';
     el.innerHTML = `<span>${r.draw ? 'Ничья' : (r.why === 'Мат' ? 'Мат! ' : '') + 'Победили ' + sideRu(r.winner)}<span class="sub">${r.draw || r.why !== 'Мат' ? r.why : (r.winner === 'w' ? 'Чёрный' : 'Белый') + ' король заматован'}</span></span>`;
   } else {
-    setStatus('', `Ход ${G.st.turn === 'w' ? 'белых' : 'чёрных'}`, C.inCheck(G.st) ? 'Шах!' : G.moves.length ? 'Последний ход: ' + G.sans[G.sans.length - 1] : 'Белые начинают');
+    const cl = liveOn() && G.cls[G.moves.length] ? clsLine(G, G.moves.length) : '';
+    setStatus('', `Ход ${G.st.turn === 'w' ? 'белых' : 'чёрных'}${C.inCheck(G.st) ? ' · шах!' : ''}`, cl || (G.moves.length ? 'Последний ход: ' + G.sans[G.sans.length - 1] : 'Белые начинают'));
     $('#status .dot').className = 'dot ' + G.st.turn;
   }
   const btns = r
@@ -1289,11 +1315,13 @@ function goGameMenu() {
    <h2 style="margin-top:0">Контроль времени</h2>
    <div class="tcs">${TCS.map(t => `<button data-tc="${t.id}" class="${S.gameTc === t.id ? 'on' : ''}">${t.name}</button>`).join('')}</div>
    <label class="switch"><input type="checkbox" id="gFlip" ${S.autoFlip ? 'checked' : ''}><span>Поворачивать доску к тому, кто ходит</span></label>
+   <label class="switch" style="margin-top:8px"><input type="checkbox" id="gCls" ${S.liveCls !== false ? 'checked' : ''}><span>Оценивать ходы кружком, как на chess.com</span></label>
    <p class="muted small">Удобно, если передаёте телефон друг другу. Если телефон лежит между вами, выключите — доску можно повернуть кнопкой.</p>
    <button class="btn" id="gNew" style="width:100%">${savedOn ? 'Начать новую партию' : 'Начать партию'}</button>
    <button class="item" id="gAna" style="margin-top:14px"><span class="t"><b>📊 Анализ партий</b><span class="n">Ошибки, точность и уровень игры каждого · мои партии · PGN с chess.com</span></span><span class="muted">›</span></button>`;
   $('#gameMenu').querySelectorAll('[data-tc]').forEach(b => b.onclick = () => { S.gameTc = b.dataset.tc; save(); goGameMenu(); });
   $('#gFlip').onchange = e => { S.autoFlip = e.target.checked; save(); };
+  $('#gCls').onchange = e => { S.liveCls = e.target.checked; save(); };
   $('#gNew').onclick = () => { if (savedOn && !confirm('Начать новую партию? Текущая будет удалена.')) return; startGame(null); };
   if (savedOn) $('#gContinue').onclick = () => startGame(saved);
   $('#gAna').onclick = () => goAnaMenu();
@@ -1302,6 +1330,46 @@ function goGameMenu() {
 function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
 
 document.addEventListener('visibilitychange', () => { if (G && G.game && !G.result) clockPause(document.hidden); });
+
+function botUi() {
+  const lvl = LEVELS[G.bot.lvl], me = G.bot.color, r = G.result;
+  setInfo(`<span class="grow muted">${lvl.icon} ${lvl.name} · ≈${lvl.elo}</span><span class="muted small">${G.opening ? G.opening.split(' · ')[1] : 'Ход ' + (Math.floor(G.moves.length / 2) + 1)}</span>`);
+  const el = $('#status');
+  const lastMine = (() => { for (let p = G.moves.length; p > 0; p--) if (G.H[p - 1].st.turn === me) return p; return 0; })();
+  const cl = liveOn() && lastMine && G.cls[lastMine] ? clsLine(G, lastMine) : '';
+  if (r) {
+    el.className = 'status win';
+    const head = r.draw ? 'Ничья' : r.winner === me ? 'Вы выиграли! 🎉' : 'Тренер выиграл';
+    el.innerHTML = `<span>${head}<span class="sub">${r.why === 'Мат' ? 'Мат' : r.why}</span></span>`;
+  } else if (G.st.turn !== me) {
+    setStatus('', 'Тренер думает…', cl || (G.moves.length ? 'Ваш ход: ' + G.sans[G.sans.length - 1] : ''));
+    $('#status .dot').className = 'dot ' + G.st.turn;
+  } else {
+    setStatus('', `Ваш ход${C.inCheck(G.st) ? ' · шах!' : ''}`, cl || (G.moves.length ? 'Тренер сыграл ' + G.sans[G.sans.length - 1] : 'Вы играете белыми — начинайте'));
+    $('#status .dot').className = 'dot ' + me;
+  }
+  const busy = G.busy || G.st.turn !== me;
+  const btns = r
+    ? [['Отменить ход', undoMove, 'sec'], ['Новая партия', () => startGame(null, { lvl:G.bot.lvl, color:G.bot.color }), 'sec'],
+       ['Анализ партии', () => { saveGame(); analyzeGame(gameFromCurrent(), () => startGame(loadGame(BKEY))); }]]
+    : [['💡 Подсказка', coachHint, 'sec'], ['Отменить ход', undoMove, 'sec'],
+       ['Сдаться', () => { if (confirm('Сдаться?')) endGame({ winner:otherC(me), why:'Вы сдались' }); }, 'sec'],
+       ['📊 Анализ', () => { if (!G.moves.length) return; Eng.stop(); analyzeGame(gameFromCurrent(), () => startGame(loadGame(BKEY))); }, 'sec']];
+  setButtons(btns);
+  $('#btns').classList.add('wrap');
+  const bs = [...$('#btns').querySelectorAll('button')];
+  if (!r) { bs[0].disabled = busy; bs[1].disabled = busy || !G.moves.some((_, i) => (i % 2 === 0 ? 'w' : 'b') === me); bs[3].disabled = !G.moves.length; }
+  const mat = material();
+  let list = '';
+  for (let i = 0; i < G.sans.length; i += 2) {
+    const cell = j => { const k = G.cls[j + 1]; const mine = (j % 2 === 0 ? 'w' : 'b') === me; return G.sans[j] ? (k && mine && liveOn() ? `<span class="clsdot sm" style="background:${CLS[k].color}">${CLS[k].icon}</span>` : '') + G.sans[j] : ''; };
+    list += `<span class="mv"><i>${i / 2 + 1}.</i> ${cell(i)} ${cell(i + 1)}</span> `;
+  }
+  setMeta(`<div class="mat"><span>${me === 'w' ? 'Вы' : 'Тренер'} (белые) взяли: <b class="cap">${mat.w || '—'}</b>${mat.d > 0 ? ` <b class="adv">+${mat.d}</b>` : ''}</span>
+    <span>${me === 'b' ? 'Вы' : 'Тренер'} (чёрные) взяли: <b class="cap">${mat.b || '—'}</b>${mat.d < 0 ? ` <b class="adv">+${-mat.d}</b>` : ''}</span></div>
+    <div class="moves" id="moves">${list || '<span class="muted">Ходов пока нет</span>'}</div>`);
+  const mv = $('#moves'); if (mv) mv.scrollTop = mv.scrollHeight;
+}
 
 /* ===== Анализ партии (как «Обзор партии» на chess.com) ===== */
 const AKEY = 'chess-analysis-v1', HKEY = 'chess-games-v1';
@@ -1327,47 +1395,73 @@ function saveHistory(h) { try { localStorage.setItem(HKEY, JSON.stringify(h.slic
 function archiveGame() {
   if (!G || !G.game || !G.moves.length) return;
   const h = loadHistory().filter(x => x.id !== G.gid);
-  h.unshift({ id:G.gid, date:Date.now(), moves:G.moves.slice(), result:G.result, tc:G.tc });
+  h.unshift({ id:G.gid, date:Date.now(), moves:G.moves.slice(), result:G.result, tc:G.tc, bot:G.bot || null });
   saveHistory(h);
 }
 function unarchiveGame(id) { saveHistory(loadHistory().filter(x => x.id !== id)); }
 function gameFromCurrent() {
-  return { id:G.gid, moves:G.moves.slice(), result:G.result, white:'Белые', black:'Чёрные', fen:START_FEN };
+  return { id:G.gid, moves:G.moves.slice(), result:G.result, fen:START_FEN, ...namesFor(G.bot) };
+}
+function namesFor(bot) {
+  if (!bot) return { white:'Белые', black:'Чёрные' };
+  const t = 'Тренер ≈' + LEVELS[bot.lvl].elo;
+  return bot.color === 'w' ? { white:'Вы', black:t } : { white:t, black:'Вы' };
 }
 const resultStr = r => !r ? '*' : r.draw ? '½–½' : r.winner === 'w' ? '1–0' : '0–1';
 
 /* ---------- движок ---------- */
 const Eng = {
-  w:null, handler:null, ready:null,
+  w:null, handler:null, ready:null, rej:null, q:Promise.resolve(),
   start() {
     if (this.ready) return this.ready;
     this.ready = new Promise((res, rej) => {
-      try { this.w = new Worker('sf/stockfish-19-lite-single.js'); } catch (e) { rej(e); return; }
+      try { this.w = new Worker('sf/stockfish-19-lite-single.js'); } catch (e) { this.ready = null; rej(e); return; }
       this.w.onmessage = e => { if (this.handler) this.handler(String(e.data)); };
       this.w.onerror = e => { this.ready = null; rej(e); };
-      this.handler = l => { if (l === 'uciok') { this.w.postMessage('setoption name MultiPV value 2'); this.w.postMessage('isready'); } if (l === 'readyok') { this.handler = null; res(); } };
+      this.handler = l => { if (l === 'uciok') this.w.postMessage('isready'); if (l === 'readyok') { this.handler = null; res(); } };
       this.w.postMessage('uci');
     });
     return this.ready;
   },
+  // задачи к движку выполняются строго по очереди
+  task(fn) { const p = this.q.then(() => this.start()).then(fn); this.q = p.catch(() => {}); return p; },
   newGame() { return new Promise(res => { this.handler = l => { if (l === 'readyok') { this.handler = null; res(); } }; this.w.postMessage('ucinewgame'); this.w.postMessage('isready'); }); },
-  analyse(fen, depth) {
-    return new Promise(res => {
-      const lines = [];
+  // opts: depth | movetime, mpv (линий), elo (ограничение силы)
+  search(fen, opts) {
+    return new Promise((res, rej) => {
+      const lines = []; this.rej = rej;
       this.handler = l => {
         if (l.startsWith('info') && l.includes(' pv ')) {
           const mp = +(l.match(/ multipv (\d+)/) || [0, 1])[1];
           const sc = l.match(/ score (cp|mate) (-?\d+)/);
           if (!sc) return;
           lines[mp - 1] = { kind:sc[1], v:+sc[2], pv:l.split(' pv ')[1].trim().split(' ') };
-        } else if (l.startsWith('bestmove')) { this.handler = null; res({ lines, best:l.split(' ')[1] }); }
+        } else if (l.startsWith('bestmove')) { this.handler = null; this.rej = null; res({ lines, best:l.split(' ')[1] }); }
       };
-      this.w.postMessage('position fen ' + fen);
-      this.w.postMessage('go depth ' + depth);
+      const w = this.w;
+      w.postMessage('setoption name MultiPV value ' + (opts.mpv || 2));
+      w.postMessage('setoption name UCI_LimitStrength value ' + (opts.elo ? 'true' : 'false'));
+      if (opts.elo) w.postMessage('setoption name UCI_Elo value ' + opts.elo);
+      w.postMessage('position fen ' + fen);
+      w.postMessage(opts.movetime ? 'go movetime ' + opts.movetime : 'go depth ' + opts.depth);
     });
   },
-  stop() { if (this.w) { this.w.terminate(); this.w = null; this.ready = null; this.handler = null; } }
+  analyse(fen, depth) { return this.search(fen, { depth, mpv:2 }); },
+  stop() {
+    if (this.rej) { const r = this.rej; this.rej = null; r(new Error('stopped')); }
+    if (this.w) { this.w.terminate(); this.w = null; }
+    this.ready = null; this.handler = null; this.q = Promise.resolve();
+  }
 };
+// результат поиска → оценка позиции (с точки зрения белых) для классификации
+function toEval(r, st) {
+  const l1 = r.lines[0] || { kind:'cp', v:0, pv:[r.best] };
+  const e = whiteScore(l1, st.turn);
+  e.best = l1.pv[0] || r.best; e.pv = l1.pv.slice(0, 6);
+  if (r.lines[1]) { const e2 = whiteScore(r.lines[1], st.turn); e.alt = e2.mate != null ? { mate:e2.mate } : { cp:e2.cp }; e.altMove = r.lines[1].pv[0]; }
+  return e;
+}
+function terminalEval(st) { return C.legal(st).length ? null : (C.inCheck(st) ? { mate:0, matedSide:st.turn } : { cp:0 }); }
 
 /* ---------- оценки ---------- */
 // оценка с точки зрения белых: {cp} или {mate} (mate>0 — белые матуют; mate=0 — мат уже на доске)
@@ -1438,6 +1532,7 @@ async function analyzeGame(game, backFn) {
       <button class="btn sec" id="anaStop" style="width:100%">Отмена</button>`;
     $('#anaStop').onclick = back;
     show('anaWait', 'Анализ партии', back);
+    Eng.stop();
     try { await Eng.start(); await Eng.newGame(); }
     catch (e) { $('#anaTxt').textContent = 'Не удалось запустить движок. Откройте приложение один раз с интернетом, чтобы он скачался.'; return; }
     E = [];
@@ -1445,13 +1540,10 @@ async function analyzeGame(game, backFn) {
       if (anaCancel) return;
       const s = P[i].st;
       if (!C.legal(s).length) { E.push(C.inCheck(s) ? { mate:0, matedSide:s.turn } : { cp:0 }); continue; }
-      const r = await Eng.analyse(C.toFEN(s, P[i].hm, P[i].fm), DEPTH);
+      let r;
+      try { r = await Eng.analyse(C.toFEN(s, P[i].hm, P[i].fm), DEPTH); } catch (e) { return; }
       if (anaCancel) return;
-      const l1 = r.lines[0] || { kind:'cp', v:0, pv:[r.best] };
-      const e = whiteScore(l1, s.turn);
-      e.best = l1.pv[0] || r.best; e.pv = l1.pv.slice(0, 6);
-      if (r.lines[1]) { const e2 = whiteScore(r.lines[1], s.turn); e.alt = e2.mate != null ? { mate:e2.mate } : { cp:e2.cp }; e.altMove = r.lines[1].pv[0]; }
-      E.push(e);
+      E.push(toEval(r, s));
       $('#anaTxt').textContent = `Позиция ${i + 1} из ${P.length}`;
       $('#anaBar').style.width = Math.round((i + 1) / P.length * 100) + '%';
     }
@@ -1474,38 +1566,42 @@ function classify(P, E, book, startFen) {
     let acc = 103.1668 * Math.exp(-0.04354 * loss) - 3.1669; acc = Math.max(0, Math.min(100, acc));
     let k;
     const lk = line.join(' ');
-    if (inBook && book.prefixes.has(lk)) { k = 'book'; if (book.names.has(lk)) opening = book.names.get(lk); }
-    else {
-      inBook = false;
-      const isBest = u === E[i].best;
-      // «Блестящий»: жертва фигуры, которая оказывается лучшим или почти лучшим ходом
-      const mover = before.b[m.from].toLowerCase(), val = PVAL[mover];
-      const captured = m.capture ? (m.ep ? 1 : PVAL[before.b[m.to].toLowerCase()]) : 0;
-      let sac = false;
-      if (val >= 3 && val < 100 && captured < val && C.attacked(after.b, m.to, after.turn)) {
-        const takers = C.legal(after).filter(x => x.to === m.to);
-        const cheap = takers.some(x => PVAL[after.b[x.from].toLowerCase()] < val);
-        const defended = C.attacked(after.b, m.to, c);
-        sac = takers.length > 0 && (cheap || !defended);
-      }
-      const alt = E[i].alt ? winFor(E[i].alt, c) : null;
-      const prevWasRecapture = i > 0 && P[i].m && P[i].m.to === m.to;
-      const prevCls = i > 0 ? out[i - 1].k : null;
-      const forcedMate = isBest && E[i].mate != null && (c === 'w' ? E[i].mate > 0 : E[i].mate < 0);
-      if (sac && !C.inCheck(before) && ((loss <= 2 && wa >= 50 && wb < 97) || forcedMate)) k = 'brilliant';
-      else if (isBest && alt != null && winFor(E[i], c) - alt >= 20 && wb > 15 && wb < 95 && !prevWasRecapture && !C.inCheck(before)) k = 'great';
-      else if (isBest || loss < 1) k = 'best';
-      else if (loss < 2.5) k = 'excellent';
-      else if (loss < 6) k = 'good';
-      else if ((prevCls === 'mistake' || prevCls === 'blunder' || prevCls === 'miss') && loss >= 10 && wa >= 30) k = 'miss';
-      else if (loss < 10) k = 'inaccuracy';
-      else if (loss < 20) k = 'mistake';
-      else k = 'blunder';
-    }
+    k = judge(before, after, m, P[i].m, E[i], E[i + 1], i > 0 ? out[i - 1].k : null, loss);
+    // дебютный ход из базы считаем «теорией», только если он не ошибочный
+    if (inBook && book.prefixes.has(lk) && loss < 6) { k = 'book'; if (book.names.has(lk)) opening = book.names.get(lk); }
+    else inBook = false;
     if (k === 'book') acc = 100;
     out.push({ k, acc, loss, c });
   }
   return { moves:out, opening };
+}
+function judge(before, after, m, prevM, eB, eA, prevCls, loss) {
+  const c = before.turn, u = C.uci(m);
+  const wb = winFor(eB, c), wa = winFor(eA, c);
+  if (loss == null) loss = Math.max(0, wb - wa);
+  const isBest = u === eB.best;
+  // «Блестящий»: жертва фигуры, которая оказывается лучшим или почти лучшим ходом
+  const mover = before.b[m.from].toLowerCase(), val = PVAL[mover];
+  const captured = m.capture ? (m.ep ? 1 : PVAL[before.b[m.to].toLowerCase()]) : 0;
+  let sac = false;
+  if (val >= 3 && val < 100 && captured < val && C.attacked(after.b, m.to, after.turn)) {
+    const takers = C.legal(after).filter(x => x.to === m.to);
+    const cheap = takers.some(x => PVAL[after.b[x.from].toLowerCase()] < val);
+    const defended = C.attacked(after.b, m.to, c);
+    sac = takers.length > 0 && (cheap || !defended);
+  }
+  const alt = eB.alt ? winFor(eB.alt, c) : null;
+  const prevWasRecapture = prevM && prevM.to === m.to;
+  const forcedMate = isBest && eB.mate != null && (c === 'w' ? eB.mate > 0 : eB.mate < 0);
+  if (sac && !C.inCheck(before) && ((loss <= 2 && wa >= 50 && wb < 97) || forcedMate)) return 'brilliant';
+  if (isBest && alt != null && wb - alt >= 20 && wb > 15 && wb < 95 && !prevWasRecapture && !C.inCheck(before)) return 'great';
+  if (isBest || loss < 1) return 'best';
+  if (loss < 2.5) return 'excellent';
+  if (loss < 6) return 'good';
+  if ((prevCls === 'mistake' || prevCls === 'blunder' || prevCls === 'miss') && loss >= 10 && wa >= 30) return 'miss';
+  if (loss < 10) return 'inaccuracy';
+  if (loss < 20) return 'mistake';
+  return 'blunder';
 }
 function gameAccuracy(list) {
   if (!list.length) return null;
@@ -1701,7 +1797,7 @@ function anaMenuHTML() {
      <button class="btn" id="pgnGo" style="width:100%">Анализировать</button>
    </div>
    ${hist.length ? `<h2>Мои партии</h2><div class="list" style="grid-template-columns:1fr">${hist.map((h, i) =>
-     `<button class="item" data-h="${i}"><span class="t"><b>${resultStr(h.result)} · ${h.result && !h.result.draw ? 'победили ' + sideRu(h.result.winner) : h.result ? 'ничья' : ''}</b><span class="n">${fmtD(h.date)} · ${Math.ceil(h.moves.length / 2)} ходов · ${(TCS.find(t => t.id === h.tc) || TCS[0]).name}</span></span><span class="muted small">Анализ ›</span></button>`).join('')}</div>` : ''}`;
+     `<button class="item" data-h="${i}"><span class="t"><b>${resultStr(h.result)} · ${h.bot ? (h.result && !h.result.draw ? (h.result.winner === h.bot.color ? 'победа' : 'поражение') : 'ничья') + ' · ' + LEVELS[h.bot.lvl].icon + ' ' + LEVELS[h.bot.lvl].name : h.result && !h.result.draw ? 'победили ' + sideRu(h.result.winner) : h.result ? 'ничья' : ''}</b><span class="n">${fmtD(h.date)} · ${Math.ceil(h.moves.length / 2)} ходов · ${h.bot ? 'с тренером' : 'вдвоём · ' + (TCS.find(t => t.id === h.tc) || TCS[0]).name}</span></span><span class="muted small">Анализ ›</span></button>`).join('')}</div>` : ''}`;
 }
 function bindAnaMenu() {
   const saved = loadGame(), hist = loadHistory();
@@ -1713,7 +1809,7 @@ function bindAnaMenu() {
   };
   document.querySelectorAll('#anaMenu [data-h]').forEach(b => b.onclick = () => {
     const h = hist[+b.dataset.h];
-    analyzeGame({ id:h.id, moves:h.moves, result:h.result, white:'Белые', black:'Чёрные', fen:START_FEN });
+    analyzeGame({ id:h.id, moves:h.moves, result:h.result, fen:START_FEN, ...namesFor(h.bot) });
   });
 }
 
@@ -1730,6 +1826,151 @@ function goAnaMenu() {
   $('#anaMenu').innerHTML = anaMenuHTML() + (loadHistory().length ? '' : '<p class="muted small" style="margin-top:14px">Сыгранные партии появятся здесь, когда вы доиграете партию в «Игре вдвоём». Анализ можно запустить и во время партии — кнопкой «Анализ».</p>');
   bindAnaMenu();
   show('anaMenu', 'Анализ партий', goHome);
+}
+
+/* ===== Игра с тренером и «кружок» оценки хода ===== */
+const BKEY = 'chess-bot-v1';
+const LIVE_DEPTH = 12;
+const LEVELS = [
+  { name:'Новичок',            elo:250,  icon:'🐣', depth:1, mpv:10, T:300, blunder:.30 },
+  { name:'Начинающий',         elo:500,  icon:'🙂', depth:2, mpv:8,  T:200, blunder:.15 },
+  { name:'Любитель',           elo:800,  icon:'😎', depth:3, mpv:6,  T:120, blunder:.08 },
+  { name:'Средний',            elo:1100, icon:'🧐', depth:5, mpv:5,  T:60,  blunder:.04 },
+  { name:'Клубный',            elo:1400, icon:'🏅', uci:1400, ms:300 },
+  { name:'Опытный',            elo:1700, icon:'🎓', uci:1700, ms:400 },
+  { name:'Кандидат в мастера', elo:2000, icon:'🥈', uci:2000, ms:500 },
+  { name:'Мастер',             elo:2300, icon:'🥇', uci:2300, ms:700 },
+  { name:'Гроссмейстер',       elo:2600, icon:'👑', uci:2600, ms:900 },
+  { name:'Максимум',           elo:3000, icon:'🤖', max:true, ms:1500 }
+];
+const botName = b => { const l = LEVELS[b.lvl] || LEVELS[0]; return `Тренер «${l.name}» (≈${l.elo})`; };
+const sleepMs = ms => new Promise(r => setTimeout(r, ms));
+
+/* ---------- выбор хода тренером ---------- */
+async function pickBotMove(fen, st, lvl) {
+  if (lvl.max) return (await Eng.search(fen, { movetime:lvl.ms, mpv:1 })).best;
+  if (lvl.uci) return (await Eng.search(fen, { movetime:lvl.ms, mpv:1, elo:lvl.uci })).best;
+  const r = await Eng.search(fen, { depth:lvl.depth, mpv:lvl.mpv });
+  const legal = C.legal(st);
+  if (Math.random() < lvl.blunder) return C.uci(legal[Math.floor(Math.random() * legal.length)]);
+  const cand = r.lines.filter(Boolean).map(l => ({ u:l.pv[0], s:l.kind === 'mate' ? (l.v > 0 ? 10000 - l.v * 10 : -10000 - l.v * 10) : l.v }));
+  if (!cand.length) return r.best;
+  const top = Math.max(...cand.map(c => c.s));
+  const w = cand.map(c => Math.exp((c.s - top) / lvl.T));
+  let x = Math.random() * w.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < cand.length; i++) { x -= w[i]; if (x <= 0) return cand[i].u; }
+  return cand[0].u;
+}
+
+async function botMove() {
+  const g = G, gen = g.gen;
+  if (!g.bot || g.result || g.st.turn === g.bot.color) return;
+  g.busy = true; gameUi();
+  const lvl = LEVELS[g.bot.lvl], h = g.H[g.H.length - 1], t0 = Date.now();
+  let u;
+  try { u = await Eng.task(() => pickBotMove(C.toFEN(h.st, h.hm, Math.floor(g.moves.length / 2) + 1), h.st, lvl)); }
+  catch (e) { if (g === G) { g.busy = false; gameUi(); } return; }
+  await sleepMs(Math.max(0, 450 - (Date.now() - t0)));
+  if (g !== G || g.gen !== gen || g.result) return;
+  g.busy = false;
+  const m = C.findUci(g.st, u) || C.legal(g.st)[0];
+  gameMove(m, false, true);
+}
+
+/* ---------- живая оценка ходов ---------- */
+const liveOn = () => G && G.game && (G.bot ? S.coachCls !== false : S.liveCls !== false);
+async function evalPly(g, ply) {
+  if (ply < 0 || g.evals[ply]) return g.evals[ply];
+  const h = g.H[ply]; if (!h) return null;
+  const t = terminalEval(h.st);
+  if (t) return (g.evals[ply] = t);
+  const r = await Eng.task(() => Eng.search(C.toFEN(h.st, h.hm, Math.floor(ply / 2) + 1), { depth:LIVE_DEPTH, mpv:2 }));
+  if (g.H[ply] !== h) return null;          // ход успели отменить
+  return (g.evals[ply] = toEval(r, h.st));
+}
+// вызывается после каждого хода и при открытии партии
+async function afterMove() {
+  const g = G, gen = g.gen, ply = g.moves.length;
+  const need = g.bot || liveOn();
+  if (need) { try { await evalPly(g, ply - 1); await evalPly(g, ply); } catch (e) {} }
+  if (g !== G || g.gen !== gen) return;
+  if (ply && liveOn() && g.evals[ply - 1] && g.evals[ply]) await classifyPly(g, ply);
+  if (g !== G || g.gen !== gen) return;
+  if (g.bot && !g.result && g.st.turn !== g.bot.color) botMove();
+}
+async function classifyPly(g, ply) {
+  if (g.cls[ply]) return showCls(g, ply);
+  const book = await openingBook();
+  const h = g.H[ply], before = g.H[ply - 1].st, m = h.m;
+  let k;
+  const prefix = g.moves.slice(0, ply).join(' ');
+  const prevBook = ply === 1 || g.cls[ply - 1] === 'book';
+  k = judge(before, h.st, m, g.H[ply - 1].m, g.evals[ply - 1], g.evals[ply], g.cls[ply - 1] || null);
+  const loss = Math.max(0, winFor(g.evals[ply - 1], before.turn) - winFor(g.evals[ply], before.turn));
+  if (prevBook && book.prefixes.has(prefix) && loss < 6) k = 'book';
+  g.cls[ply] = k;
+  const best = g.evals[ply - 1].best, bm = best && C.findUci(before, best);
+  g.clsBest[ply] = bm && C.uci(bm) !== C.uci(m) ? C.san(before, bm, true) : null;
+  if (book.names.has(prefix)) g.opening = book.names.get(prefix);
+  showCls(g, ply);
+}
+function showCls(g, ply) {
+  if (g !== G || g.moves.length !== ply) return;
+  const h = g.H[ply], mover = g.H[ply - 1].st.turn;
+  if (g.bot && mover !== g.bot.color) return;      // в игре с тренером оцениваем только ваши ходы
+  const c = CLS[g.cls[ply]];
+  g.badge = [h.m.to, 'cls', c.icon]; g.badgeColor = c.color; g.badgePly = ply;
+  drawBadge();
+  gameUi();
+}
+// текст «кружка» для строки статуса
+function clsLine(g, ply) {
+  const k = g.cls[ply]; if (!k) return '';
+  const c = CLS[k];
+  const bad = ['inaccuracy', 'mistake', 'miss', 'blunder'].includes(k);
+  return `<span class="clsdot" style="background:${c.color}">${c.icon}</span>${g.sans[ply - 1]} — ${c.name.toLowerCase()}${bad && g.clsBest[ply] ? `. Лучше было ${g.clsBest[ply]}` : ''}`;
+}
+
+/* ---------- подсказка ---------- */
+async function coachHint() {
+  const g = G; if (!g || g.result || g.busy || g.st.turn !== g.user) return;
+  setStatus('', 'Подсказка', 'Тренер смотрит позицию…');
+  let e;
+  try { e = await evalPly(g, g.moves.length); } catch (err) { return; }
+  if (g !== G || !e || !e.best) return;
+  const m = C.findUci(g.st, e.best); if (!m) return;
+  g.arrows = [[m.from, m.to, '#4a8fe7']]; g.hl.hint = [m.from];
+  render(); gameUi();
+  setStatus('', 'Подсказка тренера', `Сильнее всего здесь ${C.san(g.st, m, true)}. Стрелка показывает ход.`);
+}
+
+/* ---------- меню игры с тренером ---------- */
+function goBotMenu() {
+  RV = null; MODE = null;
+  clearInterval(gameTimer); gameTimer = null;
+  const saved = loadGame(BKEY);
+  const savedOn = saved && saved.moves.length && !saved.result && saved.bot;
+  const lv = S.botLvl ?? 3;
+  $('#botMenu').innerHTML = `
+   ${savedOn ? `<button class="tile main" id="bContinue" style="margin-bottom:14px"><span class="ic" style="background:#5d8a35">▶️</span><span><b>Продолжить партию</b><span class="muted">${botName(saved.bot)} · ${Math.ceil(saved.moves.length / 2)} ${plural(Math.ceil(saved.moves.length / 2), 'ход', 'хода', 'ходов')}</span></span></button>` : ''}
+   <h2 style="margin-top:0">Уровень тренера</h2>
+   <div class="levels">${LEVELS.map((l, i) => `<button data-l="${i}" class="${lv === i ? 'on' : ''}"><span class="li">${l.icon}</span><b>${l.name}</b><span>≈ ${l.elo}</span></button>`).join('')}</div>
+   <h2>Ваш цвет</h2>
+   <div class="seg">${[['w', '♔ Белые'], ['r', '🎲 Случайно'], ['b', '♚ Чёрные']].map(([c, n]) => `<button data-c="${c}" class="${(S.botColor || 'w') === c ? 'on' : ''}">${n}</button>`).join('')}</div>
+   <label class="switch"><input type="checkbox" id="bCls" ${S.coachCls !== false ? 'checked' : ''}><span>Оценивать мои ходы кружком, как на chess.com</span></label>
+   <p class="muted small">После каждого вашего хода тренер покажет значок: лучший ход, неточность, ошибка, зевок… Если ошиблись — подскажет, что было сильнее, и ход можно взять назад.</p>
+   <button class="btn" id="bPlay" style="width:100%">Играть</button>
+   <p class="muted small" style="margin-top:12px">Рейтинги уровней примерные. Тренер — движок Stockfish, работает без интернета.</p>`;
+  $('#botMenu').querySelectorAll('[data-l]').forEach(b => b.onclick = () => { S.botLvl = +b.dataset.l; save(); goBotMenu(); });
+  $('#botMenu').querySelectorAll('[data-c]').forEach(b => b.onclick = () => { S.botColor = b.dataset.c; save(); goBotMenu(); });
+  $('#bCls').onchange = e => { S.coachCls = e.target.checked; save(); };
+  $('#bPlay').onclick = () => {
+    if (savedOn && !confirm('Начать новую партию? Текущая будет удалена.')) return;
+    const c = S.botColor === 'r' ? (Math.random() < .5 ? 'w' : 'b') : (S.botColor || 'w');
+    startGame(null, { lvl:S.botLvl ?? 3, color:c });
+  };
+  if (savedOn) $('#bContinue').onclick = () => startGame(saved, saved.bot);
+  show('botMenu', 'Игра с тренером', goHome);
 }
 
 </script>
