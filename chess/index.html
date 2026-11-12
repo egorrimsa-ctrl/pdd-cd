@@ -127,6 +127,25 @@ h2{font-size:17px;margin:20px 0 10px}
 textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;border-radius:8px;padding:8px;font:12px ui-monospace,monospace}
 .graph{width:100%;height:150px;background:var(--panel);border-radius:10px;display:block}
 
+/* --- игра вдвоём --- */
+#btns.wrap{flex-wrap:wrap}
+#btns.wrap .btn{flex:1 1 calc(50% - 8px)}
+.clk{flex:1;display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--panel);border-radius:8px;padding:8px 12px;color:var(--muted)}
+.clk b{font-size:22px;font-variant-numeric:tabular-nums;color:var(--text)}
+.clk.on{background:#f2f1ef;color:#302e2b}.clk.on b{color:#111}
+.clk.low b{color:var(--red)}
+.mat{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
+.mat .cap{font-weight:400;font-size:17px;letter-spacing:-2px;color:var(--text)}
+.mat .adv{color:var(--green2)}
+.moves{max-height:30vh;overflow-y:auto;color:var(--text);font-size:15px;line-height:1.7}
+.moves .mv{white-space:nowrap;margin-right:6px}
+.moves i{font-style:normal;color:var(--muted)}
+.tcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-bottom:14px}
+.tcs button{background:var(--panel);border-radius:10px;padding:14px 6px;font-weight:600;border:2px solid transparent}
+.tcs button.on{border-color:var(--green);background:#3a4a2c}
+.switch{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:10px;padding:14px;font-weight:600}
+.switch input{width:22px;height:22px;accent-color:var(--green);flex:none}
+
 .wK{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgdmlld0JveD0iMCAwIDQ1IDQ1Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMTEuNjNWNk0yMCA4aDUiLz48cGF0aCBmaWxsPSIjZmZmIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMjVzNC41LTcuNSAzLTEwLjVjMCAwLTEtMi41LTMtMi41cy0zIDIuNS0zIDIuNWMtMS41IDMgMyAxMC41IDMgMTAuNSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMS41IDM3YzUuNSAzLjUgMTUuNSAzLjUgMjEgMHYtN3M5LTQuNSA2LTEwLjVjLTQtNi41LTEzLjUtMy41LTE2IDRWMjd2LTMuNWMtMy41LTcuNS0xMy0xMC41LTE2LTQtMyA2IDUgMTAgNSAxMHoiLz48cGF0aCBkPSJNMTEuNSAzMGM1LjUtMyAxNS41LTMgMjEgMG0tMjEgMy41YzUuNS0zIDE1LjUtMyAyMSAwbS0yMSAzLjVjNS41LTMgMTUuNS0zIDIxIDAiLz48L2c+PC9zdmc+)}
 .wQ{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBkPSJNOCAxMmEyIDIgMCAxIDEtNCAwIDIgMiAwIDEgMSA0IDBtMTYuNS00LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTQxIDEyYTIgMiAwIDEgMS00IDAgMiAyIDAgMSAxIDQgME0xNiA4LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTMzIDlhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwIi8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzguNS0xLjUgMjEtMS41IDI3IDBsMi0xMi03IDExVjExbC01LjUgMTMuNS0zLTE1LTMgMTUtNS41LTE0VjI1TDcgMTR6Ii8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzAgMiAxLjUgMiAyLjUgNCAxIDEuNSAxIDEgLjUgMy41LTEuNSAxLTEuNSAyLjUtMS41IDIuNS0xLjUgMS41LjUgMi41LjUgMi41IDYuNSAxIDE2LjUgMSAyMyAwIDAgMCAxLjUtMSAwLTIuNSAwIDAgLjUtMS41LTEtMi41LS41LTIuNS0uNS0yIC41LTMuNSAxLTIgMi41LTIgMi41LTQtOC41LTEuNS0xOC41LTEuNS0yNyAweiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0xMS41IDMwYzMuNS0xIDE4LjUtMSAyMiAwTTEyIDMzLjVjNi0xIDE1LTEgMjEgMCIvPjwvZz48L3N2Zz4=)}
 .wR{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBzdHJva2UtbGluZWNhcD0iYnV0dCIgZD0iTTkgMzloMjd2LTNIOXptMy0zdi00aDIxdjR6bS0xLTIyVjloNHYyaDVWOWg1djJoNVY5aDR2NSIvPjxwYXRoIGQ9Im0zNCAxNC0zIDNIMTRsLTMtMyIvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMzEgMTd2MTIuNUgxNFYxNyIvPjxwYXRoIGQ9Im0zMSAyOS41IDEuNSAyLjVoLTIwbDEuNS0yLjUiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMTEgMTRoMjMiLz48L2c+PC9zdmc+)}
@@ -153,6 +172,7 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
   <section id="rushMenu" class="screen" hidden></section>
   <section id="rushEnd" class="screen" hidden></section>
   <section id="stats" class="screen" hidden></section>
+  <section id="gameMenu" class="screen" hidden></section>
   <section id="play" class="screen" hidden>
     <div class="play">
       <div class="board-col">
@@ -351,7 +371,7 @@ const RUSH_MODES = [
 /* ---------- хранилище ---------- */
 const KEY = 'chess-puzzles-v1';
 const fresh = () => ({ rating:1200, best:1200, hist:[1200], rated:0, ratedWon:0, attempts:0, firstTry:0,
-  seen:{}, theme:{}, rush:{}, muted:false, diff:'mine' });
+  seen:{}, theme:{}, rush:{}, muted:false, diff:'mine', gameTc:'none', autoFlip:true, gameFlip:false });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
@@ -411,7 +431,7 @@ function pickNear(target, pool, avoid) {
 
 /* ---------- экраны ---------- */
 let screen = 'home', backTo = null;
-const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats'];
+const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu'];
 function show(name, title, back) {
   screen = name; backTo = back || null;
   for (const s of SCREENS) $('#' + s).hidden = s !== name;
@@ -439,6 +459,7 @@ function goHome() {
     <button class="tile main" id="tRated"><span class="ic" style="background:#5d8a35">🧩</span><span><b>Решать задачи</b><span class="muted">Подбор по вашему рейтингу · ${PZ.length} задач</span></span></button>
     <button class="tile" id="tRush"><span class="ic" style="background:#e3a23b">⚡</span><span><b>Puzzle Rush</b><span class="muted">На время, 3 ошибки — конец${bestRush ? ' · рекорд ' + bestRush : ''}</span></span></button>
     <button class="tile" id="tThemes"><span class="ic" style="background:#4a7fd1">🎯</span><span><b>Темы</b><span class="muted">Вилки, связки, маты в 2–3 хода и другое</span></span></button>
+    <button class="tile" id="tGame"><span class="ic" style="background:#c9653b">♞︎</span><span><b>Игра вдвоём</b><span class="muted">На одной доске, с часами или без${loadGame() && loadGame().moves.length && !loadGame().result ? ' · есть незаконченная партия' : ''}</span></span></button>
     <button class="tile" id="tStats"><span class="ic" style="background:#8a5bc9">📈</span><span><b>Статистика</b><span class="muted">Решено ${S.attempts} · с первой попытки ${S.attempts ? Math.round(S.firstTry / S.attempts * 100) : 0}%</span></span></button>
   </div>
   <div class="foot">${appFoot()}</div>`;
@@ -446,6 +467,7 @@ function goHome() {
   $('#tRush').onclick = () => goRushMenu();
   $('#tThemes').onclick = () => goThemes();
   $('#tStats').onclick = () => goStats();
+  $('#tGame').onclick = () => goGameMenu();
   show('home', 'Шахматные задачи', null);
 }
 
@@ -614,6 +636,7 @@ function askPromo(ms, dropped) {
 function hidePromo() { $('#promo').hidden = true; }
 
 function userMove(m, dropped) {
+  if (G.game) return gameMove(m, dropped);
   const u = C.uci(m), exp = G.p.moves[G.idx];
   const after = C.make(G.st, m), mate = C.isMate(after);
   const prev = G.st, prevLast = G.last;
@@ -677,6 +700,8 @@ function applyRating(win) {
 
 function updateUi() {
   if (!G) return;
+  if (G.game) return gameUi();
+  $('#btns').classList.remove('wrap');
   const k = MODE.kind;
   if (k === 'rush') { rushInfo(); setButtons([]); setMeta(''); return; }
   // шапка
@@ -947,6 +972,253 @@ setMute();
 loadPuzzles().then(() => { goHome(); checkOffline(); }).catch(() => {
   $('#home').innerHTML = '<p>Не удалось загрузить задачи. Откройте приложение один раз с интернетом.</p>';
 });
+
+/* ===== Игра вдвоём на одной доске ===== */
+const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+const GKEY = 'chess-game-v1';
+const TCS = [
+  { id:'none', name:'Без часов', base:0, inc:0 },
+  { id:'1+0', name:'1 мин', base:60, inc:0 },
+  { id:'3+2', name:'3 + 2', base:180, inc:2 },
+  { id:'5+0', name:'5 мин', base:300, inc:0 },
+  { id:'10+0', name:'10 мин', base:600, inc:0 },
+  { id:'15+10', name:'15 + 10', base:900, inc:10 },
+  { id:'30+0', name:'30 мин', base:1800, inc:0 }
+];
+const FIG = { K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘' };
+const VAL = { p:1, n:3, b:3, r:5, q:9, k:0 };
+const sideRu = c => c === 'w' ? 'белые' : 'чёрные';
+const SideRu = c => c === 'w' ? 'Белые' : 'Чёрные';
+const otherC = c => c === 'w' ? 'b' : 'w';
+let gameTimer = null;
+
+function san(st, m) {
+  if (m.castle) return m.castle === 'k' ? 'O-O' : 'O-O-O';
+  const p = st.b[m.from].toUpperCase(), to = C.sqName(m.to);
+  let s;
+  if (p === 'P') s = (m.capture ? C.sqName(m.from)[0] + 'x' : '') + to + (m.promo ? '=' + FIG[m.promo.toUpperCase()] : '');
+  else {
+    const rivals = C.legal(st).filter(x => x.to === m.to && x.from !== m.from && st.b[x.from] === st.b[m.from]);
+    let dis = '';
+    if (rivals.length) {
+      const f = C.sqName(m.from);
+      const sameFile = rivals.some(x => C.sqName(x.from)[0] === f[0]), sameRank = rivals.some(x => C.sqName(x.from)[1] === f[1]);
+      dis = !sameFile ? f[0] : !sameRank ? f[1] : f;
+    }
+    s = FIG[p] + dis + (m.capture ? 'x' : '') + to;
+  }
+  const after = C.make(st, m);
+  if (C.inCheck(after)) s += C.legal(after).length ? '+' : '#';
+  return s;
+}
+const posKey = st => st.b.join(',') + st.turn + st.castle + st.ep;
+
+function insufficient(b) {
+  const rest = [];
+  b.forEach((p, s) => { if (p && p.toLowerCase() !== 'k') rest.push([p.toLowerCase(), s]); });
+  if (!rest.length) return true;
+  if (rest.length === 1 && (rest[0][0] === 'b' || rest[0][0] === 'n')) return true;
+  if (rest.every(([p]) => p === 'b')) { const col = s => ((s >> 3) + (s & 7)) % 2; return rest.every(([, s]) => col(s) === col(rest[0][1])); }
+  return false;
+}
+
+function replay(moves) {
+  let st = C.parseFEN(START_FEN);
+  const H = [{ st, key:posKey(st), hm:0, m:null }], sans = [], ok = [];
+  for (const u of moves) {
+    const m = C.findUci(st, u); if (!m) break;
+    sans.push(san(st, m)); ok.push(u);
+    const hm = st.b[m.from].toLowerCase() === 'p' || m.capture ? 0 : H[H.length - 1].hm + 1;
+    st = C.make(st, m);
+    H.push({ st, key:posKey(st), hm, m });
+  }
+  return { st, H, sans, moves:ok };
+}
+
+/* ---------- часы ---------- */
+const now = () => Date.now();
+function clockLeft(c) {
+  const k = G.clock; if (!k) return 0;
+  return k[c] - (k.running && !k.paused && G.st.turn === c && !G.result ? now() - k.since : 0);
+}
+function clockCommit() {
+  const k = G && G.game && G.clock; if (!k || !k.running || k.paused || G.result) return;
+  k[G.st.turn] -= now() - k.since; k.since = now();
+}
+function clockPause(p) {
+  if (!G || !G.game || !G.clock) return;
+  if (p) { clockCommit(); G.clock.paused = true; } else { G.clock.paused = false; G.clock.since = now(); }
+  saveGame();
+}
+const fmt = ms => {
+  ms = Math.max(0, ms);
+  if (ms < 10000) return (ms / 1000).toFixed(1);
+  const s = Math.ceil(ms / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+};
+function gameTick() {
+  if (!G || !G.game) { clearInterval(gameTimer); gameTimer = null; return; }
+  if (!G.clock || G.result) return;
+  const c = G.st.turn;
+  if (clockLeft(c) <= 0) {
+    G.clock[c] = 0;
+    const win = otherC(c);
+    const winPieces = G.st.b.filter(p => p && C.colorOf(p) === win && p.toLowerCase() !== 'k');
+    const cannot = !winPieces.length || (winPieces.length === 1 && 'bn'.includes(winPieces[0].toLowerCase()));
+    endGame(cannot ? { draw:true, why:'Время вышло, но у соперника не хватает фигур для мата' } : { winner:win, why:`У ${c === 'w' ? 'белых' : 'чёрных'} кончилось время` });
+    return;
+  }
+  drawClocks();
+}
+function drawClocks() {
+  if (!G.clock) return;
+  for (const c of ['w', 'b']) {
+    const el = $('#clk-' + c); if (!el) continue;
+    const ms = clockLeft(c);
+    el.querySelector('b').textContent = fmt(ms);
+    el.classList.toggle('on', G.st.turn === c && !G.result && G.clock.running);
+    el.classList.toggle('low', ms < 20000);
+  }
+}
+
+/* ---------- партия ---------- */
+function saveGame() {
+  if (!G || !G.game) return;
+  clockCommit();
+  const k = G.clock;
+  try { localStorage.setItem(GKEY, JSON.stringify({ moves:G.moves, tc:G.tc, clock:k ? { w:k.w, b:k.b } : null, result:G.result || null })); } catch (e) {}
+}
+function loadGame() { try { return JSON.parse(localStorage.getItem(GKEY) || 'null'); } catch (e) { return null; } }
+
+function startGame(saved) {
+  const tc = TCS.find(t => t.id === (saved ? saved.tc : S.gameTc)) || TCS[0];
+  const r = replay(saved ? saved.moves : []);
+  G = { game:true, tc:tc.id, inc:tc.inc * 1000, st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn,
+        done:false, busy:false, sel:null, targets:[], epT:-1, last:null, hl:{ hint:[], wrong:-1, good:-1, check:-1 }, badge:null, result:null };
+  const lastH = r.H[r.H.length - 1]; if (lastH.m) G.last = [lastH.m.from, lastH.m.to];
+  G.clock = tc.base ? { w:saved && saved.clock ? saved.clock.w : tc.base * 1000, b:saved && saved.clock ? saved.clock.b : tc.base * 1000,
+                        running:r.moves.length > 0, paused:false, since:now() } : null;
+  MODE = { kind:'game' };
+  if (saved && saved.result) { G.result = saved.result; G.done = true; }
+  setFlip();
+  hidePromo();
+  show('play', 'Игра вдвоём', () => { clockPause(true); goGameMenu(); });
+  render(); gameUi();
+  clearInterval(gameTimer); gameTimer = setInterval(gameTick, 100);
+  saveGame();
+}
+function setFlip() { flip = S.autoFlip ? G.st.turn === 'b' : !!S.gameFlip; }
+
+function gameMove(m, dropped) {
+  const prev = G.st;
+  clockCommit();
+  const k = G.clock;
+  if (k) { if (k.running) k[prev.turn] += G.inc; k.running = true; k.since = now(); }
+  G.sans.push(san(prev, m));
+  const hm = prev.b[m.from].toLowerCase() === 'p' || m.capture ? 0 : G.H[G.H.length - 1].hm + 1;
+  G.st = C.make(prev, m); G.moves.push(C.uci(m));
+  G.H.push({ st:G.st, key:posKey(G.st), hm, m });
+  G.last = [m.from, m.to]; deselect(); G.user = G.st.turn;
+  playSound(m);
+  render(dropped ? (m.castle ? animsFor(m).slice(1) : null) : animsFor(m));
+  checkEnd();
+  saveGame();
+  gameUi();
+  if (S.autoFlip && !G.result) {
+    G.busy = true;
+    setTimeout(() => { if (!G || !G.game) return; G.busy = false; setFlip(); render(); }, 380);
+  }
+}
+function checkEnd() {
+  const st = G.st, n = C.legal(st).length;
+  if (!n) return endGame(C.inCheck(st) ? { winner:otherC(st.turn), why:'Мат' } : { draw:true, why:'Пат: ходить некуда, но шаха нет' }, true);
+  if (insufficient(st.b)) return endGame({ draw:true, why:'Ни у кого не хватает фигур для мата' }, true);
+  const key = posKey(st);
+  if (G.H.filter(h => h.key === key).length >= 3) return endGame({ draw:true, why:'Позиция повторилась три раза' }, true);
+  if (G.H[G.H.length - 1].hm >= 100) return endGame({ draw:true, why:'50 ходов без взятий и ходов пешками' }, true);
+}
+function endGame(res, quiet) {
+  clockCommit();
+  G.result = res; G.done = true; deselect();
+  setTimeout(() => SND.end(), quiet ? 250 : 0);
+  saveGame();
+  if (!quiet) { render(); gameUi(); }
+}
+function undoMove() {
+  if (!G.moves.length) return;
+  clockCommit();
+  const r = replay(G.moves.slice(0, -1));
+  Object.assign(G, { st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn, result:null, done:false, busy:false });
+  deselect();
+  const h = r.H[r.H.length - 1]; G.last = h.m ? [h.m.from, h.m.to] : null;
+  if (G.clock) { G.clock.since = now(); if (!G.moves.length) G.clock.running = false; }
+  if (S.autoFlip) setFlip();
+  render(); saveGame(); gameUi();
+}
+
+function material() {
+  const cnt = { w:{}, b:{} }, start = { p:8, n:2, b:2, r:2, q:1 };
+  let score = { w:0, b:0 };
+  for (const p of G.st.b) if (p) { const c = C.colorOf(p), t = p.toLowerCase(); cnt[c][t] = (cnt[c][t] || 0) + 1; score[c] += VAL[t]; }
+  // взятые фигуры: чего не хватает у соперника
+  const took = c => { const o = otherC(c); let s = ''; for (const t of ['q','r','b','n','p']) { const promoted = ['q','r','b','n'].reduce((n, x) => n + Math.max(0, (cnt[o][x] || 0) - start[x]), 0); const miss = Math.max(0, start[t] - (cnt[o][t] || 0) - (t === 'p' ? promoted : 0)); s += (o === 'w' ? { q:'♕\uFE0E',r:'♖\uFE0E',b:'♗\uFE0E',n:'♘\uFE0E',p:'♙\uFE0E' } : { q:'♛\uFE0E',r:'♜\uFE0E',b:'♝\uFE0E',n:'♞\uFE0E',p:'♟\uFE0E' })[t].repeat(miss); } return s; };
+  const d = score.w - score.b;
+  return { w:took('w'), b:took('b'), d };
+}
+
+function gameUi() {
+  if (!G || !G.game) return;
+  const tc = TCS.find(t => t.id === G.tc);
+  setInfo(G.clock
+    ? `<span class="clk" id="clk-w"><span>♔ Белые</span><b></b></span><span class="clk" id="clk-b"><span>♚ Чёрные</span><b></b></span>`
+    : `<span class="grow muted">Без часов</span><span class="muted small">Ход ${Math.floor(G.moves.length / 2) + 1}</span>`);
+  drawClocks();
+  const r = G.result;
+  if (r) {
+    const el = $('#status'); el.className = 'status win';
+    el.innerHTML = `<span>${r.draw ? 'Ничья' : (r.why === 'Мат' ? 'Мат! ' : '') + 'Победили ' + sideRu(r.winner)}<span class="sub">${r.draw || r.why !== 'Мат' ? r.why : (r.winner === 'w' ? 'Чёрный' : 'Белый') + ' король заматован'}</span></span>`;
+  } else {
+    setStatus('', `Ход ${G.st.turn === 'w' ? 'белых' : 'чёрных'}`, C.inCheck(G.st) ? 'Шах!' : G.moves.length ? 'Последний ход: ' + G.sans[G.sans.length - 1] : 'Белые начинают');
+    $('#status .dot').className = 'dot ' + G.st.turn;
+  }
+  const btns = r
+    ? [['Отменить ход', undoMove, 'sec'], ['Новая партия', () => startGame(null)]]
+    : [['Отменить ход', undoMove, 'sec'], ['Повернуть', () => { S.autoFlip = false; S.gameFlip = !flip; save(); setFlip(); render(); gameUi(); }, 'sec'],
+       ['Ничья', () => { if (confirm('Оба игрока согласны на ничью?')) endGame({ draw:true, why:'По соглашению' }); }, 'sec'],
+       ['Сдаться', () => { const c = G.st.turn; if (confirm(`${SideRu(c)} сдаются?`)) endGame({ winner:otherC(c), why:`${SideRu(c)} сдались` }); }, 'sec']];
+  setButtons(btns);
+  $('#btns').classList.add('wrap');
+  $('#btns').querySelector('button').disabled = !G.moves.length;
+  // запись партии
+  const mat = material();
+  let list = '';
+  for (let i = 0; i < G.sans.length; i += 2) list += `<span class="mv"><i>${i / 2 + 1}.</i> ${G.sans[i]}${G.sans[i + 1] ? ' ' + G.sans[i + 1] : ''}</span> `;
+  setMeta(`<div class="mat"><span>Белые взяли: <b class="cap">${mat.w || '—'}</b>${mat.d > 0 ? ` <b class="adv">+${mat.d}</b>` : ''}</span>
+    <span>Чёрные взяли: <b class="cap">${mat.b || '—'}</b>${mat.d < 0 ? ` <b class="adv">+${-mat.d}</b>` : ''}</span></div>
+    <div class="moves" id="moves">${list || '<span class="muted">Ходов пока нет</span>'}</div>
+    <div class="muted small" style="margin-top:6px">${tc.name}${S.autoFlip ? ' · доска поворачивается к тому, кто ходит' : ''}</div>`);
+  const mv = $('#moves'); if (mv) mv.scrollTop = mv.scrollHeight;
+}
+
+function goGameMenu() {
+  clearInterval(gameTimer); gameTimer = null;
+  const saved = loadGame();
+  const savedOn = saved && saved.moves.length && !saved.result;
+  $('#gameMenu').innerHTML = `
+   ${savedOn ? `<button class="tile main" id="gContinue" style="margin-bottom:14px"><span class="ic" style="background:#5d8a35">▶️</span><span><b>Продолжить партию</b><span class="muted">${saved.moves.length} ${plural(saved.moves.length, 'полуход', 'полухода', 'полуходов')} · ${(TCS.find(t => t.id === saved.tc) || TCS[0]).name}</span></span></button>` : ''}
+   <h2 style="margin-top:0">Контроль времени</h2>
+   <div class="tcs">${TCS.map(t => `<button data-tc="${t.id}" class="${S.gameTc === t.id ? 'on' : ''}">${t.name}</button>`).join('')}</div>
+   <label class="switch"><input type="checkbox" id="gFlip" ${S.autoFlip ? 'checked' : ''}><span>Поворачивать доску к тому, кто ходит</span></label>
+   <p class="muted small">Удобно, если передаёте телефон друг другу. Если телефон лежит между вами, выключите — доску можно повернуть кнопкой.</p>
+   <button class="btn" id="gNew" style="width:100%">${savedOn ? 'Начать новую партию' : 'Начать партию'}</button>`;
+  $('#gameMenu').querySelectorAll('[data-tc]').forEach(b => b.onclick = () => { S.gameTc = b.dataset.tc; save(); goGameMenu(); });
+  $('#gFlip').onchange = e => { S.autoFlip = e.target.checked; save(); };
+  $('#gNew').onclick = () => { if (savedOn && !confirm('Начать новую партию? Текущая будет удалена.')) return; startGame(null); };
+  if (savedOn) $('#gContinue').onclick = () => startGame(saved);
+  show('gameMenu', 'Игра вдвоём', goHome);
+}
+function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
+
+document.addEventListener('visibilitychange', () => { if (G && G.game && !G.result) clockPause(document.hidden); });
 
 </script>
 </body>
