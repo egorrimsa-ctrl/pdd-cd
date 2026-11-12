@@ -204,6 +204,7 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
   <section id="stats" class="screen" hidden></section>
   <section id="gameMenu" class="screen" hidden></section>
   <section id="anaWait" class="screen" hidden></section>
+  <section id="anaMenu" class="screen" hidden></section>
   <section id="play" class="screen" hidden>
     <div class="play">
       <div class="board-col">
@@ -517,7 +518,7 @@ function pickNear(target, pool, avoid) {
 
 /* ---------- экраны ---------- */
 let screen = 'home', backTo = null;
-const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu', 'anaWait'];
+const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu', 'anaWait', 'anaMenu'];
 function show(name, title, back) {
   screen = name; backTo = back || null;
   for (const s of SCREENS) $('#' + s).hidden = s !== name;
@@ -546,6 +547,7 @@ function goHome() {
     <button class="tile" id="tRush"><span class="ic" style="background:#e3a23b">⚡</span><span><b>Puzzle Rush</b><span class="muted">На время, 3 ошибки — конец${bestRush ? ' · рекорд ' + bestRush : ''}</span></span></button>
     <button class="tile" id="tThemes"><span class="ic" style="background:#4a7fd1">🎯</span><span><b>Темы</b><span class="muted">Вилки, связки, маты в 2–3 хода и другое</span></span></button>
     <button class="tile" id="tGame"><span class="ic" style="background:#c9653b">♞︎</span><span><b>Игра вдвоём</b><span class="muted">На одной доске, с часами или без${loadGame() && loadGame().moves.length && !loadGame().result ? ' · есть незаконченная партия' : ''}</span></span></button>
+    <button class="tile" id="tAna"><span class="ic" style="background:#2f8f83">📊</span><span><b>Анализ партий</b><span class="muted">Ошибки, точность и уровень игры — как на chess.com</span></span></button>
     <button class="tile" id="tStats"><span class="ic" style="background:#8a5bc9">📈</span><span><b>Статистика</b><span class="muted">Решено ${S.attempts} · с первой попытки ${S.attempts ? Math.round(S.firstTry / S.attempts * 100) : 0}%</span></span></button>
   </div>
   <div class="foot">${appFoot()}</div>`;
@@ -554,6 +556,7 @@ function goHome() {
   $('#tThemes').onclick = () => goThemes();
   $('#tStats').onclick = () => goStats();
   $('#tGame').onclick = () => goGameMenu();
+  $('#tAna').onclick = () => goAnaMenu();
   show('home', 'Шахматные задачи', null);
 }
 
@@ -1256,13 +1259,15 @@ function gameUi() {
     $('#status .dot').className = 'dot ' + G.st.turn;
   }
   const btns = r
-    ? [['Отменить ход', undoMove, 'sec'], ['Новая партия', () => startGame(null), 'sec'], ['Анализ партии', () => analyzeGame(gameFromCurrent())]]
+    ? [['Отменить ход', undoMove, 'sec'], ['Новая партия', () => startGame(null), 'sec'], ['Анализ партии', () => { saveGame(); analyzeGame(gameFromCurrent(), () => startGame(loadGame())); }]]
     : [['Отменить ход', undoMove, 'sec'], ['Повернуть', () => { S.autoFlip = false; S.gameFlip = !flip; save(); setFlip(); render(); gameUi(); }, 'sec'],
        ['Ничья', () => { if (confirm('Оба игрока согласны на ничью?')) endGame({ draw:true, why:'По соглашению' }); }, 'sec'],
-       ['Сдаться', () => { const c = G.st.turn; if (confirm(`${SideRu(c)} сдаются?`)) endGame({ winner:otherC(c), why:`${SideRu(c)} сдались` }); }, 'sec']];
+       ['Сдаться', () => { const c = G.st.turn; if (confirm(`${SideRu(c)} сдаются?`)) endGame({ winner:otherC(c), why:`${SideRu(c)} сдались` }); }, 'sec'],
+       ['📊 Анализ', () => { if (!G.moves.length) return; clockPause(true); analyzeGame(gameFromCurrent(), () => { const s = loadGame(); startGame(s); }); }, 'sec']];
   setButtons(btns);
   $('#btns').classList.add('wrap');
   $('#btns').querySelector('button').disabled = !G.moves.length;
+  const ab = [...$('#btns').querySelectorAll('button')].find(b => b.textContent.includes('Анализ')); if (ab) ab.disabled = !G.moves.length;
   // запись партии
   const mat = material();
   let list = '';
@@ -1286,12 +1291,12 @@ function goGameMenu() {
    <label class="switch"><input type="checkbox" id="gFlip" ${S.autoFlip ? 'checked' : ''}><span>Поворачивать доску к тому, кто ходит</span></label>
    <p class="muted small">Удобно, если передаёте телефон друг другу. Если телефон лежит между вами, выключите — доску можно повернуть кнопкой.</p>
    <button class="btn" id="gNew" style="width:100%">${savedOn ? 'Начать новую партию' : 'Начать партию'}</button>
-   ${gameMenuExtras()}`;
+   <button class="item" id="gAna" style="margin-top:14px"><span class="t"><b>📊 Анализ партий</b><span class="n">Ошибки, точность и уровень игры каждого · мои партии · PGN с chess.com</span></span><span class="muted">›</span></button>`;
   $('#gameMenu').querySelectorAll('[data-tc]').forEach(b => b.onclick = () => { S.gameTc = b.dataset.tc; save(); goGameMenu(); });
   $('#gFlip').onchange = e => { S.autoFlip = e.target.checked; save(); };
   $('#gNew').onclick = () => { if (savedOn && !confirm('Начать новую партию? Текущая будет удалена.')) return; startGame(null); };
   if (savedOn) $('#gContinue').onclick = () => startGame(saved);
-  bindGameMenuExtras();
+  $('#gAna').onclick = () => goAnaMenu();
   show('gameMenu', 'Игра вдвоём', goHome);
 }
 function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
@@ -1395,7 +1400,7 @@ function openingBook() {
 }
 
 /* ---------- запуск анализа ---------- */
-let anaCancel = false;
+let anaCancel = false, anaBack = null;
 function cacheGet(key) { try { return (JSON.parse(localStorage.getItem(AKEY) || '{}'))[key] || null; } catch (e) { return null; } }
 function cachePut(key, val) {
   try {
@@ -1405,10 +1410,11 @@ function cachePut(key, val) {
   } catch (e) {}
 }
 
-async function analyzeGame(game) {
+async function analyzeGame(game, backFn) {
+  anaBack = backFn || goAnaMenu;
   clearInterval(gameTimer); gameTimer = null;
   if (G && G.game && G.clock) clockPause(true);
-  const back = () => { anaCancel = true; Eng.stop(); goGameMenu(); };
+  const back = () => { anaCancel = true; Eng.stop(); anaBack(); };
   // позиции партии
   let st = C.parseFEN(game.fen || START_FEN);
   const P = [{ st, hm:0, fm:1 }], sans = [];
@@ -1534,7 +1540,7 @@ function openReview(game, P, sans, E, book) {
   MODE = { kind:'analysis' };
   flip = false;
   hidePromo();
-  show('play', 'Анализ партии', () => { Eng.stop(); goGameMenu(); });
+  show('play', 'Анализ партии', () => { Eng.stop(); RV = null; MODE = null; anaBack(); });
   $('#nav').hidden = false;
   $('#nav').innerHTML = [['⏮', () => goPly(0)], ['◀', () => goPly(RV.ply - 1)], ['▶', () => goPly(RV.ply + 1)], ['⏭', () => goPly(RV.P.length - 1)], ['⇅', () => { flip = !flip; goPly(RV.ply); }]]
     .map((b, i) => `<button class="btn sec" data-n="${i}">${b[0]}</button>`).join('');
@@ -1680,13 +1686,13 @@ function parsePGN(text) {
   return { id:'pgn' + Date.now(), moves, fen, result:res, white:nameOf(tags.White, tags.WhiteElo) || 'Белые', black:nameOf(tags.Black, tags.BlackElo) || 'Чёрные' };
 }
 
-function gameMenuExtras() {
+function anaMenuHTML() {
   const saved = loadGame(), hist = loadHistory();
   const fmtD = t => new Date(t).toLocaleDateString('ru-RU', { day:'numeric', month:'short' }) + ' ' + new Date(t).toLocaleTimeString('ru-RU', { hour:'2-digit', minute:'2-digit' });
   return `
-   <h2>Анализ</h2>
+   <p class="muted small" style="margin-top:0">Движок разберёт каждый ход: где лучший ход, где неточность, ошибка или зевок, какая точность и на какой уровень сыграл каждый.</p>
    <div class="list" style="grid-template-columns:1fr">
-     ${saved && saved.moves.length >= 2 && !saved.result ? `<button class="item" id="aCur"><span class="t"><b>Анализ текущей партии</b><span class="n">${saved.moves.length} полуходов, партия не закончена</span></span><span class="muted">›</span></button>` : ''}
+     ${saved && saved.moves.length >= 1 && !saved.result ? `<button class="item" id="aCur"><span class="t"><b>Текущая партия</b><span class="n">${Math.ceil(saved.moves.length / 2)} ${plural(Math.ceil(saved.moves.length / 2), 'ход', 'хода', 'ходов')}, партия ещё идёт</span></span><span class="muted small">Анализ ›</span></button>` : ''}
      <button class="item" id="aPgn"><span class="t"><b>Анализ партии из PGN</b><span class="n">Например, с chess.com: «Поделиться» → PGN → скопировать</span></span><span class="muted">›</span></button>
    </div>
    <div id="pgnBox" hidden style="margin-top:8px">
@@ -1697,7 +1703,7 @@ function gameMenuExtras() {
    ${hist.length ? `<h2>Мои партии</h2><div class="list" style="grid-template-columns:1fr">${hist.map((h, i) =>
      `<button class="item" data-h="${i}"><span class="t"><b>${resultStr(h.result)} · ${h.result && !h.result.draw ? 'победили ' + sideRu(h.result.winner) : h.result ? 'ничья' : ''}</b><span class="n">${fmtD(h.date)} · ${Math.ceil(h.moves.length / 2)} ходов · ${(TCS.find(t => t.id === h.tc) || TCS[0]).name}</span></span><span class="muted small">Анализ ›</span></button>`).join('')}</div>` : ''}`;
 }
-function bindGameMenuExtras() {
+function bindAnaMenu() {
   const saved = loadGame(), hist = loadHistory();
   const cur = $('#aCur'); if (cur) cur.onclick = () => analyzeGame({ id:saved.gid, moves:saved.moves, result:null, white:'Белые', black:'Чёрные', fen:START_FEN });
   $('#aPgn').onclick = () => { $('#pgnBox').hidden = !$('#pgnBox').hidden; if (!$('#pgnBox').hidden) $('#pgnText').focus(); };
@@ -1705,10 +1711,25 @@ function bindGameMenuExtras() {
     try { analyzeGame(parsePGN($('#pgnText').value)); }
     catch (e) { $('#pgnMsg').textContent = e.message || 'Не получилось разобрать PGN.'; }
   };
-  document.querySelectorAll('#gameMenu [data-h]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#anaMenu [data-h]').forEach(b => b.onclick = () => {
     const h = hist[+b.dataset.h];
     analyzeGame({ id:h.id, moves:h.moves, result:h.result, white:'Белые', black:'Чёрные', fen:START_FEN });
   });
+}
+
+function goAnaMenu() {
+  RV = null; MODE = null;
+  clearInterval(gameTimer); gameTimer = null;
+  // законченная партия, сыгранная до появления архива, тоже попадает в «Мои партии»
+  const saved = loadGame(), hist = loadHistory();
+  if (saved && saved.result && saved.moves.length && !hist.some(h => h.id === saved.gid)) {
+    saved.gid = saved.gid || 'g' + Date.now();
+    try { localStorage.setItem(GKEY, JSON.stringify(saved)); } catch (e) {}
+    hist.unshift({ id:saved.gid, date:Date.now(), moves:saved.moves, result:saved.result, tc:saved.tc }); saveHistory(hist);
+  }
+  $('#anaMenu').innerHTML = anaMenuHTML() + (loadHistory().length ? '' : '<p class="muted small" style="margin-top:14px">Сыгранные партии появятся здесь, когда вы доиграете партию в «Игре вдвоём». Анализ можно запустить и во время партии — кнопкой «Анализ».</p>');
+  bindAnaMenu();
+  show('anaMenu', 'Анализ партий', goHome);
 }
 
 </script>
