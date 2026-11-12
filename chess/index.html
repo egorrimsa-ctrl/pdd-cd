@@ -146,6 +146,36 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
 .switch{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:10px;padding:14px;font-weight:600}
 .switch input{width:22px;height:22px;accent-color:var(--green);flex:none}
 
+/* --- анализ --- */
+.board-wrap{display:flex;gap:6px;align-items:stretch}
+.board-wrap .board{flex:1;min-width:0}
+.evalbar{width:22px;flex:none;background:#403d39;border-radius:3px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.evalbar i{display:block;width:100%;background:#f2f1ef;transition:height .3s ease}
+.evalbar.flip{flex-direction:column-reverse}
+.evalbar span{position:absolute;left:0;right:0;text-align:center;font-size:9px;font-weight:800;letter-spacing:-.5px}
+.evalbar span.wt{bottom:3px;color:#302e2b}.evalbar span.bt{top:3px;color:#f2f1ef}
+.evalbar.flip span.wt{bottom:auto;top:3px}.evalbar.flip span.bt{top:auto;bottom:3px}
+.arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+.nav{margin-top:8px}
+.nav .btn{padding:10px 4px;font-size:18px}
+@media (max-width:760px){.nav{padding:0 12px}}
+.clsic{width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
+.clsdot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;color:#fff;font-weight:900;font-size:10px;margin-right:6px;vertical-align:-4px;flex:none}
+.clsdot.sm{width:16px;height:16px;font-size:8px;margin-right:4px;vertical-align:-3px}
+.badge.cls{width:5.6%;height:5.6%;font-size:clamp(8px,2.2vw,13px)}
+.sumt{width:100%;border-collapse:collapse;color:var(--text);font-size:14px;margin-bottom:10px}
+.sumt th{font-size:13px;color:var(--muted);font-weight:600;text-align:center;padding:4px;max-width:90px;overflow:hidden;text-overflow:ellipsis}
+.sumt td{padding:4px}
+.sumt td+td{text-align:center;font-weight:700;width:30%}
+.sumt tr.big td{font-size:17px;font-weight:800}
+.sumt tr.big td:first-child{font-size:14px;font-weight:600}
+.evgraph{width:100%;height:90px;display:block;border-radius:8px;margin:6px 0 10px;cursor:pointer}
+.mvlist{max-height:34vh;overflow-y:auto}
+.mvrow{display:grid;grid-template-columns:30px 1fr 1fr;align-items:center;gap:2px}
+.mvrow i{font-style:normal;color:var(--muted);font-size:13px}
+.mvb{background:transparent;text-align:left;padding:5px 6px;border-radius:6px;color:var(--text);font-size:15px;display:flex;align-items:center}
+.mvb.on{background:var(--panel2)}
+
 .wK{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgdmlld0JveD0iMCAwIDQ1IDQ1Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMTEuNjNWNk0yMCA4aDUiLz48cGF0aCBmaWxsPSIjZmZmIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZD0iTTIyLjUgMjVzNC41LTcuNSAzLTEwLjVjMCAwLTEtMi41LTMtMi41cy0zIDIuNS0zIDIuNWMtMS41IDMgMyAxMC41IDMgMTAuNSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMS41IDM3YzUuNSAzLjUgMTUuNSAzLjUgMjEgMHYtN3M5LTQuNSA2LTEwLjVjLTQtNi41LTEzLjUtMy41LTE2IDRWMjd2LTMuNWMtMy41LTcuNS0xMy0xMC41LTE2LTQtMyA2IDUgMTAgNSAxMHoiLz48cGF0aCBkPSJNMTEuNSAzMGM1LjUtMyAxNS41LTMgMjEgMG0tMjEgMy41YzUuNS0zIDE1LjUtMyAyMSAwbS0yMSAzLjVjNS41LTMgMTUuNS0zIDIxIDAiLz48L2c+PC9zdmc+)}
 .wQ{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBkPSJNOCAxMmEyIDIgMCAxIDEtNCAwIDIgMiAwIDEgMSA0IDBtMTYuNS00LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTQxIDEyYTIgMiAwIDEgMS00IDAgMiAyIDAgMSAxIDQgME0xNiA4LjVhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwTTMzIDlhMiAyIDAgMSAxLTQgMCAyIDIgMCAxIDEgNCAwIi8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzguNS0xLjUgMjEtMS41IDI3IDBsMi0xMi03IDExVjExbC01LjUgMTMuNS0zLTE1LTMgMTUtNS41LTE0VjI1TDcgMTR6Ii8+PHBhdGggc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIGQ9Ik05IDI2YzAgMiAxLjUgMiAyLjUgNCAxIDEuNSAxIDEgLjUgMy41LTEuNSAxLTEuNSAyLjUtMS41IDIuNS0xLjUgMS41LjUgMi41LjUgMi41IDYuNSAxIDE2LjUgMSAyMyAwIDAgMCAxLjUtMSAwLTIuNSAwIDAgLjUtMS41LTEtMi41LS41LTIuNS0uNS0yIC41LTMuNSAxLTIgMi41LTIgMi41LTQtOC41LTEuNS0xOC41LTEuNS0yNyAweiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0xMS41IDMwYzMuNS0xIDE4LjUtMSAyMiAwTTEyIDMzLjVjNi0xIDE1LTEgMjEgMCIvPjwvZz48L3N2Zz4=)}
 .wR{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHN0eWxlPSJjb2xvci1zY2hlbWU6bGlnaHQgb25seSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1IiB2aWV3Qm94PSIwIDAgNDUgNDUiPjxnIGZpbGw9IiNmZmYiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBzdHJva2UtbGluZWNhcD0iYnV0dCIgZD0iTTkgMzloMjd2LTNIOXptMy0zdi00aDIxdjR6bS0xLTIyVjloNHYyaDVWOWg1djJoNVY5aDR2NSIvPjxwYXRoIGQ9Im0zNCAxNC0zIDNIMTRsLTMtMyIvPjxwYXRoIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMzEgMTd2MTIuNUgxNFYxNyIvPjxwYXRoIGQ9Im0zMSAyOS41IDEuNSAyLjVoLTIwbDEuNS0yLjUiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBkPSJNMTEgMTRoMjMiLz48L2c+PC9zdmc+)}
@@ -173,14 +203,20 @@ textarea{width:100%;background:#1b1a18;color:var(--text);border:1px solid #444;b
   <section id="rushEnd" class="screen" hidden></section>
   <section id="stats" class="screen" hidden></section>
   <section id="gameMenu" class="screen" hidden></section>
+  <section id="anaWait" class="screen" hidden></section>
   <section id="play" class="screen" hidden>
     <div class="play">
       <div class="board-col">
+        <div class="board-wrap">
+        <div class="evalbar" id="evalbar" hidden><i id="evalfill"></i><span id="evaltxt"></span></div>
         <div class="board" id="board">
           <div class="sqs" id="sqs"></div>
           <div class="pcs" id="pcs"></div>
+          <svg class="arrows" id="arrows" viewBox="0 0 800 800"></svg>
           <div class="promo" id="promo" hidden></div>
         </div>
+        </div>
+        <div class="row nav" id="nav" hidden></div>
       </div>
       <div class="side">
         <div class="infobar" id="infobar"></div>
@@ -333,7 +369,57 @@ const Chess = (() => {
   const findUci = (st, u) => legal(st).find(m => uci(m) === u) || null;
   const isMate = st => inCheck(st) && legal(st).length === 0;
 
-  return { parseFEN, legal, make, inCheck, isMate, uci, findUci, colorOf, sqName, sqIndex, kingSq };
+  const FIG = { K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘' };
+  // Запись хода: fig=true — фигурки (♘f3), иначе буквы (Nf3)
+  function san(st, m, fig = true) {
+    const L = x => fig ? FIG[x] : x;
+    let s;
+    if (m.castle) s = m.castle === 'k' ? 'O-O' : 'O-O-O';
+    else {
+      const p = st.b[m.from].toUpperCase(), to = sqName(m.to);
+      if (p === 'P') s = (m.capture ? sqName(m.from)[0] + 'x' : '') + to + (m.promo ? '=' + L(m.promo.toUpperCase()) : '');
+      else {
+        const rivals = legal(st).filter(x => x.to === m.to && x.from !== m.from && st.b[x.from] === st.b[m.from]);
+        let dis = '';
+        if (rivals.length) {
+          const f = sqName(m.from);
+          const sameFile = rivals.some(x => sqName(x.from)[0] === f[0]), sameRank = rivals.some(x => sqName(x.from)[1] === f[1]);
+          dis = !sameFile ? f[0] : !sameRank ? f[1] : f;
+        }
+        s = L(p) + dis + (m.capture ? 'x' : '') + to;
+      }
+    }
+    const after = make(st, m);
+    if (inCheck(after)) s += legal(after).length ? '+' : '#';
+    return s;
+  }
+  // Разбор хода из PGN: Nf3, exd5, O-O, e8=Q, Кf3 и т. п.
+  const RU = { 'Кр':'K', 'Ф':'Q', 'Л':'R', 'С':'B', 'К':'N' };
+  function parseSan(st, tok) {
+    let t = tok.replace(/[+#!?]+$/g, '').replace(/^(\d+)\.+/, '').replace(/0/g, 'O').replace(/х/g, 'x');
+    for (const [r, e] of Object.entries(RU)) if (t.startsWith(r)) { t = e + t.slice(r.length); break; }
+    t = t.replace(/[♔♚]/g, 'K').replace(/[♕♛]/g, 'Q').replace(/[♖♜]/g, 'R').replace(/[♗♝]/g, 'B').replace(/[♘♞]/g, 'N');
+    if (!t) return null;
+    const norm = x => x.replace(/[+#]$/, '').replace(/=/, '');
+    const tn = norm(t);
+    const ms = legal(st);
+    let hit = ms.filter(m => norm(san(st, m, false)) === tn);
+    if (hit.length === 1) return hit[0];
+    // допускаем лишние уточнения (Ngf3, e7e8Q) и запись без «x»
+    hit = ms.filter(m => { const u = uci(m); return u === t.toLowerCase() || norm(san(st, m, false)).replace('x', '') === tn.replace('x', ''); });
+    return hit.length === 1 ? hit[0] : null;
+  }
+  function toFEN(st, hm = 0, fm = 1) {
+    let rows = [];
+    for (let r = 0; r < 8; r++) {
+      let row = '', e = 0;
+      for (let c = 0; c < 8; c++) { const p = st.b[r * 8 + c]; if (!p) e++; else { if (e) row += e; e = 0; row += p; } }
+      if (e) row += e; rows.push(row);
+    }
+    return `${rows.join('/')} ${st.turn} ${st.castle || '-'} ${st.ep >= 0 ? sqName(st.ep) : '-'} ${hm} ${fm}`;
+  }
+
+  return { parseFEN, legal, make, inCheck, isMate, uci, findUci, colorOf, sqName, sqIndex, kingSq, san, parseSan, toFEN, attacked };
 })();
 if (typeof module !== 'undefined') module.exports = Chess;
 
@@ -431,7 +517,7 @@ function pickNear(target, pool, avoid) {
 
 /* ---------- экраны ---------- */
 let screen = 'home', backTo = null;
-const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu'];
+const SCREENS = ['home', 'themes', 'rushMenu', 'play', 'rushEnd', 'stats', 'gameMenu', 'anaWait'];
 function show(name, title, back) {
   screen = name; backTo = back || null;
   for (const s of SCREENS) $('#' + s).hidden = s !== name;
@@ -549,8 +635,9 @@ function drawPieces(anims) {
 function drawBadge() {
   pcsEl.querySelectorAll('.badge').forEach(b => b.remove());
   if (!G.badge) return;
-  const [s, kind] = G.badge, vi = viewIdx(s), b = document.createElement('div');
-  b.className = 'badge ' + kind; b.textContent = kind === 'ok' ? '✓' : '✗';
+  const [s, kind, txt] = G.badge, vi = viewIdx(s), b = document.createElement('div');
+  b.className = 'badge ' + kind; b.textContent = txt || (kind === 'ok' ? '✓' : '✗');
+  if (G.badgeColor) b.style.background = G.badgeColor;
   b.style.left = ((vi & 7) * 12.5 + 12.5 - 5.6) + '%'; b.style.top = Math.max(0, (vi >> 3) * 12.5 - 1.2) + '%';
   if ((vi >> 3) === 0) b.style.top = '0.4%';
   if ((vi & 7) === 7) b.style.left = (100 - 5.6) + '%';
@@ -560,6 +647,10 @@ function render(anims) {
   G.hl.check = C.inCheck(G.st) ? C.kingSq(G.st.b, G.st.turn) : -1;
   paintSquares();
   drawPieces(anims);
+  drawArrows();
+  $('#evalbar').hidden = !G.evalbar;
+  $('#nav').hidden = !G.review;
+  if (G.evalbar) drawEvalbar();
 }
 function animsFor(m) {
   const a = [[m.from, m.to]];
@@ -949,14 +1040,14 @@ function offText() {
 function appFoot() {
   return `${isStandalone() ? '' : `<div class="box"><b>Установить на iPhone.</b> Откройте эту страницу в Safari, нажмите «Поделиться» внизу экрана и выберите «На экран „Домой“». Появится иконка, и задачи будут открываться как обычное приложение — без интернета.</div>`}
     <div id="offst">${offText()}</div>
-    <div style="margin-top:6px">Задачи — открытая база Lichess (CC0). Фигуры — Colin M. L. Burnett (GPLv2+).</div>`;
+    <div style="margin-top:6px">Задачи и названия дебютов — открытые базы Lichess (CC0). Фигуры — Colin M. L. Burnett (GPLv2+). Анализ — движок Stockfish 19 (GPLv3, stockfishchess.org).</div>`;
 }
 async function checkOffline() {
   if (!OFF.ok) return;
   try {
     await navigator.serviceWorker.ready;
     for (let i = 0; i < 40 && !OFF.ready; i++) {
-      const hit = await caches.match('puzzles.json');
+      const hit = await caches.match('puzzles.json') && await caches.match('sf/stockfish-19-lite-single.wasm');
       if (hit) OFF.ready = true; else await new Promise(r => setTimeout(r, 500));
     }
   } catch (e) {}
@@ -992,25 +1083,7 @@ const SideRu = c => c === 'w' ? 'Белые' : 'Чёрные';
 const otherC = c => c === 'w' ? 'b' : 'w';
 let gameTimer = null;
 
-function san(st, m) {
-  if (m.castle) return m.castle === 'k' ? 'O-O' : 'O-O-O';
-  const p = st.b[m.from].toUpperCase(), to = C.sqName(m.to);
-  let s;
-  if (p === 'P') s = (m.capture ? C.sqName(m.from)[0] + 'x' : '') + to + (m.promo ? '=' + FIG[m.promo.toUpperCase()] : '');
-  else {
-    const rivals = C.legal(st).filter(x => x.to === m.to && x.from !== m.from && st.b[x.from] === st.b[m.from]);
-    let dis = '';
-    if (rivals.length) {
-      const f = C.sqName(m.from);
-      const sameFile = rivals.some(x => C.sqName(x.from)[0] === f[0]), sameRank = rivals.some(x => C.sqName(x.from)[1] === f[1]);
-      dis = !sameFile ? f[0] : !sameRank ? f[1] : f;
-    }
-    s = FIG[p] + dis + (m.capture ? 'x' : '') + to;
-  }
-  const after = C.make(st, m);
-  if (C.inCheck(after)) s += C.legal(after).length ? '+' : '#';
-  return s;
-}
+const san = (st, m) => C.san(st, m, true);
 const posKey = st => st.b.join(',') + st.turn + st.castle + st.ep;
 
 function insufficient(b) {
@@ -1085,14 +1158,14 @@ function saveGame() {
   if (!G || !G.game) return;
   clockCommit();
   const k = G.clock;
-  try { localStorage.setItem(GKEY, JSON.stringify({ moves:G.moves, tc:G.tc, clock:k ? { w:k.w, b:k.b } : null, result:G.result || null })); } catch (e) {}
+  try { localStorage.setItem(GKEY, JSON.stringify({ gid:G.gid, moves:G.moves, tc:G.tc, clock:k ? { w:k.w, b:k.b } : null, result:G.result || null })); } catch (e) {}
 }
 function loadGame() { try { return JSON.parse(localStorage.getItem(GKEY) || 'null'); } catch (e) { return null; } }
 
 function startGame(saved) {
   const tc = TCS.find(t => t.id === (saved ? saved.tc : S.gameTc)) || TCS[0];
   const r = replay(saved ? saved.moves : []);
-  G = { game:true, tc:tc.id, inc:tc.inc * 1000, st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn,
+  G = { game:true, gid:saved && saved.gid || String(Date.now()), tc:tc.id, inc:tc.inc * 1000, st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn,
         done:false, busy:false, sel:null, targets:[], epT:-1, last:null, hl:{ hint:[], wrong:-1, good:-1, check:-1 }, badge:null, result:null };
   const lastH = r.H[r.H.length - 1]; if (lastH.m) G.last = [lastH.m.from, lastH.m.to];
   G.clock = tc.base ? { w:saved && saved.clock ? saved.clock.w : tc.base * 1000, b:saved && saved.clock ? saved.clock.b : tc.base * 1000,
@@ -1141,12 +1214,14 @@ function endGame(res, quiet) {
   G.result = res; G.done = true; deselect();
   setTimeout(() => SND.end(), quiet ? 250 : 0);
   saveGame();
+  archiveGame();
   if (!quiet) { render(); gameUi(); }
 }
 function undoMove() {
   if (!G.moves.length) return;
   clockCommit();
   const r = replay(G.moves.slice(0, -1));
+  if (G.result) unarchiveGame(G.gid);
   Object.assign(G, { st:r.st, H:r.H, sans:r.sans, moves:r.moves, user:r.st.turn, result:null, done:false, busy:false });
   deselect();
   const h = r.H[r.H.length - 1]; G.last = h.m ? [h.m.from, h.m.to] : null;
@@ -1181,7 +1256,7 @@ function gameUi() {
     $('#status .dot').className = 'dot ' + G.st.turn;
   }
   const btns = r
-    ? [['Отменить ход', undoMove, 'sec'], ['Новая партия', () => startGame(null)]]
+    ? [['Отменить ход', undoMove, 'sec'], ['Новая партия', () => startGame(null), 'sec'], ['Анализ партии', () => analyzeGame(gameFromCurrent())]]
     : [['Отменить ход', undoMove, 'sec'], ['Повернуть', () => { S.autoFlip = false; S.gameFlip = !flip; save(); setFlip(); render(); gameUi(); }, 'sec'],
        ['Ничья', () => { if (confirm('Оба игрока согласны на ничью?')) endGame({ draw:true, why:'По соглашению' }); }, 'sec'],
        ['Сдаться', () => { const c = G.st.turn; if (confirm(`${SideRu(c)} сдаются?`)) endGame({ winner:otherC(c), why:`${SideRu(c)} сдались` }); }, 'sec']];
@@ -1200,6 +1275,7 @@ function gameUi() {
 }
 
 function goGameMenu() {
+  RV = null; MODE = null;
   clearInterval(gameTimer); gameTimer = null;
   const saved = loadGame();
   const savedOn = saved && saved.moves.length && !saved.result;
@@ -1209,16 +1285,431 @@ function goGameMenu() {
    <div class="tcs">${TCS.map(t => `<button data-tc="${t.id}" class="${S.gameTc === t.id ? 'on' : ''}">${t.name}</button>`).join('')}</div>
    <label class="switch"><input type="checkbox" id="gFlip" ${S.autoFlip ? 'checked' : ''}><span>Поворачивать доску к тому, кто ходит</span></label>
    <p class="muted small">Удобно, если передаёте телефон друг другу. Если телефон лежит между вами, выключите — доску можно повернуть кнопкой.</p>
-   <button class="btn" id="gNew" style="width:100%">${savedOn ? 'Начать новую партию' : 'Начать партию'}</button>`;
+   <button class="btn" id="gNew" style="width:100%">${savedOn ? 'Начать новую партию' : 'Начать партию'}</button>
+   ${gameMenuExtras()}`;
   $('#gameMenu').querySelectorAll('[data-tc]').forEach(b => b.onclick = () => { S.gameTc = b.dataset.tc; save(); goGameMenu(); });
   $('#gFlip').onchange = e => { S.autoFlip = e.target.checked; save(); };
   $('#gNew').onclick = () => { if (savedOn && !confirm('Начать новую партию? Текущая будет удалена.')) return; startGame(null); };
   if (savedOn) $('#gContinue').onclick = () => startGame(saved);
+  bindGameMenuExtras();
   show('gameMenu', 'Игра вдвоём', goHome);
 }
 function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
 
 document.addEventListener('visibilitychange', () => { if (G && G.game && !G.result) clockPause(document.hidden); });
+
+/* ===== Анализ партии (как «Обзор партии» на chess.com) ===== */
+const AKEY = 'chess-analysis-v1', HKEY = 'chess-games-v1';
+const DEPTH = 14;
+const CLS = {
+  brilliant:  { name:'Блестящий ход',  icon:'!!', color:'#26c2a3' },
+  great:      { name:'Отличный ход',   icon:'!',  color:'#5c8bb0' },
+  best:       { name:'Лучший ход',     icon:'★',  color:'#81b64c' },
+  excellent:  { name:'Превосходно',    icon:'👍︎', color:'#96bc4b' },
+  good:       { name:'Хороший ход',    icon:'✓',  color:'#95af8a' },
+  book:       { name:'Теория',         icon:'📖︎', color:'#a88865' },
+  inaccuracy: { name:'Неточность',     icon:'?!', color:'#f7c631' },
+  mistake:    { name:'Ошибка',         icon:'?',  color:'#ffa459' },
+  miss:       { name:'Упущенная возможность', icon:'✗', color:'#ff7769' },
+  blunder:    { name:'Зевок',          icon:'??', color:'#fa412d' }
+};
+const CLS_ORDER = ['brilliant', 'great', 'best', 'excellent', 'good', 'book', 'inaccuracy', 'mistake', 'miss', 'blunder'];
+const PVAL = { p:1, n:3, b:3, r:5, q:9, k:100 };
+
+/* ---------- архив партий ---------- */
+function loadHistory() { try { return JSON.parse(localStorage.getItem(HKEY) || '[]'); } catch (e) { return []; } }
+function saveHistory(h) { try { localStorage.setItem(HKEY, JSON.stringify(h.slice(0, 60))); } catch (e) {} }
+function archiveGame() {
+  if (!G || !G.game || !G.moves.length) return;
+  const h = loadHistory().filter(x => x.id !== G.gid);
+  h.unshift({ id:G.gid, date:Date.now(), moves:G.moves.slice(), result:G.result, tc:G.tc });
+  saveHistory(h);
+}
+function unarchiveGame(id) { saveHistory(loadHistory().filter(x => x.id !== id)); }
+function gameFromCurrent() {
+  return { id:G.gid, moves:G.moves.slice(), result:G.result, white:'Белые', black:'Чёрные', fen:START_FEN };
+}
+const resultStr = r => !r ? '*' : r.draw ? '½–½' : r.winner === 'w' ? '1–0' : '0–1';
+
+/* ---------- движок ---------- */
+const Eng = {
+  w:null, handler:null, ready:null,
+  start() {
+    if (this.ready) return this.ready;
+    this.ready = new Promise((res, rej) => {
+      try { this.w = new Worker('sf/stockfish-19-lite-single.js'); } catch (e) { rej(e); return; }
+      this.w.onmessage = e => { if (this.handler) this.handler(String(e.data)); };
+      this.w.onerror = e => { this.ready = null; rej(e); };
+      this.handler = l => { if (l === 'uciok') { this.w.postMessage('setoption name MultiPV value 2'); this.w.postMessage('isready'); } if (l === 'readyok') { this.handler = null; res(); } };
+      this.w.postMessage('uci');
+    });
+    return this.ready;
+  },
+  newGame() { return new Promise(res => { this.handler = l => { if (l === 'readyok') { this.handler = null; res(); } }; this.w.postMessage('ucinewgame'); this.w.postMessage('isready'); }); },
+  analyse(fen, depth) {
+    return new Promise(res => {
+      const lines = [];
+      this.handler = l => {
+        if (l.startsWith('info') && l.includes(' pv ')) {
+          const mp = +(l.match(/ multipv (\d+)/) || [0, 1])[1];
+          const sc = l.match(/ score (cp|mate) (-?\d+)/);
+          if (!sc) return;
+          lines[mp - 1] = { kind:sc[1], v:+sc[2], pv:l.split(' pv ')[1].trim().split(' ') };
+        } else if (l.startsWith('bestmove')) { this.handler = null; res({ lines, best:l.split(' ')[1] }); }
+      };
+      this.w.postMessage('position fen ' + fen);
+      this.w.postMessage('go depth ' + depth);
+    });
+  },
+  stop() { if (this.w) { this.w.terminate(); this.w = null; this.ready = null; this.handler = null; } }
+};
+
+/* ---------- оценки ---------- */
+// оценка с точки зрения белых: {cp} или {mate} (mate>0 — белые матуют; mate=0 — мат уже на доске)
+function whiteScore(line, turn) {
+  const sgn = turn === 'w' ? 1 : -1;
+  return line.kind === 'mate' ? { mate:line.v * sgn } : { cp:line.v * sgn };
+}
+function winW(e) {
+  if (e.mate != null) return e.mate > 0 ? 100 : e.mate < 0 ? 0 : (e.matedSide === 'w' ? 0 : 100);
+  return 50 + 50 * (2 / (1 + Math.exp(-0.00368208 * e.cp)) - 1);
+}
+const winFor = (e, c) => c === 'w' ? winW(e) : 100 - winW(e);
+function evalText(e) {
+  if (e.mate != null) return e.mate === 0 ? (e.matedSide === 'w' ? '0–1' : '1–0') : (e.mate > 0 ? 'M' : '−M') + Math.abs(e.mate);
+  const v = e.cp / 100; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(Math.abs(v) >= 10 ? 0 : 1);
+}
+
+function openingBook() {
+  if (openingBook.p) return openingBook.p;
+  openingBook.p = fetch('openings.json').then(r => r.json()).then(list => {
+    const prefixes = new Set(), names = new Map();
+    for (const [eco, name, ucis] of list) {
+      const u = ucis.split(' ');
+      for (let i = 1; i <= u.length; i++) prefixes.add(u.slice(0, i).join(' '));
+      names.set(ucis, eco + ' · ' + name);
+    }
+    return { prefixes, names };
+  }).catch(() => ({ prefixes:new Set(), names:new Map() }));
+  return openingBook.p;
+}
+
+/* ---------- запуск анализа ---------- */
+let anaCancel = false;
+function cacheGet(key) { try { return (JSON.parse(localStorage.getItem(AKEY) || '{}'))[key] || null; } catch (e) { return null; } }
+function cachePut(key, val) {
+  try {
+    const all = JSON.parse(localStorage.getItem(AKEY) || '{}'); all[key] = val;
+    const keys = Object.keys(all); if (keys.length > 25) delete all[keys[0]];
+    localStorage.setItem(AKEY, JSON.stringify(all));
+  } catch (e) {}
+}
+
+async function analyzeGame(game) {
+  clearInterval(gameTimer); gameTimer = null;
+  if (G && G.game && G.clock) clockPause(true);
+  const back = () => { anaCancel = true; Eng.stop(); goGameMenu(); };
+  // позиции партии
+  let st = C.parseFEN(game.fen || START_FEN);
+  const P = [{ st, hm:0, fm:1 }], sans = [];
+  for (const u of game.moves) {
+    const m = C.findUci(st, u); if (!m) break;
+    sans.push(C.san(st, m, true));
+    const prev = P[P.length - 1];
+    const hm = st.b[m.from].toLowerCase() === 'p' || m.capture ? 0 : prev.hm + 1;
+    st = C.make(st, m);
+    P.push({ st, m, hm, fm:prev.fm + (st.turn === 'w' ? 1 : 0) });
+  }
+  const key = (game.fen || '') + '|' + game.moves.join(' ') + '|' + DEPTH;
+  let E = cacheGet(key);
+  if (!E) {
+    anaCancel = false;
+    $('#anaWait').innerHTML = `<div class="rating-card" style="flex-direction:column;align-items:stretch;text-align:center">
+      <div class="big" style="font-size:22px">Анализирую партию…</div>
+      <div class="muted small" id="anaTxt">Запускаю движок</div>
+      <div class="bar" style="height:10px"><i id="anaBar" style="width:0"></i></div>
+      <div class="muted small">Движок Stockfish работает прямо на телефоне, без интернета.</div></div>
+      <button class="btn sec" id="anaStop" style="width:100%">Отмена</button>`;
+    $('#anaStop').onclick = back;
+    show('anaWait', 'Анализ партии', back);
+    try { await Eng.start(); await Eng.newGame(); }
+    catch (e) { $('#anaTxt').textContent = 'Не удалось запустить движок. Откройте приложение один раз с интернетом, чтобы он скачался.'; return; }
+    E = [];
+    for (let i = 0; i < P.length; i++) {
+      if (anaCancel) return;
+      const s = P[i].st;
+      if (!C.legal(s).length) { E.push(C.inCheck(s) ? { mate:0, matedSide:s.turn } : { cp:0 }); continue; }
+      const r = await Eng.analyse(C.toFEN(s, P[i].hm, P[i].fm), DEPTH);
+      if (anaCancel) return;
+      const l1 = r.lines[0] || { kind:'cp', v:0, pv:[r.best] };
+      const e = whiteScore(l1, s.turn);
+      e.best = l1.pv[0] || r.best; e.pv = l1.pv.slice(0, 6);
+      if (r.lines[1]) { const e2 = whiteScore(r.lines[1], s.turn); e.alt = e2.mate != null ? { mate:e2.mate } : { cp:e2.cp }; e.altMove = r.lines[1].pv[0]; }
+      E.push(e);
+      $('#anaTxt').textContent = `Позиция ${i + 1} из ${P.length}`;
+      $('#anaBar').style.width = Math.round((i + 1) / P.length * 100) + '%';
+    }
+    cachePut(key, E);
+  }
+  const book = await openingBook();
+  openReview(game, P, sans, E, book);
+}
+
+/* ---------- классификация ходов ---------- */
+function classify(P, E, book, startFen) {
+  const out = [];
+  let line = [], opening = null, inBook = !startFen || startFen === START_FEN;
+  for (let i = 0; i < P.length - 1; i++) {
+    const before = P[i].st, after = P[i + 1].st, m = P[i + 1].m, c = before.turn;
+    const u = C.uci(m);
+    line.push(u);
+    const wb = winFor(E[i], c), wa = winFor(E[i + 1], c);
+    const loss = Math.max(0, wb - wa);
+    let acc = 103.1668 * Math.exp(-0.04354 * loss) - 3.1669; acc = Math.max(0, Math.min(100, acc));
+    let k;
+    const lk = line.join(' ');
+    if (inBook && book.prefixes.has(lk)) { k = 'book'; if (book.names.has(lk)) opening = book.names.get(lk); }
+    else {
+      inBook = false;
+      const isBest = u === E[i].best;
+      // «Блестящий»: жертва фигуры, которая оказывается лучшим или почти лучшим ходом
+      const mover = before.b[m.from].toLowerCase(), val = PVAL[mover];
+      const captured = m.capture ? (m.ep ? 1 : PVAL[before.b[m.to].toLowerCase()]) : 0;
+      let sac = false;
+      if (val >= 3 && val < 100 && captured < val && C.attacked(after.b, m.to, after.turn)) {
+        const takers = C.legal(after).filter(x => x.to === m.to);
+        const cheap = takers.some(x => PVAL[after.b[x.from].toLowerCase()] < val);
+        const defended = C.attacked(after.b, m.to, c);
+        sac = takers.length > 0 && (cheap || !defended);
+      }
+      const alt = E[i].alt ? winFor(E[i].alt, c) : null;
+      const prevWasRecapture = i > 0 && P[i].m && P[i].m.to === m.to;
+      const prevCls = i > 0 ? out[i - 1].k : null;
+      const forcedMate = isBest && E[i].mate != null && (c === 'w' ? E[i].mate > 0 : E[i].mate < 0);
+      if (sac && !C.inCheck(before) && ((loss <= 2 && wa >= 50 && wb < 97) || forcedMate)) k = 'brilliant';
+      else if (isBest && alt != null && winFor(E[i], c) - alt >= 20 && wb > 15 && wb < 95 && !prevWasRecapture && !C.inCheck(before)) k = 'great';
+      else if (isBest || loss < 1) k = 'best';
+      else if (loss < 2.5) k = 'excellent';
+      else if (loss < 6) k = 'good';
+      else if ((prevCls === 'mistake' || prevCls === 'blunder' || prevCls === 'miss') && loss >= 10 && wa >= 30) k = 'miss';
+      else if (loss < 10) k = 'inaccuracy';
+      else if (loss < 20) k = 'mistake';
+      else k = 'blunder';
+    }
+    if (k === 'book') acc = 100;
+    out.push({ k, acc, loss, c });
+  }
+  return { moves:out, opening };
+}
+function gameAccuracy(list) {
+  if (!list.length) return null;
+  const a = list.map(x => x.acc);
+  const mean = a.reduce((s, x) => s + x, 0) / a.length;
+  const harm = a.length / a.reduce((s, x) => s + 1 / Math.max(x, 5), 0);
+  return Math.round(((mean + harm) / 2) * 10) / 10;
+}
+function accToRating(acc) {
+  const T = [[0, 100], [40, 250], [50, 400], [60, 650], [70, 900], [75, 1100], [80, 1350], [85, 1600], [88, 1800], [90, 1950], [92, 2150], [94, 2350], [96, 2600], [98, 2850], [100, 3000]];
+  for (let i = 1; i < T.length; i++) if (acc <= T[i][0]) {
+    const [a0, r0] = T[i - 1], [a1, r1] = T[i];
+    return Math.round((r0 + (r1 - r0) * (acc - a0) / (a1 - a0)) / 50) * 50;
+  }
+  return 3000;
+}
+
+/* ---------- экран разбора ---------- */
+let RV = null;
+function openReview(game, P, sans, E, book) {
+  const { moves, opening } = classify(P, E, book, game.fen);
+  RV = { game, P, sans, E, moves, opening, ply:0 };
+  const per = { w:moves.filter(x => x.c === 'w'), b:moves.filter(x => x.c === 'b') };
+  RV.sum = {};
+  for (const c of ['w', 'b']) {
+    const acc = gameAccuracy(per[c].filter(x => x.k !== 'book'));
+    const cnt = {}; for (const x of per[c]) cnt[x.k] = (cnt[x.k] || 0) + 1;
+    RV.sum[c] = { acc, rating:acc == null ? null : accToRating(acc), cnt };
+  }
+  G = { review:true, st:P[0].st, done:true, busy:false, user:'-', sel:null, targets:[], epT:-1, last:null,
+        hl:{ hint:[], wrong:-1, good:-1, check:-1 }, badge:null, evalbar:true, arrows:[] };
+  MODE = { kind:'analysis' };
+  flip = false;
+  hidePromo();
+  show('play', 'Анализ партии', () => { Eng.stop(); goGameMenu(); });
+  $('#nav').hidden = false;
+  $('#nav').innerHTML = [['⏮', () => goPly(0)], ['◀', () => goPly(RV.ply - 1)], ['▶', () => goPly(RV.ply + 1)], ['⏭', () => goPly(RV.P.length - 1)], ['⇅', () => { flip = !flip; goPly(RV.ply); }]]
+    .map((b, i) => `<button class="btn sec" data-n="${i}">${b[0]}</button>`).join('');
+  const navFns = [() => goPly(0), () => goPly(RV.ply - 1), () => goPly(RV.ply + 1), () => goPly(RV.P.length - 1), () => { flip = !flip; goPly(RV.ply); }];
+  $('#nav').querySelectorAll('button').forEach((b, i) => b.onclick = navFns[i]);
+  setButtons([]);
+  goPly(0);
+}
+
+function goPly(n) {
+  if (!RV) return;
+  n = Math.max(0, Math.min(RV.P.length - 1, n));
+  const forward = n === RV.ply + 1;
+  RV.ply = n;
+  const p = RV.P[n];
+  G.st = p.st; G.last = p.m ? [p.m.from, p.m.to] : null; G.arrows = [];
+  const mv = n > 0 ? RV.moves[n - 1] : null;
+  G.badge = mv ? [p.m.to, 'cls', CLS[mv.k].icon] : null;
+  G.badgeColor = mv ? CLS[mv.k].color : null;
+  if (mv && !['best', 'book', 'brilliant', 'great'].includes(mv.k)) {
+    const b = RV.E[n - 1].best; if (b) G.arrows.push([C.sqIndex(b.slice(0, 2)), C.sqIndex(b.slice(2, 4)), '#81b64c']);
+  }
+  render(forward && p.m ? animsFor(p.m) : null);
+  if (forward && p.m) playSound(p.m);
+  const badge = pcsEl.querySelector('.badge.cls'); if (badge) badge.style.background = G.badgeColor;
+  reviewSide();
+}
+
+function drawEvalbar() {
+  if (!RV) return;
+  const e = RV.E[RV.ply], w = winW(e);
+  const fill = $('#evalfill'), txt = $('#evaltxt');
+  fill.style.height = w + '%';
+  $('#evalbar').classList.toggle('flip', flip);
+  txt.textContent = evalText(e).replace('+', '');
+  txt.className = w >= 50 ? 'wt' : 'bt';
+}
+function drawArrows() {
+  const svg = $('#arrows');
+  if (!G || !G.arrows || !G.arrows.length) { svg.innerHTML = ''; return; }
+  const ctr = s => { const vi = viewIdx(s); return [(vi & 7) * 100 + 50, (vi >> 3) * 100 + 50]; };
+  svg.innerHTML = G.arrows.map(([f, t, col]) => {
+    const [x1, y1] = ctr(f), [x2, y2] = ctr(t);
+    const ang = Math.atan2(y2 - y1, x2 - x1), len = Math.hypot(x2 - x1, y2 - y1) - 30;
+    const ex = x1 + Math.cos(ang) * len, ey = y1 + Math.sin(ang) * len;
+    const hx = x1 + Math.cos(ang) * (len + 28), hy = y1 + Math.sin(ang) * (len + 28);
+    const px = Math.cos(ang + Math.PI / 2) * 26, py = Math.sin(ang + Math.PI / 2) * 26;
+    return `<g opacity=".85"><line x1="${x1}" y1="${y1}" x2="${ex}" y2="${ey}" stroke="${col}" stroke-width="20" stroke-linecap="round"/>
+      <polygon points="${hx},${hy} ${ex + px},${ey + py} ${ex - px},${ey - py}" fill="${col}"/></g>`;
+  }).join('');
+}
+
+function pvSan(st, pv, n) {
+  const out = []; let s = st;
+  for (const u of pv.slice(0, n)) { const m = C.findUci(s, u); if (!m) break; out.push(C.san(s, m, true)); s = C.make(s, m); }
+  return out.join(' ');
+}
+
+function reviewSide() {
+  const { ply, P, E, moves, sans, sum, game } = RV;
+  const nm = { w:game.white || 'Белые', b:game.black || 'Чёрные' };
+  setInfo(`<span class="grow muted">${RV.opening ? RV.opening : 'Анализ партии'}</span><span class="pill">${evalText(E[ply])}</span>`);
+  // комментарий к ходу
+  const el = $('#status');
+  if (ply === 0) {
+    el.className = 'status';
+    el.innerHTML = `<span>Обзор партии<span class="sub">Листайте ходы стрелками под доской или нажмите на ход в записи. Зелёная стрелка — ход, который был лучше.</span></span>`;
+  } else {
+    const mv = moves[ply - 1], c = CLS[mv.k], prev = P[ply - 1].st, e0 = E[ply - 1];
+    let sub = '';
+    if (mv.k === 'book') sub = RV.opening ? 'Известный дебютный ход.' : 'Известный дебютный ход.';
+    else if (['best', 'brilliant', 'great'].includes(mv.k)) sub = mv.k === 'brilliant' ? 'Жертва, которая работает!' : mv.k === 'great' ? 'Единственный сильный ход в позиции.' : 'Так сыграл бы движок.';
+    else {
+      const bm = e0.best && C.findUci(prev, e0.best);
+      sub = bm ? `Лучше было ${C.san(prev, bm, true)} (${evalText(e0)}).` : '';
+    }
+    const cur = E[ply];
+    if (cur.pv && cur.pv.length && cur.mate !== 0 && !['book'].includes(mv.k) && ['inaccuracy', 'mistake', 'miss', 'blunder'].includes(mv.k)) sub += ` Угроза: ${pvSan(P[ply].st, cur.pv, 3)}`;
+    if (cur.mate === 0) sub += ' Мат!';
+    el.className = 'status';
+    el.innerHTML = `<span class="clsic" style="background:${c.color}">${c.icon}</span><span>${Math.ceil(ply / 2)}${ply % 2 ? '.' : '…'} ${sans[ply - 1]} — ${c.name.toLowerCase()}<span class="sub">${sub}</span></span>`;
+  }
+  // сводка, график и запись
+  const row = k => `<tr><td><span class="clsdot" style="background:${CLS[k].color}">${CLS[k].icon}</span>${CLS[k].name}</td><td>${sum.w.cnt[k] || 0}</td><td>${sum.b.cnt[k] || 0}</td></tr>`;
+  let list = '';
+  for (let i = 0; i < sans.length; i += 2) {
+    const cell = j => j < sans.length ? `<button class="mvb${ply === j + 1 ? ' on' : ''}" data-p="${j + 1}"><span class="clsdot sm" style="background:${CLS[moves[j].k].color}">${CLS[moves[j].k].icon}</span>${sans[j]}</button>` : '<span></span>';
+    list += `<div class="mvrow"><i>${i / 2 + 1}.</i>${cell(i)}${cell(i + 1)}</div>`;
+  }
+  setMeta(`
+    <table class="sumt"><tr><th></th><th>${nm.w}</th><th>${nm.b}</th></tr>
+      <tr class="big"><td>Точность</td><td>${sum.w.acc ?? '—'}</td><td>${sum.b.acc ?? '—'}</td></tr>
+      <tr class="big"><td>Уровень игры</td><td>${sum.w.rating ? '≈ ' + sum.w.rating : '—'}</td><td>${sum.b.rating ? '≈ ' + sum.b.rating : '—'}</td></tr>
+      ${CLS_ORDER.map(row).join('')}</table>
+    ${graphSVG()}
+    <div class="mvlist" id="mvlist">${list}</div>
+    <div class="muted small" style="margin-top:8px">Stockfish 19, глубина ${DEPTH}. Уровень игры — примерная оценка по точности, как «рейтинг партии» на chess.com.</div>`);
+  $('#meta').querySelectorAll('[data-p]').forEach(b => b.onclick = () => goPly(+b.dataset.p));
+  const g = $('#evgraph');
+  if (g) g.onclick = e => { const r = g.getBoundingClientRect(); goPly(Math.round((e.clientX - r.left) / r.width * (RV.P.length - 1))); };
+  const on = $('#mvlist .on'), box = $('#mvlist');
+  if (on && box) { const r = on.offsetTop - box.offsetTop; if (r < box.scrollTop || r > box.scrollTop + box.clientHeight - 30) box.scrollTop = r - box.clientHeight / 2; }
+}
+
+function graphSVG() {
+  const { E, moves, ply } = RV, n = E.length, W = 600, H = 120;
+  const x = i => n > 1 ? i / (n - 1) * W : 0, y = e => H - winW(e) / 100 * H;
+  let pts = E.map((e, i) => `${x(i).toFixed(1)},${y(e).toFixed(1)}`).join(' ');
+  const dots = moves.map((m, i) => ['mistake', 'blunder', 'miss', 'brilliant', 'great'].includes(m.k)
+    ? `<circle cx="${x(i + 1)}" cy="${y(E[i + 1])}" r="5" fill="${CLS[m.k].color}" stroke="#000" stroke-width="1"/>` : '').join('');
+  return `<svg class="evgraph" id="evgraph" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <rect width="${W}" height="${H}" fill="#403d39"/>
+    <polygon points="0,${H} ${pts} ${W},${H}" fill="#f2f1ef"/>
+    <line x1="0" y1="${H / 2}" x2="${W}" y2="${H / 2}" stroke="#888" stroke-width="1" stroke-dasharray="4 4"/>
+    <line x1="${x(ply)}" y1="0" x2="${x(ply)}" y2="${H}" stroke="#81b64c" stroke-width="3"/>
+    ${dots}</svg>`;
+}
+
+document.addEventListener('keydown', e => {
+  if (!RV || !MODE || MODE.kind !== 'analysis' || screen !== 'play') return;
+  if (e.key === 'ArrowLeft') goPly(RV.ply - 1);
+  if (e.key === 'ArrowRight') goPly(RV.ply + 1);
+});
+
+/* ---------- PGN ---------- */
+function parsePGN(text) {
+  const tags = {};
+  text.replace(/\[(\w+)\s+"([^"]*)"\]/g, (_, k, v) => { tags[k] = v; return ''; });
+  let body = text.replace(/\[[^\]]*\]/g, ' ').replace(/\{[^}]*\}/g, ' ').replace(/;[^\n]*/g, ' ');
+  while (/\([^()]*\)/.test(body)) body = body.replace(/\([^()]*\)/g, ' ');
+  body = body.replace(/\$\d+/g, ' ').replace(/\d+\.(\.\.)?/g, ' ');
+  const fen = tags.FEN || START_FEN;
+  let st = C.parseFEN(fen); const moves = [];
+  for (const tok of body.split(/\s+/).filter(Boolean)) {
+    if (/^(1-0|0-1|1\/2-1\/2|\*|½-½)$/.test(tok)) break;
+    const m = C.parseSan(st, tok);
+    if (!m) throw new Error(`Не понял ход «${tok}» (ход ${moves.length + 1})`);
+    moves.push(C.uci(m)); st = C.make(st, m);
+  }
+  if (!moves.length) throw new Error('В тексте нет ходов');
+  const res = tags.Result === '1-0' ? { winner:'w' } : tags.Result === '0-1' ? { winner:'b' } : tags.Result === '1/2-1/2' ? { draw:true } : null;
+  const nameOf = (n, elo) => n && n !== '?' ? n + (elo && elo !== '?' ? ` (${elo})` : '') : null;
+  return { id:'pgn' + Date.now(), moves, fen, result:res, white:nameOf(tags.White, tags.WhiteElo) || 'Белые', black:nameOf(tags.Black, tags.BlackElo) || 'Чёрные' };
+}
+
+function gameMenuExtras() {
+  const saved = loadGame(), hist = loadHistory();
+  const fmtD = t => new Date(t).toLocaleDateString('ru-RU', { day:'numeric', month:'short' }) + ' ' + new Date(t).toLocaleTimeString('ru-RU', { hour:'2-digit', minute:'2-digit' });
+  return `
+   <h2>Анализ</h2>
+   <div class="list" style="grid-template-columns:1fr">
+     ${saved && saved.moves.length >= 2 && !saved.result ? `<button class="item" id="aCur"><span class="t"><b>Анализ текущей партии</b><span class="n">${saved.moves.length} полуходов, партия не закончена</span></span><span class="muted">›</span></button>` : ''}
+     <button class="item" id="aPgn"><span class="t"><b>Анализ партии из PGN</b><span class="n">Например, с chess.com: «Поделиться» → PGN → скопировать</span></span><span class="muted">›</span></button>
+   </div>
+   <div id="pgnBox" hidden style="margin-top:8px">
+     <textarea id="pgnText" rows="6" placeholder='[White "..."]&#10;1. e4 e5 2. Nf3 ...' spellcheck="false" autocapitalize="off"></textarea>
+     <p class="muted small" id="pgnMsg"></p>
+     <button class="btn" id="pgnGo" style="width:100%">Анализировать</button>
+   </div>
+   ${hist.length ? `<h2>Мои партии</h2><div class="list" style="grid-template-columns:1fr">${hist.map((h, i) =>
+     `<button class="item" data-h="${i}"><span class="t"><b>${resultStr(h.result)} · ${h.result && !h.result.draw ? 'победили ' + sideRu(h.result.winner) : h.result ? 'ничья' : ''}</b><span class="n">${fmtD(h.date)} · ${Math.ceil(h.moves.length / 2)} ходов · ${(TCS.find(t => t.id === h.tc) || TCS[0]).name}</span></span><span class="muted small">Анализ ›</span></button>`).join('')}</div>` : ''}`;
+}
+function bindGameMenuExtras() {
+  const saved = loadGame(), hist = loadHistory();
+  const cur = $('#aCur'); if (cur) cur.onclick = () => analyzeGame({ id:saved.gid, moves:saved.moves, result:null, white:'Белые', black:'Чёрные', fen:START_FEN });
+  $('#aPgn').onclick = () => { $('#pgnBox').hidden = !$('#pgnBox').hidden; if (!$('#pgnBox').hidden) $('#pgnText').focus(); };
+  $('#pgnGo').onclick = () => {
+    try { analyzeGame(parsePGN($('#pgnText').value)); }
+    catch (e) { $('#pgnMsg').textContent = e.message || 'Не получилось разобрать PGN.'; }
+  };
+  document.querySelectorAll('#gameMenu [data-h]').forEach(b => b.onclick = () => {
+    const h = hist[+b.dataset.h];
+    analyzeGame({ id:h.id, moves:h.moves, result:h.result, white:'Белые', black:'Чёрные', fen:START_FEN });
+  });
+}
 
 </script>
 </body>

@@ -1,8 +1,9 @@
 /* Шахматные задачи — работа без интернета.
    Всё приложение (страница, задачи, иконки) лежит в кэше CACHE. При обновлении приложения меняйте номер. */
-const CACHE = 'chess-puzzles-1';
+const CACHE = 'chess-puzzles-2';
 const FILES = ['./', 'index.html', 'puzzles.json', 'manifest.webmanifest',
-  'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+  'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',
+  'openings.json', 'sf/stockfish-19-lite-single.js', 'sf/stockfish-19-lite-single.wasm'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE)

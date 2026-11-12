@@ -12,4 +12,4 @@
 
 ## Шахматные задачи
 
-В папке `chess/` — отдельное приложение: 5000 задач из открытой базы Lichess (CC0), подбор по рейтингу, темы, Puzzle Rush. Ставится на iPhone так же, как тренажёр ПДД: откройте `…/pdd-cd/chess/` в Safari → «Поделиться» → «На экран „Домой“». Фигуры — Colin M. L. Burnett (GPLv2+).
+В папке `chess/` — отдельное приложение: 5000 задач из открытой базы Lichess (CC0), подбор по рейтингу, темы, Puzzle Rush. Ставится на iPhone так же, как тренажёр ПДД: откройте `…/pdd-cd/chess/` в Safari → «Поделиться» → «На экран „Домой“». Фигуры — Colin M. L. Burnett (GPLv2+). Анализ партий — Stockfish 19 (GPLv3, `chess/sf/COPYING.txt`, исходники: github.com/official-stockfish/Stockfish и github.com/nmrugg/stockfish.js), названия дебютов — lichess-org/chess-openings (CC0).
